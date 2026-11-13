@@ -188,3 +188,15 @@ for c in targets:
     out.parent.mkdir(exist_ok=True)
     out.write_text(build(c), encoding="utf-8")
     print("geschrieben:", out.relative_to(ROOT))
+
+# Daten für die Startseite ("+" neben jedem Song)
+songs = {}
+for c in ALL:
+    meta = " · ".join(x for x in [c["date_de"], c.get("length", ""),
+                                  next((v for k, v in c.get("credits", []) if k.startswith("Produktion")), "") and
+                                  "Prod. " + next(v for k, v in c.get("credits", []) if k.startswith("Produktion"))] if x)
+    new = (datetime.date.today() - datetime.date.fromisoformat(c["date"])).days <= 60
+    songs[c["slug"]] = {"title": c["title"], "type": ("Neue " if new else "") + c.get("type", "Single"), "meta": meta,
+                        "cover": c["cover"], "text": c.get("teaser_de") or c.get("pitch_de") or ""}
+(ROOT / "data/songs.json").write_text(json.dumps(songs, ensure_ascii=False, indent=1), encoding="utf-8")
+print("geschrieben: data/songs.json")
