@@ -2,6 +2,8 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src https://open.spotify.com https://www.youtube-nocookie.com; media-src 'self' https:; form-action https://*.sibforms.com mailto:; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Softblech</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -461,7 +463,7 @@ footer{padding-block:48px 40px;text-align:center}
           <dl>
             <dt>Produktion</dt><dd><a href="https://www.instagram.com/leonschmeon/" target="_blank" rel="noopener">Leon Kaack</a>, <a href="https://www.birkbuttchereyt.com" target="_blank" rel="noopener">Birk Buttchereyt</a>, <a href="https://lukas-kurz.com" target="_blank" rel="noopener">Lukas Kurz</a>, <a href="https://www.instagram.com/arnesrm/" target="_blank" rel="noopener">Arne Schramm</a></dd>
             <dt>Mastering</dt><dd><a href="https://jaccoherhaus.com" target="_blank" rel="noopener">Jacco Herhaus</a></dd>
-            <dt>Fotos &amp; Cover</dt><dd><a href="https://www.instagram.com/keevvkeevv" target="_blank" rel="noopener">Kevin Pawlak</a>, <a href="https://karlaschradi.de" target="_blank" rel="noopener">Karla Schradi</a>, <a href="https://www.instagram.com/caro_hanneforth/" target="_blank" rel="noopener">Caro Hanneforth</a>, <a href="https://www.instagram.com/alina.thiemann/" target="_blank" rel="noopener">Alina Thiemann</a>, <a href="https://www.instagram.com/ben0nline/" target="_blank" rel="noopener">Benjamin Cohen</a></dd>
+            <dt>Fotos &amp; Cover</dt><dd><a href="https://www.instagram.com/keevvkeevv" target="_blank" rel="noopener">Kevin Pawlak</a>, <a href="https://karlaschradi.de" target="_blank" rel="noopener">Karla Schradi</a>, <a href="https://www.instagram.com/caro_hanneforth/" target="_blank" rel="noopener">Caro Hanneforth</a>, <a href="https://www.instagram.com/alina.thiemann/" target="_blank" rel="noopener">Alina Thiemann</a>, <a href="https://www.instagram.com/ben0nline/" target="_blank" rel="noopener">Benjamin Cohen</a>, <a href="https://www.instagram.com/oliviaklug_/" target="_blank" rel="noopener">Olivia Klug</a>, <a href="https://www.instagram.com/jeremias_otto/" target="_blank" rel="noopener">Jeremias Otto</a>, <a href="https://www.instagram.com/leons_zeug/" target="_blank" rel="noopener">@leons_zeug</a></dd>
             <dt>Stimme</dt><dd><a href="https://www.instagram.com/anastasiatonkha/" target="_blank" rel="noopener">Anastasia Tonkha</a> („I Want To Be With You“)</dd>
           </dl>
         </div>
@@ -583,6 +585,7 @@ footer{padding-block:48px 40px;text-align:center}
   </div>
 </div>
 <script>
+function safeUrl(u){u=String(u||"");return /^(https?:\/\/|#|[a-z0-9-]+\/|img\/|data\/)/i.test(u)&&!/^\s*javascript:/i.test(u)?u:"#"}
 /* ===== EINSTELLUNGEN – hier trägt man später IDs ein ===== */
 var SB = {
   gaId: "G-S0FEBCYZ1K",              /* Google-Analytics-ID, z. B. "G-ABC123XYZ" */
@@ -627,9 +630,9 @@ var SB = {
     var pin='<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>';
     function slide(n){
       var ext=function(u){return /^https?:/.test(u)?' target="_blank" rel="noopener"':''};
-      return '<div class="slide" role="group" aria-roledescription="Folie"><picture>'+(n.image_mobile?'<source media="(max-width:860px)" srcset="'+esc(n.image_mobile)+'">':'')+'<img class="bg" src="'+esc(n.image)+'" alt="'+esc(n.alt)+'" style="--pos:'+esc(n.position||'50% 30%')+'"></picture>'+
+      return '<div class="slide" role="group" aria-roledescription="Folie"><picture>'+(n.image_mobile?'<source media="(max-width:860px)" srcset="'+esc(safeUrl(n.image_mobile))+'">':'')+'<img class="bg" src="'+esc(safeUrl(n.image))+'" alt="'+esc(n.alt)+'" style="--pos:'+esc(n.position||'50% 30%')+'"></picture>'+
         '<div class="wrap"><div class="stop">'+pin+esc(n.eyebrow)+'</div><h1 class="cond">'+esc(n.title)+(n.highlight?' <span>'+esc(n.highlight)+'</span>':'')+'</h1>'+
-        '<div class="btns">'+(n.buttons||[]).map(function(b,i){return '<a class="btn '+(i?'ghost':'solid')+'" href="'+esc(b[1])+'"'+ext(b[1])+'>'+esc(b[0])+'</a>'}).join('')+'</div></div></div>';
+        '<div class="btns">'+(n.buttons||[]).map(function(b,i){return '<a class="btn '+(i?'ghost':'solid')+'" href="'+esc(safeUrl(b[1]))+'"'+ext(b[1])+'>'+esc(b[0])+'</a>'}).join('')+'</div></div></div>';
     }
     var M=['Jan.','Feb.','März','Apr.','Mai','Juni','Juli','Aug.','Sep.','Okt.','Nov.','Dez.'];
     Promise.all([
@@ -669,7 +672,7 @@ var SB = {
     var p=(d&&d.posts)||[]; if(p.length<4) return;
     var esc=function(t){var x=document.createElement('div');x.textContent=t||'';return x.innerHTML};
     var box=document.getElementById('insta');
-    box.innerHTML=p.slice(0,8).map(function(x){return '<a href="'+esc(x.link)+'" target="_blank" rel="noopener"><img src="'+esc(x.img)+'" alt="'+esc(x.caption||'Instagram-Post von Softblech')+'" loading="lazy">'+(x.video?'<span class="v">▶ Video</span>':'')+'</a>'}).join('');
+    box.innerHTML=p.slice(0,8).map(function(x){return '<a href="'+esc(safeUrl(x.link))+'" target="_blank" rel="noopener"><img src="'+esc(safeUrl(x.img))+'" alt="'+esc(x.caption||'Instagram-Post von Softblech')+'" loading="lazy">'+(x.video?'<span class="v">▶ Video</span>':'')+'</a>'}).join('');
     box.hidden=false; document.getElementById('photos').hidden=true; document.getElementById('photo-credit').hidden=true;
   }).catch(function(){});
 
@@ -687,7 +690,7 @@ var SB = {
       return '<li class="show"><div class="date"><small>'+M[dt.getMonth()]+'</small><b>'+String(dt.getDate()).padStart(2,'0')+'</b><small>'+dt.getFullYear()+'</small></div>'+
         '<div class="venue">'+esc(e.venue)+'<span class="note">'+esc(note)+'</span></div>'+
         '<div class="city">'+esc(e.city)+', '+esc(C[e.country]||e.country)+'</div>'+
-        (e.url?'<a class="btn solid" href="'+esc(e.url)+'" target="_blank" rel="noopener">'+(e.tickets?'Tickets':'Infos')+'</a>':'<span></span>')+'</li>';
+        (e.url?'<a class="btn solid" href="'+esc(safeUrl(e.url))+'" target="_blank" rel="noopener">'+(e.tickets?'Tickets':'Infos')+'</a>':'<span></span>')+'</li>';
     }).join('');
   }).catch(function(){});
 
@@ -702,7 +705,7 @@ var SB = {
     document.getElementById('videos').hidden=false;
     SB.youtube.forEach(function(v){
       var w=document.createElement('div');
-      w.innerHTML='<div class="embed video" data-embed="youtube" data-src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(v.id)+'" data-title="'+(v.title||'Video').replace(/"/g,'&quot;')+'"></div><p class="vtitle">'+(v.title||'')+'</p>';
+      w.innerHTML='<div class="embed video" data-embed="youtube" data-src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(v.id)+'" data-title="'+(v.title||'Video').replace(/"/g,'&quot;')+'"></div><p class="vtitle">'+String(v.title||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})+'</p>';
       list.appendChild(w);
     });
   }
