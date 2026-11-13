@@ -649,7 +649,7 @@ var SB = {
       var news=(res[0]&&res[0].news)||[]; if(!news.length) return;
       var ev=((res[1]&&res[1].events)||[])[0];
       if(ev){var d=new Date(ev.datetime);
-        news.splice(1,0,{eyebrow:'Nächstes Konzert · '+d.getDate()+'. '+M[d.getMonth()]+' '+d.getFullYear(),title:ev.venue,highlight:ev.city,image:'img/header-mauer.jpg',image_mobile:'img/press/kevin-pawlak-6.jpg',alt:'Henri und Dennis vor einer Kieselwand',position:'40% 30%',buttons:[['Alle Termine','#live']].concat(ev.url?[[ev.tickets?'Tickets':'Infos',ev.url]]:[])});}
+        news.splice(1,0,{eyebrow:'Nächstes Konzert · '+d.getDate()+'. '+M[d.getMonth()]+' '+d.getFullYear(),title:ev.venue,highlight:ev.city,image:'img/header-live.jpg',image_mobile:'img/header-live-mobil.jpg',alt:'Publikum und Band bei einem Softblech-Konzert im Valentin Stüberl',position:'50% 40%',buttons:[['Alle Termine','#live']].concat(ev.url?[[ev.tickets?'Tickets':'Infos',ev.url]]:[])});}
       hero.querySelectorAll('.slide').forEach(function(s){s.remove()});
       hero.insertAdjacentHTML('afterbegin',news.map(slide).join(''));
       var slides=hero.querySelectorAll('.slide'),dots=hero.querySelector('.dots'),i=0,timer;
