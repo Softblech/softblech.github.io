@@ -66,3 +66,9 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px}
 .pitch blockquote p{margin:0 0 12px}
 .small{font-size:14px;margin-top:20px}
 .contact a{color:var(--red)}
+.others{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px}
+.other{text-decoration:none;display:block}
+.other img{width:100%;aspect-ratio:1;object-fit:cover;margin-bottom:8px}
+.other span{display:block;font-size:22px;line-height:1}
+.other small{color:var(--muted)}
+.other:hover span{color:var(--red)}

@@ -117,6 +117,8 @@ section{scroll-margin-top:64px}
 .single .y{font-family:var(--display);font-stretch:75%;font-weight:700;letter-spacing:.06em;color:var(--muted);font-variant-numeric:tabular-nums}
 .single:hover .y{color:var(--black)}
 .single .t{font-size:clamp(26px,3vw,44px)}
+.single .more{font-family:var(--display);font-stretch:75%;font-weight:800;text-transform:uppercase;letter-spacing:.04em;font-size:14px;text-decoration:underline;text-underline-offset:3px;align-self:flex-start}
+.single .more:hover{color:var(--chrome)}
 
 /* Live */
 .shows{list-style:none;margin:0;padding:0;border-top:1px solid var(--line-red)}
@@ -277,6 +279,10 @@ footer{padding-block:48px 40px;text-align:center}
   .single{aspect-ratio:auto;flex-direction:row-reverse;align-items:baseline;justify-content:space-between;gap:12px;padding:14px 4px;border:0;border-bottom:1px solid var(--line);background:transparent}
   .single .t{font-size:28px}
   .single .y{white-space:nowrap;font-size:14px}
+  .single{flex-wrap:wrap;flex-direction:row}
+  .single .t{order:1;flex:1 1 0;min-width:0}
+  .single .y{order:2}
+  .single .more{order:0;flex-basis:100%;font-size:12px;margin-top:-4px}
 
   .photos{grid-template-columns:1fr 1fr;gap:8px}
   .contact .big{font-size:clamp(26px,8vw,40px)}
@@ -698,8 +704,14 @@ var SB = {
     var id=SB.tracks[a.dataset.song];
     if(!id) return;
     a.href='https://open.spotify.com/track/'+id;
+    if(a.classList.contains('single')){
+      var m=document.createElement('span');m.className='more';m.textContent='Mehr zum Song ›';m.setAttribute('role','link');m.tabIndex=0;
+      m.dataset.href=a.dataset.song+'/';a.appendChild(m);
+      m.addEventListener('keydown',function(ev){if(ev.key==='Enter'){ev.preventDefault();ev.stopPropagation();location.href=m.dataset.href}});
+    }
     a.addEventListener('click',function(e){
       e.preventDefault();
+      var mo=e.target.closest&&e.target.closest('.more'); if(mo){location.href=mo.dataset.href;return}
       player.dataset.src='https://open.spotify.com/embed/track/'+id+'?utm_source=generator&theme=0';
       player.innerHTML='';
       if(consent&&consent.media){ load(player); } else { gate(player); }
