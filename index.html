@@ -72,7 +72,8 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .hero .slide::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,11,11,0) 35%,rgba(12,11,11,.85) 100%)}
 .hero .cnav{position:absolute;z-index:3;inset:0;pointer-events:none}
 .hero .cnav[hidden]{display:none}
-.hero .cnav button.prev,.hero .cnav button.next{position:absolute;top:40%;transform:translateY(-50%);pointer-events:auto;background:transparent;border:0;color:var(--chrome);font-size:clamp(56px,5vw,80px);line-height:1;cursor:pointer;padding:16px 12px;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.hero .cnav button.prev,.hero .cnav button.next{position:absolute;top:40%;transform:translateY(-50%);pointer-events:auto;background:transparent;border:0;color:#fff;opacity:.55;font-size:clamp(36px,3vw,48px);font-weight:300;line-height:1;cursor:pointer;padding:16px 12px;transition:opacity .2s}
+.hero .cnav button.prev:hover,.hero .cnav button.next:hover{opacity:1}
 .hero .cnav button.prev{left:4px}.hero .cnav button.next{right:4px}
 .hero .dots{display:none}
 .hero .dots button{width:28px;height:5px;border:0;padding:0;background:rgba(228,226,226,.4);cursor:pointer}
