@@ -14,9 +14,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Termine laden
+        env:
+          APP_ID: ${{ secrets.BANDSINTOWN_APP_ID }}
         run: |
           set -e
-          curl -sf "https://rest.bandsintown.com/artists/id_15651849/events?app_id=js_widget&date=upcoming" -o /tmp/events.json
+          curl -sf "https://rest.bandsintown.com/artists/id_15651849/events?app_id=${APP_ID:-js_widget}&date=upcoming" -o /tmp/events.json
           # nur übernehmen, wenn gültiges JSON-Array
           python3 - <<'PY'
           import json
