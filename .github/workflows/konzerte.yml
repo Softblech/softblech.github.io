@@ -28,6 +28,8 @@ jobs:
           for e in ev:
               v = e.get('venue') or {}
               offers = [o.get('url') for o in (e.get('offers') or []) if o.get('url')]
+              free = bool(e.get('free')) or bool(re.search(r'spende|eintritt frei|kostenlos|free entry|pay what', (e.get('description') or '').lower()))
+              if free: offers = []
               out.append({
                   'datetime': e.get('datetime'),
                   'title': e.get('title') or '',
