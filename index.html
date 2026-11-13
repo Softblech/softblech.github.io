@@ -552,6 +552,24 @@ var SB = {
 
   /* Videos aufbauen */
   var list=document.getElementById('video-list');
+  /* Konzerte: kommen automatisch von Bandsintown (data/konzerte.json, alle 3 Std. aktualisiert) */
+  fetch('data/konzerte.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(d){
+    var ev=(d&&d.events)||[]; if(!ev.length) return;
+    var ul=document.querySelector('#live .shows'); if(!ul) return;
+    var M=['Jan.','Feb.','März','Apr.','Mai','Juni','Juli','Aug.','Sep.','Okt.','Nov.','Dez.'];
+    var esc=function(t){var x=document.createElement('div');x.textContent=t||'';return x.innerHTML};
+    var C={'Germany':'Deutschland','Austria':'Österreich','Switzerland':'Schweiz','Netherlands':'Niederlande','Denmark':'Dänemark','France':'Frankreich','Poland':'Polen','Belgium':'Belgien','Czech Republic':'Tschechien','United Kingdom':'Großbritannien'};
+    ul.innerHTML=ev.map(function(e){
+      var dt=new Date(e.datetime), uhr=e.datetime.slice(11,16);
+      var tage=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+      var note=tage[dt.getDay()]+(uhr&&uhr!=='00:00'?', '+uhr+' Uhr':'');
+      return '<li class="show"><div class="date"><small>'+M[dt.getMonth()]+'</small><b>'+String(dt.getDate()).padStart(2,'0')+'</b><small>'+dt.getFullYear()+'</small></div>'+
+        '<div class="venue">'+esc(e.venue)+'<span class="note">'+esc(note)+'</span></div>'+
+        '<div class="city">'+esc(e.city)+', '+esc(C[e.country]||e.country)+'</div>'+
+        (e.url?'<a class="btn solid" href="'+esc(e.url)+'" target="_blank" rel="noopener">'+(e.tickets?'Tickets':'Infos')+'</a>':'<span></span>')+'</li>';
+    }).join('');
+  }).catch(function(){});
+
   if(SB.youtubeChannel){
     document.getElementById('videos').hidden=false;
     var pl=document.createElement('div');
