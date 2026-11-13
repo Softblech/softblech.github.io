@@ -114,11 +114,8 @@ section{scroll-margin-top:64px}
 .feature p{max-width:52ch;margin:16px 0 0}
 .singles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .single{aspect-ratio:1/1;max-width:100%;background:var(--black-2);border:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between;padding:16px;text-decoration:none;transition:background .2s,color .2s,border-color .2s}
-.single.playing{background:var(--red);color:var(--black);border-color:var(--red)}
-.single.playing .y{color:var(--black)}
-.single:hover{background:var(--red);color:var(--black);border-color:var(--red)}
+.single.open,.single.playing{border-color:var(--red);box-shadow:inset 0 0 0 2px var(--red)}
 .single .y{font-family:var(--display);font-stretch:75%;font-weight:700;letter-spacing:.06em;color:var(--muted);font-variant-numeric:tabular-nums}
-.single:hover .y{color:var(--black)}
 .single .t{font-size:clamp(26px,3vw,44px)}
 .single{position:relative}
 .song-panel{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:24px;align-items:center;background:var(--black-2);border:1px solid var(--red);padding:20px}
@@ -128,19 +125,13 @@ section{scroll-margin-top:64px}
 .song-panel .meta{color:var(--muted);font-family:var(--display);font-stretch:75%;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
 .song-panel p{max-width:60ch;margin:12px 0 0}
 .song-panel .btns{margin-top:16px}
-.single .plus{position:absolute;top:10px;right:10px;width:40px;height:40px;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:30px;line-height:1;border:2px solid currentColor;color:var(--red);cursor:pointer}
-.single:hover .plus,.single.playing .plus{color:var(--black)}
-.single .plus:hover{background:var(--black);color:var(--red)!important;border-color:var(--black)}
 
 .single{overflow:hidden}
 .single .cv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s,opacity .2s}
 .single::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,11,11,.55) 0%,rgba(12,11,11,0) 30%,rgba(12,11,11,0) 45%,rgba(12,11,11,.9) 100%);pointer-events:none}
-.single .y,.single .t,.single .plus{position:relative;z-index:1}
+.single .y,.single .t{position:relative;z-index:1}
 .single .y{color:var(--chrome)}
-.single .plus{position:absolute;z-index:2}
 .single:hover .cv{transform:scale(1.04)}
-.single:hover .cv,.single.playing .cv{opacity:.25}
-.single:hover::after,.single.playing::after{opacity:0}
 /* Live */
 .shows{list-style:none;margin:0;padding:0;border-top:1px solid var(--line-red)}
 .show{display:grid;grid-template-columns:90px minmax(0,1.3fr) minmax(0,1fr) auto;align-items:center;gap:16px;padding-block:16px;border-bottom:1px solid var(--line-red)}
@@ -315,17 +306,16 @@ footer{padding-block:48px 40px;text-align:center}
   .single{aspect-ratio:auto;flex-direction:row-reverse;align-items:baseline;justify-content:space-between;gap:12px;padding:14px 4px;border:0;border-bottom:1px solid var(--line);background:transparent}
   .single .t{font-size:28px}
   .single .y{white-space:nowrap;font-size:14px}
-  .single{flex-direction:row;align-items:center;padding-right:52px}
+  .single{flex-direction:row;align-items:center;padding-right:4px}
   .single .t{order:1;flex:1 1 0;min-width:0}
   .single .cv{position:static;inset:auto;width:56px;height:56px;flex:none;order:0}
   .single::after{display:none}
-  .single:hover .cv,.single.playing .cv{opacity:1;transform:none}
+  .single:hover .cv{transform:none}
   .single .y{color:var(--muted)}
   .single .y{order:2}
   .song-panel{grid-template-columns:96px minmax(0,1fr);gap:14px;align-items:start;padding:14px 4px;border:0;border-bottom:1px solid var(--line)}
   .song-panel h3{font-size:30px}
   .song-panel .btns{display:grid;grid-template-columns:1fr;gap:8px}
-  .single .plus{top:50%;right:4px;transform:translateY(-50%);width:36px;height:36px;font-size:26px}
 
   .photos{grid-template-columns:1fr 1fr;gap:8px}
   .photos .wide{aspect-ratio:3/2}
@@ -765,7 +755,7 @@ var SB = {
     var x=songs[slug]; if(!x){ location.href=slug+'/'; return; }
     var open=panel&&panel.dataset.slug===slug;
     if(panel){panel.remove();panel=null}
-    document.querySelectorAll('.single .plus').forEach(function(b){b.textContent='+';b.setAttribute('aria-expanded','false')});
+    document.querySelectorAll('.single').forEach(function(t){t.classList.remove('open');t.setAttribute('aria-expanded','false')});
     if(open) return;
     var tile=document.querySelector('.single[data-song="'+slug+'"]');
     /* Panel hinter dem letzten Song derselben Zeile einfügen (Raster am Desktop, Liste am Handy) */
@@ -779,21 +769,18 @@ var SB = {
       '<div class="btns"><a class="btn solid" href="https://open.spotify.com/track/'+esc(SB.tracks[slug]||'')+'" data-play="'+esc(slug)+'">Abspielen</a><a class="btn ghost" href="'+esc(slug)+'/">Mehr zum Song</a></div></div>';
     after.insertAdjacentElement('afterend',panel);
     panel.querySelector('[data-play]').addEventListener('click',function(e){e.preventDefault();playSong(slug)});
-    var b=tile.querySelector('.plus'); b.textContent='–'; b.setAttribute('aria-expanded','true');
+    tile.classList.add('open'); tile.setAttribute('aria-expanded','true');
   }
   document.querySelectorAll('[data-song]').forEach(function(a){
     var id=SB.tracks[a.dataset.song];
     if(!id) return;
     a.href='https://open.spotify.com/track/'+id;
     if(a.classList.contains('single')){
-      var m=document.createElement('span');m.className='plus';m.textContent='+';m.setAttribute('role','button');m.tabIndex=0;
-      m.dataset.slug=a.dataset.song;m.setAttribute('aria-label','Details zu '+a.querySelector('.t').textContent);m.setAttribute('aria-expanded','false');
-      a.appendChild(m);
-      m.addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();ev.stopPropagation();showSong(m.dataset.slug)}});
+      a.setAttribute('aria-expanded','false');
     }
     a.addEventListener('click',function(e){
       e.preventDefault();
-      var pl=e.target.closest&&e.target.closest('.plus'); if(pl){showSong(pl.dataset.slug);return}
+      if(a.classList.contains('single')){showSong(a.dataset.song);return}
       playSong(a.dataset.song);
     });
   });
