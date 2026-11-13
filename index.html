@@ -385,7 +385,7 @@ footer{padding-block:48px 40px;text-align:center}
       <p style="max-width:60ch;margin:0 0 28px;font-weight:600;font-size:18px">Neue Songs und Konzerte direkt ins Postfach. Kein Spam, höchstens ein paar Mails im Jahr.</p>
       <form class="nl" id="nl-form" method="post" novalidate>
         <label for="nl-email">E-Mail<input id="nl-email" name="EMAIL" type="email" autocomplete="email" required placeholder="du@beispiel.de"></label>
-        <label for="nl-name">Vorname (optional)<input id="nl-name" name="FIRSTNAME" type="text" autocomplete="given-name" placeholder="Vorname"></label>
+        <label for="nl-name">Vorname<input id="nl-name" name="VORNAME" type="text" autocomplete="given-name" maxlength="200" required placeholder="Vorname"></label>
         <label class="check" for="nl-ok"><input id="nl-ok" name="OPT_IN" type="checkbox" value="1" required><span>Ich möchte den Newsletter von SOFTBLECH per E-Mail bekommen. Ich kann mich jederzeit über den Link in jeder Mail wieder abmelden. Mehr dazu in der <a href="datenschutz.html">Datenschutzerklärung</a>.</span></label>
         <input type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
         <input type="hidden" name="locale" value="de">
@@ -465,7 +465,7 @@ var SB = {
   youtube: [             /* Videos: { id: "YouTube-ID", title: "Titel" } */
     { id: "Ot96k1AsQ8s", title: "" }
   ],
-  newsletterAction: ""   /* Formular-Adresse von Brevo (https://...sibforms.com/serve/...) */
+  newsletterAction: "https://4a6dbfd6.sibforms.com/serve/MUIFAMwR_m5h8o1wltsYbSCL7N-QMkxqJUoEVb_HBoeFtIwxgZZst1DJeTa-DguGFJctrygaBhK5eTaY9OMlEblkh8J50NXY2i4jN8-niLvTT9qEuoETD_KrCktzgieUgJNxSoE3nzt0x5q3pnvh9-7T5rGj5rN5tNrGP_zIDFhjXlRyv7Ma3OdJQnfqodpfR2hNcHu-zTpUljvZAg=="   /* Formular-Adresse von Brevo (https://...sibforms.com/serve/...) */
 };
 /* ========================================================= */
 (function(){
@@ -527,6 +527,7 @@ var SB = {
   form.addEventListener('submit',function(e){
     var mail=document.getElementById('nl-email'), ok=document.getElementById('nl-ok');
     if(!mail.value||!mail.checkValidity()){e.preventDefault();msg.textContent='Bitte gib eine gültige E-Mail-Adresse ein.';mail.focus();return}
+    var nm=document.getElementById('nl-name');if(!nm.value.trim()){e.preventDefault();msg.textContent='Bitte gib deinen Vornamen ein.';nm.focus();return}
     if(!ok.checked){e.preventDefault();msg.textContent='Bitte setz noch das Häkchen.';ok.focus();return}
     if(!SB.newsletterAction){e.preventDefault();msg.textContent='Der Newsletter startet bald. Bis dahin: softblech@gmail.com';return}
     form.action=SB.newsletterAction;
