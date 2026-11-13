@@ -5,9 +5,9 @@
    "eyebrow": "Neue Single · 13.11.2026",
    "title": "I Want To Be With You",
    "highlight": "Out now",
-   "image": "img/hero.jpg",
+   "image": "img/header-single.jpg",
    "alt": "Dennis und Henri auf einem Sofa, Polaroid-Cover der Single I Want To Be With You",
-   "position": "50% 22%",
+   "position": "50% 50%",
    "buttons": [
     [
      "Zum Song",
@@ -17,21 +17,23 @@
      "Spotify",
      "https://open.spotify.com/track/3QPbj1t4wVA0xUqkVoVLPV"
     ]
-   ]
+   ],
+   "image_mobile": "img/hero.jpg"
   },
   {
    "eyebrow": "Newsletter",
    "title": "Nichts verpassen",
    "highlight": "",
-   "image": "img/press/kevin-pawlak-1.jpg",
-   "alt": "Dennis und Henri auf einer Mauer",
-   "position": "50% 40%",
+   "image": "img/header-baum.jpg",
+   "alt": "Dennis und Henri vor einem Baum",
+   "position": "50% 35%",
    "buttons": [
     [
      "Eintragen",
      "#newsletter"
     ]
-   ]
+   ],
+   "image_mobile": "img/press/kevin-pawlak-1.jpg"
   }
  ]
 }

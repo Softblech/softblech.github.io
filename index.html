@@ -58,6 +58,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 
 .hero .wrap{position:relative;z-index:1;width:100%;padding-block:40px 72px}
 .hero .slide{position:absolute;inset:0;display:flex;align-items:flex-end;opacity:0;visibility:hidden;transition:opacity .6s,visibility .6s}
+.hero picture{display:contents}
 .hero .slide.on{opacity:1;visibility:visible}
 .hero .slide::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,11,11,0) 35%,rgba(12,11,11,.85) 100%)}
 .hero .cnav{position:absolute;z-index:3;left:0;right:0;bottom:18px;display:flex;align-items:center;justify-content:center;gap:14px}
@@ -367,7 +368,7 @@ footer{padding-block:48px 40px;text-align:center}
   </div>
   <section class="hero" id="news" aria-roledescription="Karussell" aria-label="News">
   <div class="slide on">
-    <img class="bg" src="img/hero.jpg" alt="Dennis und Henri auf einem Sofa, Polaroid-Cover der Single I Want To Be With You">
+    <picture><source media="(max-width:860px)" srcset="img/hero.jpg"><img class="bg" src="img/header-single.jpg" style="--pos:50% 50%" alt="Dennis und Henri auf einem Sofa, Polaroid-Cover der Single I Want To Be With You"></picture>
     <div class="wrap">
       <div class="stop"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>Neue Single · 13.11.2026</div>
       <h1 class="cond">I Want To Be With You <span>Out now</span></h1>
@@ -633,7 +634,7 @@ var SB = {
     var pin='<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>';
     function slide(n){
       var ext=function(u){return /^https?:/.test(u)?' target="_blank" rel="noopener"':''};
-      return '<div class="slide" role="group" aria-roledescription="Folie"><img class="bg" src="'+esc(n.image)+'" alt="'+esc(n.alt)+'" style="--pos:'+esc(n.position||'50% 30%')+'">'+
+      return '<div class="slide" role="group" aria-roledescription="Folie"><picture>'+(n.image_mobile?'<source media="(max-width:860px)" srcset="'+esc(n.image_mobile)+'">':'')+'<img class="bg" src="'+esc(n.image)+'" alt="'+esc(n.alt)+'" style="--pos:'+esc(n.position||'50% 30%')+'"></picture>'+
         '<div class="wrap"><div class="stop">'+pin+esc(n.eyebrow)+'</div><h1 class="cond">'+esc(n.title)+(n.highlight?' <span>'+esc(n.highlight)+'</span>':'')+'</h1>'+
         '<div class="btns">'+(n.buttons||[]).map(function(b,i){return '<a class="btn '+(i?'ghost':'solid')+'" href="'+esc(b[1])+'"'+ext(b[1])+'>'+esc(b[0])+'</a>'}).join('')+'</div></div></div>';
     }
@@ -645,7 +646,7 @@ var SB = {
       var news=(res[0]&&res[0].news)||[]; if(!news.length) return;
       var ev=((res[1]&&res[1].events)||[])[0];
       if(ev){var d=new Date(ev.datetime);
-        news.splice(1,0,{eyebrow:'Nächstes Konzert · '+d.getDate()+'. '+M[d.getMonth()]+' '+d.getFullYear(),title:ev.venue,highlight:ev.city,image:'img/press/kevin-pawlak-6.jpg',alt:'Henri und Dennis',position:'50% 25%',buttons:[['Alle Termine','#live']].concat(ev.url?[[ev.tickets?'Tickets':'Infos',ev.url]]:[])});}
+        news.splice(1,0,{eyebrow:'Nächstes Konzert · '+d.getDate()+'. '+M[d.getMonth()]+' '+d.getFullYear(),title:ev.venue,highlight:ev.city,image:'img/header-mauer.jpg',image_mobile:'img/press/kevin-pawlak-6.jpg',alt:'Henri und Dennis vor einer Kieselwand',position:'40% 30%',buttons:[['Alle Termine','#live']].concat(ev.url?[[ev.tickets?'Tickets':'Infos',ev.url]]:[])});}
       hero.querySelectorAll('.slide').forEach(function(s){s.remove()});
       hero.insertAdjacentHTML('afterbegin',news.map(slide).join(''));
       var slides=hero.querySelectorAll('.slide'),dots=hero.querySelector('.dots'),i=0,timer;
