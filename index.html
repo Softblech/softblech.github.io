@@ -185,6 +185,8 @@ section{scroll-margin-top:64px}
 .photos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .photos figure{margin:0;position:relative;overflow:hidden;background:var(--black-2)}
 .photos img{width:100%;height:100%;object-fit:cover;aspect-ratio:2/3}
+.photos .wide{grid-column:span 2}
+.photos .wide img{position:absolute;inset:0;aspect-ratio:auto}
 .photos figcaption{position:absolute;left:0;bottom:0;background:var(--red);color:var(--black);font-family:var(--display);font-stretch:75%;font-weight:800;text-transform:uppercase;font-size:13px;letter-spacing:.05em;padding:4px 10px}
 
 /* Presse */
@@ -326,6 +328,7 @@ footer{padding-block:48px 40px;text-align:center}
   .single .plus{top:50%;right:4px;transform:translateY(-50%);width:36px;height:36px;font-size:26px}
 
   .photos{grid-template-columns:1fr 1fr;gap:8px}
+  .photos .wide{aspect-ratio:3/2}
   .contact .big{font-size:clamp(26px,8vw,40px)}
   .contact .btns{display:grid;grid-template-columns:1fr;gap:10px}
   .nl .actions .btn{width:100%}
@@ -481,12 +484,14 @@ footer{padding-block:48px 40px;text-align:center}
       <h2 class="cond">Fotos</h2>
       <div class="insta" id="insta" hidden></div>
       <div class="photos" id="photos">
-        <figure><img src="img/press/kevin-pawlak-1.jpg" alt="Dennis und Henri auf einer Mauer vor einer Hauswand" width="1067" height="1600" loading="lazy"></figure>
-        <figure><img src="img/press/kevin-pawlak-2.jpg" alt="Henri hält die Hand vor die Kamera, Dennis dahinter" width="1067" height="1600" loading="lazy"></figure>
-        <figure><img src="img/press/kevin-pawlak-3.jpg" alt="Fischaugen-Foto von Dennis und Henri" width="1067" height="1600" loading="lazy"></figure>
-        <figure><img src="img/press/kevin-pawlak-6.jpg" alt="Henri und Dennis nebeneinander, Blitzlicht" width="1067" height="1600" loading="lazy"></figure>
+        <figure><img src="img/press/kevin-pawlak-1.jpg" alt="Dennis und Henri auf einer Mauer vor einer Hauswand" loading="lazy"><figcaption>Foto: Kevin Pawlak</figcaption></figure>
+        <figure><img src="img/press/kevin-pawlak-2.jpg" alt="Henri hält die Hand vor die Kamera, Dennis dahinter" loading="lazy"><figcaption>Foto: Kevin Pawlak</figcaption></figure>
+        <figure class="wide"><img src="img/press/alina-thiemann.jpg" alt="Henri und Dennis auf einem braunen Sofa vor einer Holztreppe" loading="lazy"><figcaption>Foto: Alina Thiemann</figcaption></figure>
+        <figure class="wide"><img src="img/press/benjamin-cohen.jpg" alt="Henri und Dennis in einem Treppenhaus mit Glasfront" loading="lazy"><figcaption>Foto: Benjamin Cohen</figcaption></figure>
+        <figure><img src="img/press/karla-schradi.jpg" alt="Dennis umarmt Henri vor Hochhäusern" loading="lazy"><figcaption>Foto: Karla Schradi</figcaption></figure>
+        <figure><img src="img/press/caro-hanneforth.jpg" alt="Dennis und Henri an einem Einkaufswagen-Unterstand" loading="lazy"><figcaption>Foto: Caro Hanneforth</figcaption></figure>
       </div>
-      <p class="photo-credit" id="photo-credit">Alle Fotos: <a href="https://www.instagram.com/keevvkeevv" target="_blank" rel="noopener">Kevin Pawlak (@keevvkeevv)</a></p>
+      <p class="photo-credit" id="photo-credit">Fotos: <a href="https://www.instagram.com/keevvkeevv" target="_blank" rel="noopener">Kevin Pawlak</a>, <a href="https://karlaschradi.de" target="_blank" rel="noopener">Karla Schradi</a>, <a href="https://www.instagram.com/caro_hanneforth/" target="_blank" rel="noopener">Caro Hanneforth</a>, <a href="https://www.instagram.com/alina.thiemann/" target="_blank" rel="noopener">Alina Thiemann</a>, <a href="https://www.instagram.com/ben0nline/" target="_blank" rel="noopener">Benjamin Cohen</a></p>
       <div class="btns"><a class="btn ghost" href="https://www.instagram.com/softblech" target="_blank" rel="noopener">@softblech auf Instagram</a></div>
     </div>
   </section>
