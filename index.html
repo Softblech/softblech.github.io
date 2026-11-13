@@ -140,6 +140,12 @@ section{scroll-margin-top:64px}
 .members span{color:var(--muted)}
 
 /* Fotos */
+.insta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.insta a{position:relative;display:block;overflow:hidden;background:var(--black-2)}
+.insta img{width:100%;aspect-ratio:1;object-fit:cover;transition:transform .3s}
+.insta a:hover img{transform:scale(1.04)}
+.insta a .v{position:absolute;top:8px;right:8px;background:var(--red);color:var(--black);font-size:12px;font-weight:800;padding:2px 6px}
+@media (max-width:860px){.insta{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}
 .photos{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:auto auto;gap:12px}
 .photos figure{margin:0;position:relative;overflow:hidden;background:var(--black-2)}
 .photos img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3}
@@ -418,13 +424,15 @@ footer{padding-block:48px 40px;text-align:center}
   <section id="fotos" class="sec" style="padding-top:0">
     <div class="wrap">
       <h2 class="cond">Fotos</h2>
-      <div class="photos">
+      <div class="insta" id="insta" hidden></div>
+      <div class="photos" id="photos">
         <figure><img src="img/hochhaus.jpg" alt="Dennis und Henri vor einem Hochhaus"><figcaption>Berlin</figcaption></figure>
         <figure><img src="img/live.jpg" alt="Softblech live, Henri mit Gitarre, Dennis am Mikrofon"><figcaption>Live</figcaption></figure>
         <figure><img src="img/tanz.jpg" alt="Henri tanzt, schwarz-weiß"></figure>
         <figure><img src="img/studio.jpg" alt="Henri und Dennis im Studio vor Synthesizern"><figcaption>Studio</figcaption></figure>
         <figure><img src="img/hero.jpg" alt="Polaroid von Henri und Dennis auf dem Sofa"></figure>
       </div>
+      <div class="btns"><a class="btn ghost" href="https://www.instagram.com/softblech" target="_blank" rel="noopener">@softblech auf Instagram</a></div>
     </div>
   </section>
 
@@ -607,6 +615,15 @@ var SB = {
       show(0);play();
     });
   })();
+
+  /* Fotos: neueste Instagram-Bilder (lokal gespeichert von GitHub Action, kein Kontakt zu Instagram beim Laden) */
+  fetch('data/instagram.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(d){
+    var p=(d&&d.posts)||[]; if(p.length<4) return;
+    var esc=function(t){var x=document.createElement('div');x.textContent=t||'';return x.innerHTML};
+    var box=document.getElementById('insta');
+    box.innerHTML=p.slice(0,8).map(function(x){return '<a href="'+esc(x.link)+'" target="_blank" rel="noopener"><img src="'+esc(x.img)+'" alt="'+esc(x.caption||'Instagram-Post von Softblech')+'" loading="lazy">'+(x.video?'<span class="v">▶ Video</span>':'')+'</a>'}).join('');
+    box.hidden=false; document.getElementById('photos').hidden=true;
+  }).catch(function(){});
 
   /* Konzerte: kommen automatisch von Bandsintown (data/konzerte.json, alle 3 Std. aktualisiert) */
   fetch('data/konzerte.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(d){
