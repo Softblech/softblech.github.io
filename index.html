@@ -66,7 +66,8 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .hero .dots button{width:28px;height:5px;border:0;padding:0;background:rgba(228,226,226,.4);cursor:pointer}
 .hero .dots button[aria-current=true]{background:var(--red)}
 @media (prefers-reduced-motion:reduce){.hero .slide{transition:none}}
-.hero .stop{display:flex;align-items:center;gap:6px;color:var(--red);font-family:var(--display);font-stretch:75%;font-weight:800;text-transform:uppercase;font-size:15px;letter-spacing:.04em}
+.hero .stop{display:inline-flex;align-items:center;gap:8px;background:var(--red);color:var(--black);padding:6px 12px;font-family:var(--display);font-stretch:75%;font-weight:850;text-transform:uppercase;font-size:clamp(17px,1.8vw,24px);letter-spacing:.04em}
+.hero .stop svg{width:1em;height:1em}
 .hero h1{font-size:clamp(46px,8.4vw,128px);color:var(--chrome);margin-top:10px}
 .hero h1 span{color:var(--red)}
 .btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
@@ -193,6 +194,12 @@ section{scroll-margin-top:64px}
 .quote .src{font-family:var(--display);font-stretch:75%;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
 .quote:hover .src{color:var(--black)}
 
+/* Presse + Newsletter nebeneinander */
+.duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,80px);align-items:start}
+.duo > div{scroll-margin-top:64px;min-width:0}
+.duo .press{grid-template-columns:minmax(0,1fr)}
+.duo .nl{grid-template-columns:minmax(0,1fr)}
+@media (max-width:860px){.duo{grid-template-columns:minmax(0,1fr);gap:56px}}
 /* Kontakt */
 .contact{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:end}
 .contact .big{font-size:clamp(30px,4vw,60px);overflow-wrap:anywhere;user-select:all}
@@ -373,11 +380,6 @@ footer{padding-block:48px 40px;text-align:center}
   <div class="cnav" hidden><button type="button" class="prev" aria-label="Vorherige News">‹</button><div class="dots"></div><button type="button" class="next" aria-label="Nächste News">›</button></div>
   </section>
 
-  <nav class="tiles cond" aria-label="Bereiche">
-    <a href="#musik">Musik</a>
-    <a href="#live">Live</a>
-    <a href="#band">Band</a>
-  </nav>
 
 
 
@@ -490,8 +492,9 @@ footer{padding-block:48px 40px;text-align:center}
     </div>
   </section>
 
-  <section id="presse" class="sec on-red">
-    <div class="wrap">
+  <section class="sec on-red duo-sec">
+    <div class="wrap duo">
+      <div id="presse">
       <h2 class="cond">Presse</h2>
       <div class="press">
         <a class="quote" style="border-color:var(--black)" href="https://www.kaltblut-magazine.com/the-anatomy-of-a-freefall-softblech-capture-heartbreak-on-in-the-end-i-only-think-of-you/" target="_blank" rel="noopener">
@@ -507,10 +510,7 @@ footer{padding-block:48px 40px;text-align:center}
         <a class="btn solid" href="https://drive.google.com/drive/folders/1K4uR7UvWpCNpZ2IkZ0Ao4phFAWkuovKI" target="_blank" rel="noopener">Pressefotos &amp; Presskit</a>
       </div>
     </div>
-  </section>
-
-  <section id="newsletter" class="sec on-red">
-    <div class="wrap">
+      <div id="newsletter">
       <h2 class="cond">Newsletter</h2>
       <p style="max-width:60ch;margin:0 0 28px;font-weight:600;font-size:18px">Neue Songs und Konzerte direkt ins Postfach. Kein Spam, höchstens ein paar Mails im Jahr.</p>
       <form class="nl" id="nl-form" method="post" novalidate>
@@ -521,6 +521,7 @@ footer{padding-block:48px 40px;text-align:center}
         <input type="hidden" name="locale" value="de">
         <div class="actions"><button class="btn solid" type="submit">Anmelden</button><span class="msg" id="nl-msg" role="status"></span></div>
       </form>
+    </div>
     </div>
   </section>
 
