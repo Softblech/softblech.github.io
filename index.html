@@ -493,7 +493,6 @@ footer{padding-block:48px 40px;text-align:center}
         <figure><img src="img/press/karla-schradi-1.jpg" alt="Dennis umarmt Henri vor Hochhäusern" loading="lazy"><figcaption>Foto: Karla Schradi</figcaption></figure>
         <figure><img src="img/press/caro-hanneforth.jpg" alt="Dennis und Henri an einem Einkaufswagen-Unterstand" loading="lazy"><figcaption>Foto: Caro Hanneforth</figcaption></figure>
       </div>
-      <p class="photo-credit" id="photo-credit">Fotos: <a href="https://www.instagram.com/keevvkeevv" target="_blank" rel="noopener">Kevin Pawlak</a>, <a href="https://karlaschradi.de" target="_blank" rel="noopener">Karla Schradi</a>, <a href="https://www.instagram.com/caro_hanneforth/" target="_blank" rel="noopener">Caro Hanneforth</a>, <a href="https://www.instagram.com/alina.thiemann/" target="_blank" rel="noopener">Alina Thiemann</a>, <a href="https://www.instagram.com/ben0nline/" target="_blank" rel="noopener">Benjamin Cohen</a></p>
       <div class="btns"><a class="btn ghost" href="https://www.instagram.com/softblech" target="_blank" rel="noopener">@softblech auf Instagram</a></div>
     </div>
   </section>
@@ -691,7 +690,7 @@ var SB = {
     var esc=function(t){var x=document.createElement('div');x.textContent=t||'';return x.innerHTML};
     var box=document.getElementById('insta');
     box.innerHTML=p.slice(0,8).map(function(x){return '<a href="'+esc(safeUrl(x.link))+'" target="_blank" rel="noopener"><img src="'+esc(safeUrl(x.img))+'" alt="'+esc(x.caption||'Instagram-Post von Softblech')+'" loading="lazy">'+(x.video?'<span class="v">▶ Video</span>':'')+'</a>'}).join('');
-    box.hidden=false; document.getElementById('photos').hidden=true; document.getElementById('photo-credit').hidden=true;
+    box.hidden=false; document.getElementById('photos').hidden=true;
   }).catch(function(){});
 
   /* Konzerte: kommen automatisch von Bandsintown (data/konzerte.json, alle 3 Std. aktualisiert) */
