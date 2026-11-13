@@ -65,14 +65,16 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .hero{position:relative;min-height:max(460px,calc(100vh - var(--hero-top,115px)));min-height:max(460px,calc(100lvh - var(--hero-top,115px)));display:flex;align-items:flex-end;overflow:hidden;background:var(--black)}
 .hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pos,50% 22%);filter:saturate(1.05) contrast(1.05)}
 
-.hero .wrap{position:relative;z-index:1;width:100%;padding-block:40px 72px}
+.hero .wrap{position:relative;z-index:1;width:100%;padding-block:40px 56px}
 .hero .slide{position:absolute;inset:0;display:flex;align-items:flex-end;opacity:0;visibility:hidden;transition:opacity .6s,visibility .6s}
 .hero picture{display:contents}
 .hero .slide.on{opacity:1;visibility:visible}
 .hero .slide::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,11,11,0) 35%,rgba(12,11,11,.85) 100%)}
-.hero .cnav{position:absolute;z-index:3;left:0;right:0;bottom:18px;display:flex;align-items:center;justify-content:center;gap:14px}
-.hero .cnav button.prev,.hero .cnav button.next{background:transparent;border:0;color:var(--chrome);font-size:34px;line-height:1;cursor:pointer;padding:0 8px}
-.hero .dots{display:flex;gap:8px}
+.hero .cnav{position:absolute;z-index:3;inset:0;pointer-events:none}
+.hero .cnav[hidden]{display:none}
+.hero .cnav button.prev,.hero .cnav button.next{position:absolute;top:40%;transform:translateY(-50%);pointer-events:auto;background:transparent;border:0;color:var(--chrome);font-size:clamp(56px,5vw,80px);line-height:1;cursor:pointer;padding:16px 12px;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.hero .cnav button.prev{left:4px}.hero .cnav button.next{right:4px}
+.hero .dots{display:none}
 .hero .dots button{width:28px;height:5px;border:0;padding:0;background:rgba(228,226,226,.4);cursor:pointer}
 .hero .dots button[aria-current=true]{background:var(--red)}
 @media (prefers-reduced-motion:reduce){.hero .slide{transition:none}}
