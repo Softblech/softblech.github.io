@@ -130,6 +130,15 @@ section{scroll-margin-top:64px}
 .single:hover .plus,.single.playing .plus{color:var(--black)}
 .single .plus:hover{background:var(--black);color:var(--red)!important;border-color:var(--black)}
 
+.single{overflow:hidden}
+.single .cv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s,opacity .2s}
+.single::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,11,11,.55) 0%,rgba(12,11,11,0) 30%,rgba(12,11,11,0) 45%,rgba(12,11,11,.9) 100%);pointer-events:none}
+.single .y,.single .t,.single .plus{position:relative;z-index:1}
+.single .y{color:var(--chrome)}
+.single .plus{position:absolute;z-index:2}
+.single:hover .cv{transform:scale(1.04)}
+.single:hover .cv,.single.playing .cv{opacity:.25}
+.single:hover::after,.single.playing::after{opacity:0}
 /* Live */
 .shows{list-style:none;margin:0;padding:0;border-top:1px solid var(--line-red)}
 .show{display:grid;grid-template-columns:90px minmax(0,1.3fr) minmax(0,1fr) auto;align-items:center;gap:16px;padding-block:16px;border-bottom:1px solid var(--line-red)}
@@ -298,6 +307,10 @@ footer{padding-block:48px 40px;text-align:center}
   .single .y{white-space:nowrap;font-size:14px}
   .single{flex-direction:row;align-items:center;padding-right:52px}
   .single .t{order:1;flex:1 1 0;min-width:0}
+  .single .cv{position:static;inset:auto;width:56px;height:56px;flex:none;order:0}
+  .single::after{display:none}
+  .single:hover .cv,.single.playing .cv{opacity:1;transform:none}
+  .single .y{color:var(--muted)}
   .single .y{order:2}
   .song-panel{grid-template-columns:96px minmax(0,1fr);gap:14px;align-items:start;padding:14px 4px;border:0;border-bottom:1px solid var(--line)}
   .song-panel h3{font-size:30px}
@@ -385,14 +398,14 @@ footer{padding-block:48px 40px;text-align:center}
         </div>
       </div>
       <div class="singles">
-        <a class="single" data-song="in-the-end" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2026</span><span class="t cond">In The End I Only Think Of You</span></a>
-        <a class="single" data-song="how-to-feel" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2026</span><span class="t cond">How To Feel</span></a>
-        <a class="single" data-song="want-to-stay" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2026</span><span class="t cond">Want To Stay</span></a>
-        <a class="single" data-song="love-kills-slowly" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2025</span><span class="t cond">Love Kills Slowly</span></a>
-        <a class="single" data-song="melt-away" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2025</span><span class="t cond">Melt Away</span></a>
-        <a class="single" data-song="try-so-hard" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2025</span><span class="t cond">Try So Hard</span></a>
-        <a class="single" data-song="leave-me-now" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2024</span><span class="t cond">Leave Me Now</span></a>
-        <a class="single" data-song="love-me-now" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2024 · Debüt</span><span class="t cond">Love Me Now</span></a>
+        <a class="single" data-song="in-the-end" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><img class="cv" src="img/covers/in-the-end.jpg" alt="" loading="lazy" width="600" height="600"><span class="y">2026</span><span class="t cond">In The End I Only Think Of You</span></a>
+        <a class="single" data-song="how-to-feel" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><img class="cv" src="img/covers/how-to-feel.jpg" alt="" loading="lazy" width="600" height="600"><span class="y">2026</span><span class="t cond">How To Feel</span></a>
+        <a class="single" data-song="want-to-stay" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><img class="cv" src="img/covers/want-to-stay.jpg" alt="" loading="lazy" width="600" height="600"><span class="y">2026</span><span class="t cond">Want To Stay</span></a>
+        <a class="single" data-song="love-kills-slowly" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><img class="cv" src="img/covers/love-kills-slowly.jpg" alt="" loading="lazy" width="600" height="600"><span class="y">2025</span><span class="t cond">Love Kills Slowly</span></a>
+        <a class="single" data-song="melt-away" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><img class="cv" src="img/covers/melt-away.jpg" alt="" loading="lazy" width="600" height="600"><span class="y">2025</span><span class="t cond">Melt Away</span></a>
+        <a class="single" data-song="try-so-hard" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><img class="cv" src="img/covers/try-so-hard.jpg" alt="" loading="lazy" width="600" height="600"><span class="y">2025</span><span class="t cond">Try So Hard</span></a>
+        <a class="single" data-song="leave-me-now" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><img class="cv" src="img/covers/leave-me-now.jpg" alt="" loading="lazy" width="600" height="600"><span class="y">2024</span><span class="t cond">Leave Me Now</span></a>
+        <a class="single" data-song="love-me-now" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><img class="cv" src="img/covers/love-me-now.jpg" alt="" loading="lazy" width="600" height="600"><span class="y">2024 · Debüt</span><span class="t cond">Love Me Now</span></a>
       </div>
       <div class="listen">
         <h3 class="cond">Reinhören</h3>
