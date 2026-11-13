@@ -186,7 +186,8 @@ footer{padding-block:48px 40px;text-align:center}
 .listen{margin-top:clamp(40px,5vw,64px)}
 .listen h3,.sub-h{font-size:clamp(30px,3.6vw,48px);color:var(--chrome);margin-bottom:16px}
 .embed{position:relative;background:var(--black-2);border:1px solid var(--line);max-width:100%}
-.embed iframe{display:block;width:100%;border:0}
+.embed iframe{display:block;width:100%;border:0;border-radius:12px}
+.embed.on{border:0;background:transparent}
 .embed.spotify{min-height:352px}
 .embed.video{aspect-ratio:16/9}
 .embed.video iframe{height:100%}
@@ -226,19 +227,23 @@ footer{padding-block:48px 40px;text-align:center}
 @media (max-width:860px){
   .top .wrap{flex-direction:row;align-items:center;padding-block:10px}
   .top .logo img{height:34px}
-  .burger{display:flex;flex-direction:column;justify-content:center;gap:5px;width:48px;height:44px;padding:10px;background:transparent;border:2px solid var(--black);cursor:pointer;position:relative}
-  .burger span{display:block;height:3px;background:var(--black);transition:transform .2s,opacity .2s}
+  .burger{display:flex;flex-direction:column;justify-content:center;gap:8px;width:48px;height:44px;padding:8px 4px;background:transparent;border:0;cursor:pointer;position:relative}
+  .burger span{display:block;height:5px;background:var(--black);transition:transform .2s}
+  .burger span:nth-child(3){display:none}
   .burger b{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-  .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(8px) rotate(45deg)}
-  .burger[aria-expanded="true"] span:nth-child(2){opacity:0}
-  .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+  .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+  .burger[aria-expanded="true"] span:nth-child(2){transform:translateY(-6.5px) rotate(-45deg)}
   .top nav{display:none;position:absolute;left:0;right:0;top:100%;background:var(--red);border-bottom:2px solid var(--black);flex-direction:column;gap:0;padding:4px var(--gutter-r) 16px var(--gutter-l)}
   .top nav.open{display:flex}
   .top nav a{font-size:34px;font-stretch:62%;font-weight:850;padding-block:6px;border-bottom:1px solid var(--line-red)}
   section{scroll-margin-top:60px}
 
-  .hero{min-height:0;aspect-ratio:4/5;max-height:calc(100svh - 64px)}
-  .hero .wrap{padding-block:24px}
+  .hero{min-height:max(560px,calc(100svh - 64px));aspect-ratio:auto}
+  .hero img.bg{object-position:50% 8%}
+  .hero::after{background:linear-gradient(180deg,rgba(12,11,11,0) 58%,rgba(12,11,11,.9) 100%)}
+  .hero .wrap{padding-block:16px 20px}
+  .hero h1{margin-top:6px}
+  .hero .btns{margin-top:14px}
   .hero h1{font-size:clamp(44px,13vw,72px)}
   .hero .btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .btns .btn{text-align:center}
@@ -557,6 +562,7 @@ var SB = {
 
   function gate(el){
     var name=el.dataset.embed==='youtube'?'YouTube':'Spotify';
+    el.classList.remove('on');
     el.innerHTML='<div class="gate"><p>Hier wird ein Player von '+name+' angezeigt. Beim Laden werden Daten an '+name+' übertragen.</p><button class="btn solid" type="button">'+name+' laden</button></div>';
     el.querySelector('button').onclick=function(){ save({media:true,stats:consent?!!consent.stats:false}); };
   }
@@ -566,7 +572,7 @@ var SB = {
     f.src=el.dataset.src; f.title=el.dataset.title||''; f.loading='lazy';
     f.allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
     if(el.dataset.height) f.height=el.dataset.height;
-    el.innerHTML=''; el.appendChild(f);
+    el.innerHTML=''; el.appendChild(f); el.classList.add('on');
   }
   var gaLoaded=false;
   function loadGA(){
