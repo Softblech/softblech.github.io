@@ -797,7 +797,9 @@ var SB = {
 
   /* Newsletter */
   var form=document.getElementById('nl-form'), msg=document.getElementById('nl-msg');
+  var formT0=Date.now();
   form.addEventListener('submit',function(e){
+    if(Date.now()-formT0<3000||form.email_address_check.value){e.preventDefault();return}
     var mail=document.getElementById('nl-email'), ok=document.getElementById('nl-ok');
     if(!mail.value||!mail.checkValidity()){e.preventDefault();msg.textContent='Bitte gib eine gültige E-Mail-Adresse ein.';mail.focus();return}
     var nm=document.getElementById('nl-name');if(!nm.value.trim()){e.preventDefault();msg.textContent='Bitte gib deinen Vornamen ein.';nm.focus();return}
