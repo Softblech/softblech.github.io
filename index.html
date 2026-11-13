@@ -145,13 +145,23 @@ section{scroll-margin-top:64px}
 
 /* Band */
 .band{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,5vw,72px);align-items:start}
-.band img{width:100%;filter:grayscale(1) contrast(1.05)}
+.band-photo{margin:0}
+.band img{width:100%}
+.band-photo figcaption,.photo-credit{color:var(--muted);font-size:13px;margin-top:8px}
+.band-photo a,.photo-credit a{color:var(--chrome)}
 .band .text p{margin:0 0 1em;max-width:62ch}
 .band .lead{font-size:clamp(20px,2vw,24px);line-height:1.4;font-weight:600;color:var(--chrome)}
 .members{display:flex;flex-wrap:wrap;gap:12px 40px;margin:28px 0 0;padding-top:20px;border-top:1px solid var(--line)}
 .members div{min-width:0}
 .members b{display:block;font-size:30px;color:var(--red)}
 .members span{color:var(--muted)}
+.crew{margin-top:32px;padding-top:20px;border-top:1px solid var(--line)}
+.crew h3{font-size:clamp(26px,3vw,36px);color:var(--red);margin-bottom:12px}
+.crew dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px 24px;margin:0}
+.crew dt{color:var(--muted)}
+.crew dd{margin:0}
+.crew a{color:var(--chrome);text-decoration-color:var(--red);text-underline-offset:3px}
+@media (max-width:860px){.crew dl{grid-template-columns:1fr;gap:0}.crew dd{margin-bottom:10px}}
 
 /* Fotos */
 .insta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
@@ -160,11 +170,9 @@ section{scroll-margin-top:64px}
 .insta a:hover img{transform:scale(1.04)}
 .insta a .v{position:absolute;top:8px;right:8px;background:var(--red);color:var(--black);font-size:12px;font-weight:800;padding:2px 6px}
 @media (max-width:860px){.insta{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}
-.photos{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:auto auto;gap:12px}
+.photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .photos figure{margin:0;position:relative;overflow:hidden;background:var(--black-2)}
-.photos img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3}
-.photos figure:first-child{grid-row:span 2}
-.photos figure:first-child img{aspect-ratio:auto}
+.photos img{width:100%;height:100%;object-fit:cover;aspect-ratio:2/3}
 .photos figcaption{position:absolute;left:0;bottom:0;background:var(--red);color:var(--black);font-family:var(--display);font-stretch:75%;font-weight:800;text-transform:uppercase;font-size:13px;letter-spacing:.05em;padding:4px 10px}
 
 /* Presse */
@@ -200,7 +208,6 @@ footer{padding-block:48px 40px;text-align:center}
   .show .btn{grid-column:3;grid-row:1 / span 2}
   .past ul{grid-template-columns:minmax(0,1fr)}
   .photos{grid-template-columns:1fr 1fr}
-  .photos figure:first-child{grid-column:span 2;grid-row:auto}
   .press{grid-template-columns:minmax(0,1fr)}
 }
 @media (max-width:520px){
@@ -429,7 +436,7 @@ footer{padding-block:48px 40px;text-align:center}
 
   <section id="band" class="sec">
     <div class="wrap band">
-      <img src="img/treppe.jpg" alt="Henri und Dennis vor einer Holztreppe, schwarz-weiß" width="1080" height="840">
+      <figure class="band-photo"><img src="img/press/kevin-pawlak-4.jpg" alt="Dennis und Henri auf einem orangefarbenen Sofa" width="1067" height="1600" loading="lazy"><figcaption>Foto: <a href="https://www.instagram.com/keevvkeevv" target="_blank" rel="noopener">Kevin Pawlak</a></figcaption></figure>
       <div class="text">
         <h2 class="cond">Band</h2>
         <p class="lead">SOFTBLECH sind ein Post-Wave-Duo aus Berlin. Post Wave liegt genau zwischen Post-Punk und Dark Wave: irgendwo zwischen The Cure und Fontaines D.C.</p>
@@ -438,6 +445,16 @@ footer{padding-block:48px 40px;text-align:center}
         <div class="members">
           <div><b class="cond">Dennis Hörtinger</b><span>Bass, Gesang</span></div>
           <div><b class="cond">Henri Röttger</b><span>Gitarre, Gesang</span></div>
+        </div>
+        <div class="crew">
+          <h3 class="cond">Mit uns gearbeitet haben</h3>
+          <dl>
+            <dt>Produktion</dt><dd>Leon Kaack, Birk Buttchereyt, Lukas Kurz, Arne Schramm</dd>
+            <dt>Mastering</dt><dd>Jacco Herhaus</dd>
+            <dt>Fotos &amp; Cover</dt><dd><a href="https://www.instagram.com/keevvkeevv" target="_blank" rel="noopener">Kevin Pawlak</a>, Karla Schradi, Caro Hanneforth, Alina Thiemann, Benjamin Cohen</dd>
+            <dt>Stimme</dt><dd>Anastasia Tonkha („I Want To Be With You“)</dd>
+            <dt>Live-Visuals</dt><dd>Fede Torres</dd>
+          </dl>
         </div>
       </div>
     </div>
@@ -448,12 +465,14 @@ footer{padding-block:48px 40px;text-align:center}
       <h2 class="cond">Fotos</h2>
       <div class="insta" id="insta" hidden></div>
       <div class="photos" id="photos">
-        <figure><img src="img/hochhaus.jpg" alt="Dennis und Henri vor einem Hochhaus"><figcaption>Berlin</figcaption></figure>
-        <figure><img src="img/live.jpg" alt="Softblech live, Henri mit Gitarre, Dennis am Mikrofon"><figcaption>Live</figcaption></figure>
-        <figure><img src="img/tanz.jpg" alt="Henri tanzt, schwarz-weiß"></figure>
-        <figure><img src="img/studio.jpg" alt="Henri und Dennis im Studio vor Synthesizern"><figcaption>Studio</figcaption></figure>
-        <figure><img src="img/hero.jpg" alt="Polaroid von Henri und Dennis auf dem Sofa"></figure>
+        <figure><img src="img/press/kevin-pawlak-1.jpg" alt="Dennis und Henri auf einer Mauer vor einer Hauswand" width="1067" height="1600" loading="lazy"></figure>
+        <figure><img src="img/press/kevin-pawlak-2.jpg" alt="Henri hält die Hand vor die Kamera, Dennis dahinter" width="1067" height="1600" loading="lazy"></figure>
+        <figure><img src="img/press/kevin-pawlak-3.jpg" alt="Fischaugen-Foto von Dennis und Henri" width="1067" height="1600" loading="lazy"></figure>
+        <figure><img src="img/press/kevin-pawlak-5.jpg" alt="Dennis und Henri vor einer weißen Wand" width="1067" height="1600" loading="lazy"></figure>
+        <figure><img src="img/press/kevin-pawlak-6.jpg" alt="Henri und Dennis nebeneinander, Blitzlicht" width="1067" height="1600" loading="lazy"></figure>
+        <figure><img src="img/press/kevin-pawlak-7.jpg" alt="Dennis und Henri, Porträt mit Blitz" width="1067" height="1600" loading="lazy"></figure>
       </div>
+      <p class="photo-credit" id="photo-credit">Alle Fotos: <a href="https://www.instagram.com/keevvkeevv" target="_blank" rel="noopener">Kevin Pawlak (@keevvkeevv)</a></p>
       <div class="btns"><a class="btn ghost" href="https://www.instagram.com/softblech" target="_blank" rel="noopener">@softblech auf Instagram</a></div>
     </div>
   </section>
@@ -613,7 +632,7 @@ var SB = {
       var news=(res[0]&&res[0].news)||[]; if(!news.length) return;
       var ev=((res[1]&&res[1].events)||[])[0];
       if(ev){var d=new Date(ev.datetime);
-        news.splice(1,0,{eyebrow:'Nächstes Konzert · '+d.getDate()+'. '+M[d.getMonth()]+' '+d.getFullYear(),title:ev.venue,highlight:ev.city,image:'img/live.jpg',alt:'Softblech live',position:'50% 35%',buttons:[['Alle Termine','#live']].concat(ev.url?[[ev.tickets?'Tickets':'Infos',ev.url]]:[])});}
+        news.splice(1,0,{eyebrow:'Nächstes Konzert · '+d.getDate()+'. '+M[d.getMonth()]+' '+d.getFullYear(),title:ev.venue,highlight:ev.city,image:'img/press/kevin-pawlak-6.jpg',alt:'Henri und Dennis',position:'50% 25%',buttons:[['Alle Termine','#live']].concat(ev.url?[[ev.tickets?'Tickets':'Infos',ev.url]]:[])});}
       hero.querySelectorAll('.slide').forEach(function(s){s.remove()});
       hero.insertAdjacentHTML('afterbegin',news.map(slide).join(''));
       var slides=hero.querySelectorAll('.slide'),dots=hero.querySelector('.dots'),i=0,timer;
@@ -644,7 +663,7 @@ var SB = {
     var esc=function(t){var x=document.createElement('div');x.textContent=t||'';return x.innerHTML};
     var box=document.getElementById('insta');
     box.innerHTML=p.slice(0,8).map(function(x){return '<a href="'+esc(x.link)+'" target="_blank" rel="noopener"><img src="'+esc(x.img)+'" alt="'+esc(x.caption||'Instagram-Post von Softblech')+'" loading="lazy">'+(x.video?'<span class="v">▶ Video</span>':'')+'</a>'}).join('');
-    box.hidden=false; document.getElementById('photos').hidden=true;
+    box.hidden=false; document.getElementById('photos').hidden=true; document.getElementById('photo-credit').hidden=true;
   }).catch(function(){});
 
   /* Konzerte: kommen automatisch von Bandsintown (data/konzerte.json, alle 3 Std. aktualisiert) */
