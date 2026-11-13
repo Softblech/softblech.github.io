@@ -199,6 +199,7 @@ for c in ALL:
                                   "Prod. " + next(v for k, v in c.get("credits", []) if k.startswith("Produktion"))] if x)
     new = (datetime.date.today() - datetime.date.fromisoformat(c["date"])).days <= 60
     songs[c["slug"]] = {"title": c["title"], "type": ("Neue " if new else "") + c.get("type", "Single"), "meta": meta,
-                        "cover": c["cover"], "text": c.get("teaser_de") or c.get("pitch_de") or ""}
+                        "cover": c["cover"], "text": c.get("teaser_de") or c.get("pitch_de") or "",
+                        "text_en": c.get("teaser_en") or c.get("pitch_en") or ""}
 (ROOT / "data/songs.json").write_text(json.dumps(songs, ensure_ascii=False, indent=1), encoding="utf-8")
 print("geschrieben: data/songs.json")
