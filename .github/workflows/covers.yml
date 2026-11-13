@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: pip install --quiet pillow
       - name: Cover aus tools/covers.txt herunterladen
         run: |
           mkdir -p img/covers
@@ -26,7 +27,7 @@ jobs:
             [ -z "$name" ] && continue
             [ -f "img/press/$name.jpg" ] && continue
             curl -sfL "https://drive.usercontent.google.com/download?id=$id&export=download" -o /tmp/p.jpg && \
-              convert /tmp/p.jpg -auto-orient -resize '1600x1600>' -strip -quality 82 "img/press/$name.jpg" || echo "Fehler: $name"
+              python3 -c "import sys;from PIL import Image,ImageOps;i=ImageOps.exif_transpose(Image.open('/tmp/p.jpg')).convert('RGB');i.thumbnail((1600,1600));i.save(sys.argv[1],quality=82,optimize=True)" "img/press/$name.jpg" || echo "Fehler: $name"
           done < tools/photos.txt
           git config user.name "softblech-bot"
           git config user.email "actions@users.noreply.github.com"
