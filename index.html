@@ -117,8 +117,10 @@ section{scroll-margin-top:64px}
 .single .y{font-family:var(--display);font-stretch:75%;font-weight:700;letter-spacing:.06em;color:var(--muted);font-variant-numeric:tabular-nums}
 .single:hover .y{color:var(--black)}
 .single .t{font-size:clamp(26px,3vw,44px)}
-.single .more{font-family:var(--display);font-stretch:75%;font-weight:800;text-transform:uppercase;letter-spacing:.04em;font-size:14px;text-decoration:underline;text-underline-offset:3px;align-self:flex-start}
-.single .more:hover{color:var(--chrome)}
+.single{position:relative}
+.single .plus{position:absolute;top:10px;right:10px;width:40px;height:40px;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:30px;line-height:1;border:2px solid currentColor;color:var(--red);cursor:pointer}
+.single:hover .plus,.single.playing .plus{color:var(--black)}
+.single .plus:hover{background:var(--black);color:var(--red)!important;border-color:var(--black)}
 
 /* Live */
 .shows{list-style:none;margin:0;padding:0;border-top:1px solid var(--line-red)}
@@ -279,10 +281,10 @@ footer{padding-block:48px 40px;text-align:center}
   .single{aspect-ratio:auto;flex-direction:row-reverse;align-items:baseline;justify-content:space-between;gap:12px;padding:14px 4px;border:0;border-bottom:1px solid var(--line);background:transparent}
   .single .t{font-size:28px}
   .single .y{white-space:nowrap;font-size:14px}
-  .single{flex-wrap:wrap;flex-direction:row}
+  .single{flex-direction:row;align-items:center;padding-right:52px}
   .single .t{order:1;flex:1 1 0;min-width:0}
   .single .y{order:2}
-  .single .more{order:0;flex-basis:100%;font-size:12px;margin-top:-4px}
+  .single .plus{top:50%;right:4px;transform:translateY(-50%);width:36px;height:36px;font-size:26px}
 
   .photos{grid-template-columns:1fr 1fr;gap:8px}
   .contact .big{font-size:clamp(26px,8vw,40px)}
@@ -351,20 +353,21 @@ footer{padding-block:48px 40px;text-align:center}
   <section id="musik" class="sec">
     <div class="wrap">
       <h2 class="cond">Musik</h2>
-      <div class="feature">
-        <img src="img/cover-iwtbwy.jpg" alt="Cover der Single I Want To Be With You" width="1200" height="1200">
+      <div class="feature" id="feature">
+        <img id="f-cover" src="img/cover-iwtbwy.jpg" alt="Cover der Single I Want To Be With You" width="1200" height="1200">
         <div>
-          <div class="eyebrow" style="color:var(--red)">Neue Single</div>
-          <h3 class="cond">I Want To Be With You</h3>
-          <div class="meta">13. November 2026 · 3:32 · Prod. Leon Kaack</div>
-          <p>Ein Song über die Sehnsucht nach dem, was man nicht hat, selbst wenn man festhält, was man hat. Über Einsamkeit, die nicht verschwindet, nur weil jemand neben einem liegt.</p>
+          <div class="eyebrow" style="color:var(--red)" id="f-eyebrow">Neue Single</div>
+          <h3 class="cond" id="f-title">I Want To Be With You</h3>
+          <div class="meta" id="f-meta">13. November 2026 · 3:32 · Prod. Leon Kaack</div>
+          <p id="f-text">Ein Song über die Sehnsucht nach dem, was man nicht hat, selbst wenn man festhält, was man hat. Über Einsamkeit, die nicht verschwindet, nur weil jemand neben einem liegt.</p>
           <div class="btns">
-            <a class="btn solid" data-song="i-want-to-be-with-you" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener">Abspielen</a>
-            <a class="btn ghost" href="i-want-to-be-with-you/">Mehr zum Song</a>
+            <a class="btn solid" id="f-play" data-song="i-want-to-be-with-you" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener">Abspielen</a>
+            <a class="btn ghost" id="f-more" href="i-want-to-be-with-you/">Mehr zum Song</a>
           </div>
         </div>
       </div>
       <div class="singles">
+        <a class="single" data-song="i-want-to-be-with-you" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2026 · Neu</span><span class="t cond">I Want To Be With You</span></a>
         <a class="single" data-song="in-the-end" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2026</span><span class="t cond">In The End I Only Think Of You</span></a>
         <a class="single" data-song="how-to-feel" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2026</span><span class="t cond">How To Feel</span></a>
         <a class="single" data-song="want-to-stay" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2026</span><span class="t cond">Want To Stay</span></a>
@@ -700,24 +703,44 @@ var SB = {
 
   /* Songs direkt im Player abspielen */
   var player=document.getElementById('player');
+  function playSong(slug,el){
+    var id=SB.tracks[slug]; if(!id) return;
+    player.dataset.src='https://open.spotify.com/embed/track/'+id+'?utm_source=generator&theme=0';
+    player.innerHTML='';
+    if(consent&&consent.media){ load(player); } else { gate(player); }
+    document.querySelectorAll('.single.playing').forEach(function(x){x.classList.remove('playing')});
+    var tile=document.querySelector('.single[data-song="'+slug+'"]'); if(tile) tile.classList.add('playing');
+    player.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  /* "+" neben jedem Song: zeigt ihn oben groß wie den neuesten Song (Daten: data/songs.json) */
+  var songs={}, feat=document.getElementById('feature');
+  fetch('data/songs.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(d){songs=d||{}}).catch(function(){});
+  function showSong(slug){
+    var x=songs[slug]; if(!x) { location.href=slug+'/'; return; }
+    var img=document.getElementById('f-cover'); img.src=x.cover; img.alt='Cover von '+x.title;
+    document.getElementById('f-eyebrow').textContent=x.type;
+    document.getElementById('f-title').textContent=x.title;
+    document.getElementById('f-meta').textContent=x.meta;
+    var t=document.getElementById('f-text'); t.textContent=x.text||''; t.hidden=!x.text;
+    var p=document.getElementById('f-play'); p.dataset.song=slug; p.href='https://open.spotify.com/track/'+(SB.tracks[slug]||'');
+    document.getElementById('f-more').href=slug+'/';
+    document.querySelectorAll('.single .plus').forEach(function(b){var on=b.dataset.slug===slug;b.textContent=on?'–':'+';b.setAttribute('aria-expanded',on)});
+    feat.scrollIntoView({behavior:'smooth',block:'start'});
+  }
   document.querySelectorAll('[data-song]').forEach(function(a){
     var id=SB.tracks[a.dataset.song];
     if(!id) return;
     a.href='https://open.spotify.com/track/'+id;
     if(a.classList.contains('single')){
-      var m=document.createElement('span');m.className='more';m.textContent='Mehr zum Song ›';m.setAttribute('role','link');m.tabIndex=0;
-      m.dataset.href=a.dataset.song+'/';a.appendChild(m);
-      m.addEventListener('keydown',function(ev){if(ev.key==='Enter'){ev.preventDefault();ev.stopPropagation();location.href=m.dataset.href}});
+      var m=document.createElement('span');m.className='plus';m.textContent='+';m.setAttribute('role','button');m.tabIndex=0;
+      m.dataset.slug=a.dataset.song;m.setAttribute('aria-label','Details zu '+a.querySelector('.t').textContent);m.setAttribute('aria-expanded','false');
+      a.appendChild(m);
+      m.addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();ev.stopPropagation();showSong(m.dataset.slug)}});
     }
     a.addEventListener('click',function(e){
       e.preventDefault();
-      var mo=e.target.closest&&e.target.closest('.more'); if(mo){location.href=mo.dataset.href;return}
-      player.dataset.src='https://open.spotify.com/embed/track/'+id+'?utm_source=generator&theme=0';
-      player.innerHTML='';
-      if(consent&&consent.media){ load(player); } else { gate(player); }
-      document.querySelectorAll('.single.playing').forEach(function(x){x.classList.remove('playing')});
-      a.classList.add('playing');
-      player.scrollIntoView({behavior:'smooth',block:'center'});
+      var pl=e.target.closest&&e.target.closest('.plus'); if(pl){showSong(pl.dataset.slug);return}
+      playSong(a.dataset.song);
     });
   });
 
