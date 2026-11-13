@@ -21,7 +21,7 @@ jobs:
           curl -sf "https://rest.bandsintown.com/artists/id_15651849/events?app_id=${APP_ID:-js_widget}&date=upcoming" -o /tmp/events.json
           # nur übernehmen, wenn gültiges JSON-Array
           python3 - <<'PY'
-          import json
+          import json, re
           ev = json.load(open('/tmp/events.json'))
           assert isinstance(ev, list)
           out = []
@@ -35,7 +35,7 @@ jobs:
                   'city': v.get('city') or '',
                   'country': v.get('country') or '',
                   'description': (e.get('description') or '')[:200],
-                  'url': offers[0] if offers else e.get('url') or '',
+                  'url': re.sub(r'app_id=[^&]*&?', '', offers[0] if offers else e.get('url') or '').rstrip('?&'),
                   'tickets': bool(offers),
               })
           json.dump({'events': out}, open('data/konzerte.json', 'w'), ensure_ascii=False, indent=1)
