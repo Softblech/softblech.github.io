@@ -51,9 +51,18 @@ h1,h2,h3{margin:0;text-wrap:balance}
 
 /* Hero */
 .hero{position:relative;min-height:clamp(460px,72vh,780px);display:flex;align-items:flex-end;overflow:hidden;background:var(--black)}
-.hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:saturate(1.05) contrast(1.05)}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,11,11,0) 35%,rgba(12,11,11,.85) 100%)}
-.hero .wrap{position:relative;z-index:1;width:100%;padding-block:40px}
+.hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pos,50% 22%);filter:saturate(1.05) contrast(1.05)}
+
+.hero .wrap{position:relative;z-index:1;width:100%;padding-block:40px 72px}
+.hero .slide{position:absolute;inset:0;display:flex;align-items:flex-end;opacity:0;visibility:hidden;transition:opacity .6s,visibility .6s}
+.hero .slide.on{opacity:1;visibility:visible}
+.hero .slide::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,11,11,0) 35%,rgba(12,11,11,.85) 100%)}
+.hero .cnav{position:absolute;z-index:3;left:0;right:0;bottom:18px;display:flex;align-items:center;justify-content:center;gap:14px}
+.hero .cnav button.prev,.hero .cnav button.next{background:transparent;border:0;color:var(--chrome);font-size:34px;line-height:1;cursor:pointer;padding:0 8px}
+.hero .dots{display:flex;gap:8px}
+.hero .dots button{width:28px;height:5px;border:0;padding:0;background:rgba(228,226,226,.4);cursor:pointer}
+.hero .dots button[aria-current=true]{background:var(--red)}
+@media (prefers-reduced-motion:reduce){.hero .slide{transition:none}}
 .hero .stop{display:flex;align-items:center;gap:6px;color:var(--red);font-family:var(--display);font-stretch:75%;font-weight:800;text-transform:uppercase;font-size:15px;letter-spacing:.04em}
 .hero h1{font-size:clamp(46px,8.4vw,128px);color:var(--chrome);margin-top:10px}
 .hero h1 span{color:var(--red)}
@@ -241,8 +250,8 @@ footer{padding-block:48px 40px;text-align:center}
 
   .hero{min-height:max(560px,calc(100svh - 64px));aspect-ratio:auto}
   .hero img.bg{object-position:50% 8%}
-  .hero::after{background:linear-gradient(180deg,rgba(12,11,11,0) 58%,rgba(12,11,11,.9) 100%)}
-  .hero .wrap{padding-block:16px 20px}
+  .hero .slide::after{background:linear-gradient(180deg,rgba(12,11,11,0) 58%,rgba(12,11,11,.9) 100%)}
+  .hero .wrap{padding-block:16px 56px}
   .hero h1{margin-top:6px}
   .hero .btns{margin-top:14px}
   .hero h1{font-size:clamp(44px,13vw,72px)}
@@ -295,16 +304,19 @@ footer{padding-block:48px 40px;text-align:center}
 </header>
 
 <main id="start">
-  <section class="hero" aria-label="Neue Single">
+  <section class="hero" id="news" aria-roledescription="Karussell" aria-label="News">
+  <div class="slide on">
     <img class="bg" src="img/hero.jpg" alt="Dennis und Henri auf einem Sofa, Polaroid-Cover der Single I Want To Be With You">
     <div class="wrap">
-      <div class="stop"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>Nächster Halt: Berlin, 04.12.</div>
+      <div class="stop"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>Neue Single · 13.11.2026</div>
       <h1 class="cond">I Want To Be With You <span>Out now</span></h1>
       <div class="btns">
-        <a class="btn solid" href="https://open.spotify.com/track/3QPbj1t4wVA0xUqkVoVLPV" target="_blank" rel="noopener">Spotify</a>
-        <a class="btn ghost" href="https://music.apple.com/de/artist/softblech/1750294821" target="_blank" rel="noopener">Apple Music</a>
+        <a class="btn solid" href="i-want-to-be-with-you/">Zum Song</a>
+        <a class="btn ghost" href="https://open.spotify.com/track/3QPbj1t4wVA0xUqkVoVLPV" target="_blank" rel="noopener">Spotify</a>
       </div>
     </div>
+  </div>
+  <div class="cnav" hidden><button type="button" class="prev" aria-label="Vorherige News">‹</button><div class="dots"></div><button type="button" class="next" aria-label="Nächste News">›</button></div>
   </section>
 
   <nav class="tiles cond" aria-label="Bereiche">
@@ -332,7 +344,7 @@ footer{padding-block:48px 40px;text-align:center}
           <p>Ein Song über die Sehnsucht nach dem, was man nicht hat, selbst wenn man festhält, was man hat. Über Einsamkeit, die nicht verschwindet, nur weil jemand neben einem liegt.</p>
           <div class="btns">
             <a class="btn solid" data-song="i-want-to-be-with-you" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener">Abspielen</a>
-            <a class="btn ghost" href="https://music.apple.com/de/artist/softblech/1750294821" target="_blank" rel="noopener">Apple Music</a>
+            <a class="btn ghost" href="i-want-to-be-with-you/">Mehr zum Song</a>
           </div>
         </div>
       </div>
@@ -552,6 +564,50 @@ var SB = {
 
   /* Videos aufbauen */
   var list=document.getElementById('video-list');
+  /* News-Karussell: data/news.json (neueste zuerst) + nächstes Konzert von Bandsintown */
+  (function(){
+    var hero=document.getElementById('news'); if(!hero) return;
+    var esc=function(t){var x=document.createElement('div');x.textContent=t||'';return x.innerHTML};
+    var pin='<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>';
+    function slide(n){
+      var ext=function(u){return /^https?:/.test(u)?' target="_blank" rel="noopener"':''};
+      return '<div class="slide" role="group" aria-roledescription="Folie"><img class="bg" src="'+esc(n.image)+'" alt="'+esc(n.alt)+'" style="--pos:'+esc(n.position||'50% 30%')+'">'+
+        '<div class="wrap"><div class="stop">'+pin+esc(n.eyebrow)+'</div><h1 class="cond">'+esc(n.title)+(n.highlight?' <span>'+esc(n.highlight)+'</span>':'')+'</h1>'+
+        '<div class="btns">'+(n.buttons||[]).map(function(b,i){return '<a class="btn '+(i?'ghost':'solid')+'" href="'+esc(b[1])+'"'+ext(b[1])+'>'+esc(b[0])+'</a>'}).join('')+'</div></div></div>';
+    }
+    var M=['Jan.','Feb.','März','Apr.','Mai','Juni','Juli','Aug.','Sep.','Okt.','Nov.','Dez.'];
+    Promise.all([
+      fetch('data/news.json',{cache:'no-cache'}).then(function(r){return r.json()}).catch(function(){return null}),
+      fetch('data/konzerte.json',{cache:'no-cache'}).then(function(r){return r.json()}).catch(function(){return null})
+    ]).then(function(res){
+      var news=(res[0]&&res[0].news)||[]; if(!news.length) return;
+      var ev=((res[1]&&res[1].events)||[])[0];
+      if(ev){var d=new Date(ev.datetime);
+        news.splice(1,0,{eyebrow:'Nächstes Konzert · '+d.getDate()+'. '+M[d.getMonth()]+' '+d.getFullYear(),title:ev.venue,highlight:ev.city,image:'img/live.jpg',alt:'Softblech live',position:'50% 35%',buttons:[['Alle Termine','#live']].concat(ev.url?[[ev.tickets?'Tickets':'Infos',ev.url]]:[])});}
+      hero.querySelectorAll('.slide').forEach(function(s){s.remove()});
+      hero.insertAdjacentHTML('afterbegin',news.map(slide).join(''));
+      var slides=hero.querySelectorAll('.slide'),dots=hero.querySelector('.dots'),i=0,timer;
+      if(slides.length<2){slides[0].classList.add('on');return}
+      hero.querySelector('.cnav').hidden=false;
+      dots.innerHTML=Array.prototype.map.call(slides,function(_,k){return '<button type="button" aria-label="News '+(k+1)+'"></button>'}).join('');
+      function show(k){i=(k+slides.length)%slides.length;
+        slides.forEach(function(s,j){s.classList.toggle('on',j===i);s.setAttribute('aria-hidden',j!==i)});
+        dots.querySelectorAll('button').forEach(function(b,j){b.setAttribute('aria-current',j===i)})}
+      var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function play(){clearInterval(timer);if(!reduce) timer=setInterval(function(){show(i+1)},6500)}
+      dots.querySelectorAll('button').forEach(function(b,j){b.onclick=function(){show(j);play()}});
+      hero.querySelector('.prev').onclick=function(){show(i-1);play()};
+      hero.querySelector('.next').onclick=function(){show(i+1);play()};
+      hero.addEventListener('mouseenter',function(){clearInterval(timer)});
+      hero.addEventListener('mouseleave',play);
+      hero.addEventListener('focusin',function(){clearInterval(timer)});
+      var x0=null;
+      hero.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+      hero.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40){show(i+(dx<0?1:-1));play()}x0=null});
+      show(0);play();
+    });
+  })();
+
   /* Konzerte: kommen automatisch von Bandsintown (data/konzerte.json, alle 3 Std. aktualisiert) */
   fetch('data/konzerte.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(d){
     var ev=(d&&d.events)||[]; if(!ev.length) return;

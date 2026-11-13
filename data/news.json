@@ -1,0 +1,23 @@
+{
+ "_hilfe": "Neueste News nach oben. Das nächste Konzert von Bandsintown wird automatisch als zweite Folie eingefügt.",
+ "news": [
+  {
+   "eyebrow": "Neue Single · 13.11.2026",
+   "title": "I Want To Be With You",
+   "highlight": "Out now",
+   "image": "img/hero.jpg",
+   "alt": "Dennis und Henri auf einem Sofa, Polaroid-Cover der Single I Want To Be With You",
+   "position": "50% 22%",
+   "buttons": [["Zum Song", "i-want-to-be-with-you/"], ["Spotify", "https://open.spotify.com/track/3QPbj1t4wVA0xUqkVoVLPV"]]
+  },
+  {
+   "eyebrow": "Newsletter",
+   "title": "Nichts verpassen",
+   "highlight": "",
+   "image": "img/tanz.jpg",
+   "alt": "Softblech tanzend auf der Bühne",
+   "position": "50% 30%",
+   "buttons": [["Eintragen", "#newsletter"]]
+  }
+ ]
+}
