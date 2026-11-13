@@ -520,8 +520,7 @@ footer{padding-block:48px 40px;text-align:center}
       <div>
         <p>Für Booking, Presse und alles andere. Wir antworten persönlich.</p>
         <div class="btns">
-          <button class="btn solid copy" id="copy-mail" type="button">Adresse kopieren</button>
-          <a class="btn ghost" href="mailto:softblech@gmail.com">Mail schreiben</a>
+          <a class="btn solid" href="mailto:softblech@gmail.com">Mail schreiben</a>
         </div>
       </div>
     </div>
@@ -791,16 +790,6 @@ var SB = {
     if(!SB.newsletterAction){e.preventDefault();msg.textContent='Der Newsletter startet bald. Bis dahin: softblech@gmail.com';return}
     form.action=SB.newsletterAction;
     msg.textContent='Danke! Bitte bestätige die Anmeldung über den Link in der Mail, die wir dir gerade schicken.';
-  });
-})();
-(function(){
-  var b=document.getElementById('copy-mail');
-  if(!b) return;
-  b.addEventListener('click',function(){
-    var t='softblech@gmail.com';
-    function done(){b.textContent='Kopiert';setTimeout(function(){b.textContent='Adresse kopieren'},1800)}
-    function fallback(){var r=document.createRange();r.selectNodeContents(document.getElementById('mail'));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Markiert, jetzt kopieren'}
-    try{navigator.clipboard.writeText(t).then(done,fallback)}catch(e){fallback()}
   });
 })();
 (function(){
