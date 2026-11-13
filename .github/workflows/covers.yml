@@ -3,7 +3,7 @@ name: Cover laden
 on:
   workflow_dispatch:
   push:
-    paths: ["tools/covers.txt"]
+    paths: ["tools/covers.txt", "tools/photos.txt"]
 
 permissions:
   contents: write
@@ -20,7 +20,15 @@ jobs:
             [ -z "$name" ] && continue
             [ -f "img/covers/$name.jpg" ] || curl -sfL "$url" -o "img/covers/$name.jpg" || echo "Fehler: $name"
           done < tools/covers.txt
+          # Pressefotos aus Google Drive (Link-Freigabe), auf 1600 px verkleinert
+          mkdir -p img/press
+          while read -r name id; do
+            [ -z "$name" ] && continue
+            [ -f "img/press/$name.jpg" ] && continue
+            curl -sfL "https://drive.usercontent.google.com/download?id=$id&export=download" -o /tmp/p.jpg && \
+              convert /tmp/p.jpg -auto-orient -resize '1600x1600>' -strip -quality 82 "img/press/$name.jpg" || echo "Fehler: $name"
+          done < tools/photos.txt
           git config user.name "softblech-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add img/covers
+          git add img/covers img/press
           git diff --cached --quiet || (git commit -m "Cover geladen" && git push)
