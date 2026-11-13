@@ -195,6 +195,7 @@ footer{padding-block:48px 40px;text-align:center}
 .gate p{margin:0;max-width:56ch;color:var(--muted);font-size:15px}
 .gate p a{color:var(--chrome)}
 .videos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.vfull{grid-column:1/-1}
 .vtitle{margin:10px 0 0;font-family:var(--display);font-stretch:75%;font-weight:800;text-transform:uppercase;letter-spacing:.03em}
 
 /* Newsletter */
@@ -517,8 +518,8 @@ footer{padding-block:48px 40px;text-align:center}
 /* ===== EINSTELLUNGEN – hier trägt man später IDs ein ===== */
 var SB = {
   gaId: "G-S0FEBCYZ1K",              /* Google-Analytics-ID, z. B. "G-ABC123XYZ" */
-  youtube: [             /* Videos: { id: "YouTube-ID", title: "Titel" } */
-    { id: "Ot96k1AsQ8s", title: "" }
+  youtubeChannel: "UCH2bCuSMWeOySYkNK6NGcbA",  /* YouTube-Kanal: alle Uploads erscheinen automatisch */
+  youtube: [             /* optional einzelne Videos: { id: "YouTube-ID", title: "Titel" } */
   ],
   tracks: {             /* Spotify-Song-IDs (aus dem Song-Link: open.spotify.com/track/ID) */
     "i-want-to-be-with-you": "3QPbj1t4wVA0xUqkVoVLPV",
@@ -551,6 +552,13 @@ var SB = {
 
   /* Videos aufbauen */
   var list=document.getElementById('video-list');
+  if(SB.youtubeChannel){
+    document.getElementById('videos').hidden=false;
+    var pl=document.createElement('div');
+    pl.className='vfull';
+    pl.innerHTML='<div class="embed video" data-embed="youtube" data-src="https://www.youtube-nocookie.com/embed/videoseries?list=UU'+SB.youtubeChannel.slice(2)+'" data-title="Softblech auf YouTube"></div><div class="btns"><a class="btn ghost" href="https://www.youtube.com/@SoftblechMusic" target="_blank" rel="noopener">Alle Videos auf YouTube</a></div>';
+    list.appendChild(pl);
+  }
   if(SB.youtube.length){
     document.getElementById('videos').hidden=false;
     SB.youtube.forEach(function(v){
