@@ -99,6 +99,8 @@ section{scroll-margin-top:64px}
 .feature p{max-width:52ch;margin:16px 0 0}
 .singles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .single{aspect-ratio:1/1;max-width:100%;background:var(--black-2);border:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between;padding:16px;text-decoration:none;transition:background .2s,color .2s,border-color .2s}
+.single.playing{background:var(--red);color:var(--black);border-color:var(--red)}
+.single.playing .y{color:var(--black)}
 .single:hover{background:var(--red);color:var(--black);border-color:var(--red)}
 .single .y{font-family:var(--display);font-stretch:75%;font-weight:700;letter-spacing:.06em;color:var(--muted);font-variant-numeric:tabular-nums}
 .single:hover .y{color:var(--black)}
@@ -323,24 +325,24 @@ footer{padding-block:48px 40px;text-align:center}
           <div class="meta">13. November 2026 · 3:32 · Prod. Leon Kaack</div>
           <p>Ein Song über die Sehnsucht nach dem, was man nicht hat, selbst wenn man festhält, was man hat. Über Einsamkeit, die nicht verschwindet, nur weil jemand neben einem liegt.</p>
           <div class="btns">
-            <a class="btn solid" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener">Stream</a>
+            <a class="btn solid" data-song="i-want-to-be-with-you" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener">Abspielen</a>
             <a class="btn ghost" href="https://music.apple.com/de/artist/softblech/1750294821" target="_blank" rel="noopener">Apple Music</a>
           </div>
         </div>
       </div>
       <div class="singles">
-        <a class="single" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2026</span><span class="t cond">In The End I Only Think Of You</span></a>
-        <a class="single" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2026</span><span class="t cond">How To Feel</span></a>
-        <a class="single" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2026</span><span class="t cond">Want To Stay</span></a>
-        <a class="single" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2025</span><span class="t cond">Love Kills Slowly</span></a>
-        <a class="single" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2025</span><span class="t cond">Melt Away</span></a>
-        <a class="single" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2025</span><span class="t cond">Try So Hard</span></a>
-        <a class="single" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2024</span><span class="t cond">Leave Me Now</span></a>
-        <a class="single" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2024 · Debüt</span><span class="t cond">Love Me Now</span></a>
+        <a class="single" data-song="in-the-end" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2026</span><span class="t cond">In The End I Only Think Of You</span></a>
+        <a class="single" data-song="how-to-feel" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2026</span><span class="t cond">How To Feel</span></a>
+        <a class="single" data-song="want-to-stay" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2026</span><span class="t cond">Want To Stay</span></a>
+        <a class="single" data-song="love-kills-slowly" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2025</span><span class="t cond">Love Kills Slowly</span></a>
+        <a class="single" data-song="melt-away" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2025</span><span class="t cond">Melt Away</span></a>
+        <a class="single" data-song="try-so-hard" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2025</span><span class="t cond">Try So Hard</span></a>
+        <a class="single" data-song="leave-me-now" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2024</span><span class="t cond">Leave Me Now</span></a>
+        <a class="single" data-song="love-me-now" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2024 · Debüt</span><span class="t cond">Love Me Now</span></a>
       </div>
       <div class="listen">
         <h3 class="cond">Reinhören</h3>
-        <div class="embed spotify" data-embed="spotify" data-src="https://open.spotify.com/embed/artist/2jYXnyDOvsZcopHLQgBgt6?utm_source=generator&amp;theme=0" data-height="352" data-title="Softblech auf Spotify"></div>
+        <div class="embed spotify" id="player" data-embed="spotify" data-src="https://open.spotify.com/embed/artist/2jYXnyDOvsZcopHLQgBgt6?utm_source=generator&amp;theme=0" data-height="352" data-title="Softblech auf Spotify"></div>
       </div>
     </div>
   </section>
@@ -513,6 +515,17 @@ var SB = {
   youtube: [             /* Videos: { id: "YouTube-ID", title: "Titel" } */
     { id: "Ot96k1AsQ8s", title: "" }
   ],
+  tracks: {             /* Spotify-Song-IDs (aus dem Song-Link: open.spotify.com/track/ID) */
+    "i-want-to-be-with-you": "",
+    "in-the-end": "",
+    "how-to-feel": "",
+    "want-to-stay": "",
+    "love-kills-slowly": "1aQ9myKzE6QiJEWDWgbby2",
+    "melt-away": "",
+    "try-so-hard": "",
+    "leave-me-now": "",
+    "love-me-now": ""
+  },
   newsletterAction: "https://4a6dbfd6.sibforms.com/serve/MUIFAMwR_m5h8o1wltsYbSCL7N-QMkxqJUoEVb_HBoeFtIwxgZZst1DJeTa-DguGFJctrygaBhK5eTaY9OMlEblkh8J50NXY2i4jN8-niLvTT9qEuoETD_KrCktzgieUgJNxSoE3nzt0x5q3pnvh9-7T5rGj5rN5tNrGP_zIDFhjXlRyv7Ma3OdJQnfqodpfR2hNcHu-zTpUljvZAg=="   /* Formular-Adresse von Brevo (https://...sibforms.com/serve/...) */
 };
 /* ========================================================= */
@@ -569,6 +582,23 @@ var SB = {
   }
   apply();
   if(!consent) openBox();
+
+  /* Songs direkt im Player abspielen */
+  var player=document.getElementById('player');
+  document.querySelectorAll('[data-song]').forEach(function(a){
+    var id=SB.tracks[a.dataset.song];
+    if(!id) return;
+    a.href='https://open.spotify.com/track/'+id;
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      player.dataset.src='https://open.spotify.com/embed/track/'+id+'?utm_source=generator&theme=0';
+      player.innerHTML='';
+      if(consent&&consent.media){ load(player); } else { gate(player); }
+      document.querySelectorAll('.single.playing').forEach(function(x){x.classList.remove('playing')});
+      a.classList.add('playing');
+      player.scrollIntoView({behavior:'smooth',block:'center'});
+    });
+  });
 
   /* Newsletter */
   var form=document.getElementById('nl-form'), msg=document.getElementById('nl-msg');
