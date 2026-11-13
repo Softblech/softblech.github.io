@@ -62,3 +62,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px}
   .sec{padding-block:40px}
   .credits{grid-template-columns:1fr;gap:2px}.credits dd{margin-bottom:10px}
 }
+.pitch .lead{font-size:clamp(20px,2.4vw,26px);line-height:1.45;margin:0 0 36px;font-weight:500}
+.pitch blockquote p{margin:0 0 12px}
+.small{font-size:14px;margin-top:20px}
+.contact a{color:var(--red)}

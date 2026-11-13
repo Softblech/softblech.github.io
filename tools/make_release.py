@@ -42,7 +42,10 @@ page = f"""<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{e(c['title'])} · SOFTBLECH</title>
 <meta name="description" content="{e(c['teaser_de'])}">
-<link rel="icon" type="image/png" href="../img/logo-schwarz.png">
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta name="theme-color" content="#ff2f3f">
 <link rel="canonical" href="{url}">
 <meta property="og:type" content="music.song">
 <meta property="og:title" content="SOFTBLECH – {e(c['title'])}">
@@ -75,22 +78,20 @@ page = f"""<!doctype html>
   </div>
 </div></section>
 
-<section class="sec"><div class="wrap narrow">
-  <h2 class="cond"><span data-l="de">Über den Song</span><span data-l="en">About the song</span></h2>
-  <div data-l="de">{paras(c['text_de'])}</div>
-  <div data-l="en">{paras(c['text_en'])}</div>
+<section class="sec pitch"><div class="wrap narrow">
+  <p class="lead" data-l="de">{e(c['pitch_de'])}</p>
+  <p class="lead" data-l="en">{e(c['pitch_en'])}</p>
+  <blockquote><p>„{e(c['quote_short_en'])}“</p><cite>{e(c['quote_by'])}</cite></blockquote>
 </div></section>
 
-<section class="sec quote-sec"><div class="wrap narrow">
-  <blockquote>{paras(c['quote_en'])}<cite>{e(c['quote_by'])}</cite></blockquote>
-</div></section>
-
-<section class="sec"><div class="wrap narrow">
-  <details><summary class="cond">Lyrics</summary><div class="lyrics">{lyrics(c['lyrics'])}</div></details>
-  <details><summary class="cond">Interview</summary>
-    <div data-l="de">{interview(c['interview_de'])}</div>
-    <div data-l="en">{interview(c['interview_en'])}</div>
-  </details>
+<section class="sec on-red"><div class="wrap narrow">
+  <h2 class="cond"><span data-l="de">Presse</span><span data-l="en">Press</span></h2>
+  <p><span data-l="de">Pressemappe mit Pressetext, Fotos, Cover und Lyrics. Fotos sind zur redaktionellen Nutzung freigegeben, bitte Fotograf*in nennen.</span><span data-l="en">Press kit with press release, photos, cover and lyrics. Photos are free for editorial use, please credit the photographer.</span></p>
+  <div class="btns">
+    <a class="btn solid" href="{e(c['presskit'])}" target="_blank" rel="noopener"><span data-l="de">Pressemappe &amp; Fotos</span><span data-l="en">Press kit &amp; photos</span></a>
+    <a class="btn ghost" href="../{e(c['cover'])}" download><span data-l="de">Cover laden</span><span data-l="en">Download cover</span></a>
+  </div>
+  <p class="small"><span data-l="de">Fotos</span><span data-l="en">Photos</span>: {e(', '.join(c.get('photo_credits', [])))} · Cover: {e(c['cover_credit'])}</p>
 </div></section>
 
 <section class="sec"><div class="wrap narrow">
@@ -103,14 +104,21 @@ page = f"""<!doctype html>
   </dl>
 </div></section>
 
-<section class="sec on-red"><div class="wrap narrow">
-  <h2 class="cond"><span data-l="de">Presse</span><span data-l="en">Press</span></h2>
-  <p><span data-l="de">Pressemappe mit Pressetext, Fotos, Cover und Lyrics. Fotos sind zur redaktionellen Nutzung freigegeben, bitte Fotograf*in nennen.</span><span data-l="en">Press kit with press release, photos, cover and lyrics. Photos are free for editorial use, please credit the photographer.</span></p>
-  <div class="btns">
-    <a class="btn solid" href="{e(c['presskit'])}" target="_blank" rel="noopener"><span data-l="de">Pressemappe öffnen</span><span data-l="en">Open press kit</span></a>
-    <a class="btn ghost" href="../{e(c['cover'])}" download><span data-l="de">Cover laden</span><span data-l="en">Download cover</span></a>
-    <a class="btn ghost" href="mailto:softblech@gmail.com"><span data-l="de">Kontakt</span><span data-l="en">Contact</span></a>
-  </div>
+<section class="sec"><div class="wrap narrow">
+  <details><summary class="cond"><span data-l="de">Über den Song</span><span data-l="en">About the song</span></summary>
+    <div data-l="de">{paras(c['text_de'])}</div>
+    <div data-l="en">{paras(c['text_en'])}</div>
+  </details>
+  <details><summary class="cond">Lyrics</summary><div class="lyrics">{lyrics(c['lyrics'])}</div></details>
+  <details><summary class="cond">Interview</summary>
+    <div data-l="de">{interview(c['interview_de'])}</div>
+    <div data-l="en">{interview(c['interview_en'])}</div>
+  </details>
+</div></section>
+
+<section class="sec contact"><div class="wrap narrow">
+  <h2 class="cond"><span data-l="de">Kontakt</span><span data-l="en">Contact</span></h2>
+  <p><span data-l="de">Fragen, Interviews, Konzertanfragen:</span><span data-l="en">Questions, interviews, bookings:</span> <a href="mailto:softblech@gmail.com">softblech@gmail.com</a></p>
 </div></section>
 </main>
 
