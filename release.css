@@ -29,7 +29,7 @@ html[data-lang=de] [data-l=en],html[data-lang=en] [data-l=de]{display:none!impor
 .btn:hover{background:var(--chrome);border-color:var(--chrome);color:var(--black)}
 .player{margin-top:28px}
 .player small{display:block;color:var(--muted);font-size:13px;margin-top:8px}
-.player iframe{width:100%;height:152px;border:0;border-radius:12px;display:block}
+.player iframe{width:100%;height:152px;border:0;border-radius:12px;display:block;clip-path:inset(1px round 12px);color-scheme:normal;background:transparent}
 .sec{padding-block:56px;border-top:1px solid var(--line)}
 .sec h2{font-size:clamp(40px,6vw,72px);margin-bottom:20px;color:var(--red)}
 .sec p{margin:0 0 1em}
