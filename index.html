@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Softblech</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="SOFTBLECH – Post Wave aus Berlin. Dennis Hörtinger und Henri Röttger.">
+<link rel="icon" type="image/png" href="img/logo-schwarz.png">
+<meta property="og:title" content="SOFTBLECH">
+<meta property="og:description" content="Post Wave aus Berlin. Neue Single: I Want To Be With You.">
+<meta property="og:image" content="https://softblech.github.io/img/hero.jpg">
+<style>
+@font-face{font-family:"Archivo";font-style:normal;font-weight:400 900;font-stretch:62% 125%;font-display:swap;src:url(fonts/archivo-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Archivo";font-style:normal;font-weight:400 900;font-stretch:62% 125%;font-display:swap;src:url(fonts/archivo-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+/* Layout: Fontaines-D.C.-Prinzip (Vollbild-Foto, Riesen-Kacheln, Live-Liste, Lauf-Band) in Softblech-Farben: Signalrot + Schwarz + Chrom-Logo */
+:root{
+  --black:#0c0b0b;
+  --black-2:#171515;
+  --red:#ff2f3f;
+  --red-deep:#e01a2a;
+  --chrome:#e4e2e2;
+  --muted:#9a9393;
+  --line:rgba(255,255,255,.14);
+  --line-red:rgba(12,11,11,.22);
+  --display:"Archivo","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --body:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --gutter-l:max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r:max(16px, env(safe-area-inset-right, 0px));
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--chrome);font-family:var(--body);font-size:16px;line-height:1.55;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--red)}
+a{color:inherit}
+img{max-width:100%;height:auto;display:block}
+.wrap{max-width:1360px;margin:0 auto;padding-left:var(--gutter-l);padding-right:var(--gutter-r)}
+.cond{font-family:var(--display);font-stretch:62%;font-weight:850;text-transform:uppercase;letter-spacing:.005em;line-height:.9}
+h1,h2,h3{margin:0;text-wrap:balance}
+:focus-visible{outline:3px solid var(--chrome);outline-offset:3px}
+
+/* Header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--red);color:var(--black);border-bottom:2px solid var(--black)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:8px}
+.top .logo img{height:44px;width:auto}
+.top nav{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px 20px}
+.top nav a{text-decoration:none;font-family:var(--display);font-stretch:70%;font-weight:800;text-transform:uppercase;font-size:17px;letter-spacing:.02em}
+.top nav a:hover{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:2px}
+
+/* Hero */
+.hero{position:relative;min-height:clamp(460px,72vh,780px);display:flex;align-items:flex-end;overflow:hidden;background:var(--black)}
+.hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:saturate(1.05) contrast(1.05)}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,11,11,0) 35%,rgba(12,11,11,.85) 100%)}
+.hero .wrap{position:relative;z-index:1;width:100%;padding-block:40px}
+.hero .stop{display:flex;align-items:center;gap:6px;color:var(--red);font-family:var(--display);font-stretch:75%;font-weight:800;text-transform:uppercase;font-size:15px;letter-spacing:.04em}
+.hero h1{font-size:clamp(46px,8.4vw,128px);color:var(--chrome);margin-top:10px}
+.hero h1 span{color:var(--red)}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.btn{display:inline-block;text-decoration:none;font-family:var(--display);font-stretch:70%;font-weight:850;text-transform:uppercase;font-size:20px;letter-spacing:.03em;padding:10px 22px;border:2px solid var(--red);transition:background .15s,color .15s}
+.btn.solid{background:var(--red);color:var(--black)}
+.btn.solid:hover{background:var(--chrome);border-color:var(--chrome)}
+.btn.ghost{color:var(--red)}
+.btn.ghost:hover{background:var(--red);color:var(--black)}
+.on-red .btn{border-color:var(--black)}
+.on-red .btn.solid{background:var(--black);color:var(--red)}
+.on-red .btn.ghost{color:var(--black)}
+.on-red .btn.ghost:hover{background:var(--black);color:var(--red)}
+
+/* Kacheln */
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:2px solid var(--black)}
+.tiles a{display:flex;align-items:center;justify-content:center;min-height:clamp(120px,15vw,210px);text-decoration:none;font-size:clamp(48px,8vw,120px);transition:background .2s,color .2s}
+.tiles a:nth-child(odd){background:var(--red);color:var(--black)}
+.tiles a:nth-child(even){background:var(--black);color:var(--red)}
+.tiles a:hover{background:var(--chrome);color:var(--black)}
+
+/* Lauf-Band */
+.marquee{background:var(--red);color:var(--black);overflow:hidden;border-block:2px solid var(--black)}
+.marquee .track{display:flex;width:max-content;animation:run 32s linear infinite}
+.marquee span{font-size:clamp(20px,2.4vw,30px);padding:12px 28px;white-space:nowrap}
+.marquee span::after{content:"●";font-size:.5em;vertical-align:middle;margin-left:56px}
+@keyframes run{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.marquee .track{animation:none}html{scroll-behavior:auto}}
+
+/* Sektionen */
+section{scroll-margin-top:64px}
+.sec{padding-block:clamp(48px,7vw,96px)}
+.sec h2{font-size:clamp(52px,7vw,104px);color:var(--red);margin-bottom:clamp(24px,3vw,40px)}
+.on-red{background:var(--red);color:var(--black)}
+.on-red h2{color:var(--black)}
+.eyebrow{font-family:var(--display);font-stretch:75%;font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:14px}
+
+/* Musik */
+.feature{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,4vw,56px);align-items:end;margin-bottom:clamp(40px,5vw,64px)}
+.feature img{aspect-ratio:1/1;object-fit:cover;width:100%}
+.feature h3{font-size:clamp(44px,6vw,92px);color:var(--red);margin-block:10px 6px}
+.feature .meta{color:var(--muted);font-family:var(--display);font-stretch:75%;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.feature p{max-width:52ch;margin:16px 0 0}
+.singles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.single{aspect-ratio:1/1;max-width:100%;background:var(--black-2);border:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between;padding:16px;text-decoration:none;transition:background .2s,color .2s,border-color .2s}
+.single:hover{background:var(--red);color:var(--black);border-color:var(--red)}
+.single .y{font-family:var(--display);font-stretch:75%;font-weight:700;letter-spacing:.06em;color:var(--muted);font-variant-numeric:tabular-nums}
+.single:hover .y{color:var(--black)}
+.single .t{font-size:clamp(26px,3vw,44px)}
+
+/* Live */
+.shows{list-style:none;margin:0;padding:0;border-top:1px solid var(--line-red)}
+.show{display:grid;grid-template-columns:90px minmax(0,1.3fr) minmax(0,1fr) auto;align-items:center;gap:16px;padding-block:16px;border-bottom:1px solid var(--line-red)}
+.date{text-align:center;font-family:var(--display);font-stretch:70%;font-weight:850;text-transform:uppercase;line-height:1;font-variant-numeric:tabular-nums}
+.date b{display:block;font-size:42px;font-weight:900}
+.date small{font-size:15px;letter-spacing:.04em}
+.show .venue,.show .city{font-family:var(--display);font-stretch:75%;font-weight:800;text-transform:uppercase;font-size:20px;letter-spacing:.02em}
+.show .note{display:block;font-family:var(--body);font-stretch:100%;font-weight:500;text-transform:none;font-size:15px;letter-spacing:0;margin-top:2px}
+.past{margin-top:56px}
+.past h3{font-size:clamp(30px,3.6vw,48px);margin-bottom:16px}
+.past ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 40px}
+.past li{display:flex;justify-content:space-between;gap:16px;padding-block:10px;border-bottom:1px solid var(--line-red);font-weight:600}
+.past li span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap;opacity:.75}
+
+/* Band */
+.band{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,5vw,72px);align-items:start}
+.band img{width:100%;filter:grayscale(1) contrast(1.05)}
+.band .text p{margin:0 0 1em;max-width:62ch}
+.band .lead{font-size:clamp(20px,2vw,24px);line-height:1.4;font-weight:600;color:var(--chrome)}
+.members{display:flex;flex-wrap:wrap;gap:12px 40px;margin:28px 0 0;padding-top:20px;border-top:1px solid var(--line)}
+.members div{min-width:0}
+.members b{display:block;font-size:30px;color:var(--red)}
+.members span{color:var(--muted)}
+
+/* Fotos */
+.photos{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:auto auto;gap:12px}
+.photos figure{margin:0;position:relative;overflow:hidden;background:var(--black-2)}
+.photos img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3}
+.photos figure:first-child{grid-row:span 2}
+.photos figure:first-child img{aspect-ratio:auto}
+.photos figcaption{position:absolute;left:0;bottom:0;background:var(--red);color:var(--black);font-family:var(--display);font-stretch:75%;font-weight:800;text-transform:uppercase;font-size:13px;letter-spacing:.05em;padding:4px 10px}
+
+/* Presse */
+.press{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.quote{border:2px solid var(--red);padding:24px;text-decoration:none;display:flex;flex-direction:column;gap:12px;transition:background .2s,color .2s}
+.quote:hover{background:var(--red);color:var(--black)}
+.quote .q{font-size:clamp(26px,3vw,40px)}
+.quote .src{font-family:var(--display);font-stretch:75%;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.quote:hover .src{color:var(--black)}
+
+/* Kontakt */
+.contact{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:end}
+.contact .big{font-size:clamp(30px,4vw,60px);overflow-wrap:anywhere;user-select:all}
+.contact p{max-width:48ch;margin:0 0 16px;font-weight:500}
+.copy{font:inherit;cursor:pointer}
+
+/* Footer */
+footer{padding-block:48px 40px;text-align:center}
+.social{display:flex;justify-content:center;flex-wrap:wrap;gap:22px;margin-bottom:28px}
+.social a{color:var(--red);display:inline-flex;transition:color .15s,transform .15s}
+.social a:hover{color:var(--chrome);transform:translateY(-2px)}
+.social svg{width:30px;height:30px}
+.foot-links{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 26px;margin-bottom:14px}
+.foot-links a,.copyr{font-family:var(--display);font-stretch:75%;font-weight:800;text-transform:uppercase;font-size:14px;letter-spacing:.05em;color:var(--red);text-decoration:none}
+.foot-links a:hover{text-decoration:underline}
+
+@media (max-width:860px){
+  .top nav a{font-size:15px}
+  .feature,.band,.contact{grid-template-columns:minmax(0,1fr)}
+  .singles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .show{grid-template-columns:70px minmax(0,1fr) auto;row-gap:4px}
+  .show .city{grid-column:2;grid-row:2;font-size:16px}
+  .show .btn{grid-column:3;grid-row:1 / span 2}
+  .past ul{grid-template-columns:minmax(0,1fr)}
+  .photos{grid-template-columns:1fr 1fr}
+  .photos figure:first-child{grid-column:span 2;grid-row:auto}
+  .press{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:520px){
+  .top .wrap{flex-direction:column;align-items:flex-start;gap:6px}
+  .top .logo img{height:34px}
+  .top nav{justify-content:flex-start;gap:2px 14px}
+  .show .btn{font-size:15px;padding:8px 12px}
+  .date b{font-size:34px}
+}
+</style>
+
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#start" aria-label="Softblech Startseite"><img src="img/logo-schwarz.png" alt="Softblech" width="400" height="139"></a>
+    <nav aria-label="Hauptmenü">
+      <a href="#musik">Musik</a>
+      <a href="#live">Live</a>
+      <a href="#band">Band</a>
+      <a href="#fotos">Fotos</a>
+      <a href="#presse">Presse</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+  </div>
+</header>
+
+<main id="start">
+  <section class="hero" aria-label="Neue Single">
+    <img class="bg" src="img/hero.jpg" alt="Dennis und Henri auf einem Sofa, Polaroid-Cover der Single I Want To Be With You">
+    <div class="wrap">
+      <div class="stop"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>Nächster Halt: Berlin, 04.12.</div>
+      <h1 class="cond">I Want To Be With You <span>Out now</span></h1>
+      <div class="btns">
+        <a class="btn solid" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener">Spotify</a>
+        <a class="btn ghost" href="https://music.apple.com/de/artist/softblech/1750294821" target="_blank" rel="noopener">Apple Music</a>
+      </div>
+    </div>
+  </section>
+
+  <nav class="tiles cond" aria-label="Bereiche">
+    <a href="#musik">Musik</a>
+    <a href="#live">Live</a>
+    <a href="#band">Band</a>
+  </nav>
+
+  <div class="marquee cond" aria-hidden="true">
+    <div class="track">
+      <span>I Want To Be With You – die neue Single – out now</span><span>Post Wave aus Berlin</span><span>04.12. Valentin Stüberl</span>
+      <span>I Want To Be With You – die neue Single – out now</span><span>Post Wave aus Berlin</span><span>04.12. Valentin Stüberl</span>
+    </div>
+  </div>
+
+  <section id="musik" class="sec">
+    <div class="wrap">
+      <h2 class="cond">Musik</h2>
+      <div class="feature">
+        <img src="img/cover-iwtbwy.jpg" alt="Cover der Single I Want To Be With You" width="1200" height="1200">
+        <div>
+          <div class="eyebrow" style="color:var(--red)">Neue Single</div>
+          <h3 class="cond">I Want To Be With You</h3>
+          <div class="meta">13. November 2026 · 3:32 · Prod. Leon Kaack</div>
+          <p>Ein Song über die Sehnsucht nach dem, was man nicht hat, selbst wenn man festhält, was man hat. Über Einsamkeit, die nicht verschwindet, nur weil jemand neben einem liegt.</p>
+          <div class="btns">
+            <a class="btn solid" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener">Stream</a>
+            <a class="btn ghost" href="https://music.apple.com/de/artist/softblech/1750294821" target="_blank" rel="noopener">Apple Music</a>
+          </div>
+        </div>
+      </div>
+      <div class="singles">
+        <a class="single" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2026</span><span class="t cond">In The End I Only Think Of You</span></a>
+        <a class="single" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2026</span><span class="t cond">How To Feel</span></a>
+        <a class="single" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2026</span><span class="t cond">Want To Stay</span></a>
+        <a class="single" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2025</span><span class="t cond">Love Kills Slowly</span></a>
+        <a class="single" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2025</span><span class="t cond">Melt Away</span></a>
+        <a class="single" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2025</span><span class="t cond">Try So Hard</span></a>
+        <a class="single" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2024</span><span class="t cond">Leave Me Now</span></a>
+        <a class="single" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2024 · Debüt</span><span class="t cond">Love Me Now</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="live" class="sec on-red">
+    <div class="wrap">
+      <h2 class="cond">Live</h2>
+      <ul class="shows">
+        <li class="show">
+          <div class="date"><small>Dez.</small><b>04</b><small>2026</small></div>
+          <div class="venue">Valentin Stüberl<span class="note">Freitag, ab 19 Uhr · Eintritt auf Spendenbasis</span></div>
+          <div class="city">Berlin, Deutschland</div>
+          <a class="btn solid" href="https://www.instagram.com/softblech" target="_blank" rel="noopener">Infos</a>
+        </li>
+      </ul>
+      <div class="past">
+        <h3 class="cond">Bisher auf der Bühne</h3>
+        <ul>
+          <li><span>Privatclub, Berlin · Support Day We Ran</span><span>25.09.2026</span></li>
+          <li><span>Lido, Berlin · Support WU LYF</span><span>24.09.2026</span></li>
+          <li><span>Fête de la Musique, Alte Münze, Berlin</span><span>21.06.2026</span></li>
+          <li><span>Valentin Stüberl, Berlin · Release-Show</span><span>12.06.2026</span></li>
+          <li><span>Kantine am Berghain, Berlin</span><span>2026</span></li>
+          <li><span>Urban Spree, Berlin · mit Night Tapes</span><span></span></li>
+          <li><span>Lark, Berlin · mit Dews Pegahorn</span><span></span></li>
+          <li><span>Hebebühne, Hamburg · mit Dews Pegahorn</span><span></span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="band" class="sec">
+    <div class="wrap band">
+      <img src="img/treppe.jpg" alt="Henri und Dennis vor einer Holztreppe, schwarz-weiß" width="1080" height="840">
+      <div class="text">
+        <h2 class="cond">Band</h2>
+        <p class="lead">SOFTBLECH sind ein Post-Wave-Duo aus Berlin. Post Wave liegt genau zwischen Post-Punk und Dark Wave: irgendwo zwischen The Cure und Fontaines D.C.</p>
+        <p>Sie schreiben von innen nach außen. Ihre Songs versuchen nicht, schwierige Gefühle zu erklären, sondern ehrlich in ihnen zu bleiben. Trennungen, Zweifel, Liebe, die ihre Form verändert, die Angst, jemanden ein zweites Mal zu verlieren.</p>
+        <p>Als Duo ohne Schlagzeuger haben sie aus der Not eine Tugend gemacht: Die Drum Machine ist kein Kompromiss, sondern ihre Handschrift. Seit ihrer Gründung 2024 in Hamburg haben SOFTBLECH eine ganze Reihe von Singles veröffentlicht. Ihre Debütsingle „Love Me Now“ lief im Podcast „Fest &amp; Flauschig“. Ihre Musik wurde mehr als 215.000 Mal gestreamt.</p>
+        <div class="members">
+          <div><b class="cond">Dennis Hörtinger</b><span>Bass, Gesang</span></div>
+          <div><b class="cond">Henri Röttger</b><span>Gitarre, Gesang</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="fotos" class="sec" style="padding-top:0">
+    <div class="wrap">
+      <h2 class="cond">Fotos</h2>
+      <div class="photos">
+        <figure><img src="img/hochhaus.jpg" alt="Dennis und Henri vor einem Hochhaus"><figcaption>Berlin</figcaption></figure>
+        <figure><img src="img/live.jpg" alt="Softblech live, Henri mit Gitarre, Dennis am Mikrofon"><figcaption>Live</figcaption></figure>
+        <figure><img src="img/tanz.jpg" alt="Henri tanzt, schwarz-weiß"></figure>
+        <figure><img src="img/studio.jpg" alt="Henri und Dennis im Studio vor Synthesizern"><figcaption>Studio</figcaption></figure>
+        <figure><img src="img/hero.jpg" alt="Polaroid von Henri und Dennis auf dem Sofa"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="presse" class="sec on-red">
+    <div class="wrap">
+      <h2 class="cond">Presse</h2>
+      <div class="press">
+        <a class="quote" style="border-color:var(--black)" href="https://www.kaltblut-magazine.com/the-anatomy-of-a-freefall-softblech-capture-heartbreak-on-in-the-end-i-only-think-of-you/" target="_blank" rel="noopener">
+          <span class="q cond">„The Anatomy of a Freefall“</span>
+          <span class="src" style="color:var(--black)">KALTBLUT Magazine · September 2026</span>
+        </a>
+        <a class="quote" style="border-color:var(--black)" href="https://www.radiohamburg.de/aktionen/stars_for_free/TOP-3-im-Check-So-klingt-Softblech-id1431622.html" target="_blank" rel="noopener">
+          <span class="q cond">„TOP 3 im Check: So klingt Softblech“</span>
+          <span class="src" style="color:var(--black)">Radio Hamburg · August 2025</span>
+        </a>
+      </div>
+      <div class="btns" style="margin-top:28px">
+        <a class="btn solid" href="https://drive.google.com/drive/folders/1K4uR7UvWpCNpZ2IkZ0Ao4phFAWkuovKI" target="_blank" rel="noopener">Pressefotos &amp; Presskit</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontakt" class="sec">
+    <div class="wrap contact">
+      <div>
+        <h2 class="cond">Kontakt</h2>
+        <div class="big cond" id="mail">softblech@gmail.com</div>
+      </div>
+      <div>
+        <p>Für Booking, Presse und alles andere. Wir antworten persönlich.</p>
+        <div class="btns">
+          <button class="btn solid copy" id="copy-mail" type="button">Adresse kopieren</button>
+          <a class="btn ghost" href="mailto:softblech@gmail.com">Mail schreiben</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="marquee cond" aria-hidden="true">
+  <div class="track">
+    <span>Softblech</span><span>Post Wave aus Berlin</span><span>I Want To Be With You – out now</span>
+    <span>Softblech</span><span>Post Wave aus Berlin</span><span>I Want To Be With You – out now</span>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="social">
+      <a href="https://www.instagram.com/softblech" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg></a>
+      <a href="https://www.tiktok.com/@softblech" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 3h-3.2v12.2a2.8 2.8 0 1 1-2.8-2.8c.3 0 .6 0 .9.1V9.2a6 6 0 1 0 5.1 6V9.1a7.6 7.6 0 0 0 4.5 1.5V7.4a4.5 4.5 0 0 1-4.5-4.4Z"/></svg></a>
+      <a href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener" aria-label="Spotify"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M7 9.3c3.6-1 7.4-.7 10.4 1M7.6 12.5c2.9-.8 6-.5 8.4.9M8.2 15.5c2.3-.6 4.6-.4 6.5.7" fill="none" stroke="var(--black)" stroke-width="1.7" stroke-linecap="round"/></svg></a>
+      <a href="https://music.apple.com/de/artist/softblech/1750294821" target="_blank" rel="noopener" aria-label="Apple Music"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3v12.3a3.2 3.2 0 1 1-2-3V7.6l-7 1.6v8a3.2 3.2 0 1 1-2-3V5.5Z"/></svg></a>
+      <a href="https://on.soundcloud.com/JbQ1oPXzyjxwlHsI6D" target="_blank" rel="noopener" aria-label="SoundCloud"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 8.2a5.6 5.6 0 0 1 9.3 3.5A3.2 3.2 0 0 1 20 18h-9ZM9 9.5h1V18H9Zm-2 1h1V18H7Zm-2 1.3h1V18H5Zm-2 1.7h1V18H3Z"/></svg></a>
+      <a href="#kontakt" aria-label="E-Mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3.5 6 8.5 7 8.5-7"/></svg></a>
+    </div>
+    <div class="foot-links">
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+    <div class="copyr">© 2026 Softblech</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var b=document.getElementById('copy-mail');
+  if(!b) return;
+  b.addEventListener('click',function(){
+    var t='softblech@gmail.com';
+    function done(){b.textContent='Kopiert';setTimeout(function(){b.textContent='Adresse kopieren'},1800)}
+    function fallback(){var r=document.createRange();r.selectNodeContents(document.getElementById('mail'));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Markiert, jetzt kopieren'}
+    try{navigator.clipboard.writeText(t).then(done,fallback)}catch(e){fallback()}
+  });
+})();
+</script>
+
+</body>
+</html>
