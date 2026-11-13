@@ -1,0 +1,26 @@
+name: Cover laden
+
+on:
+  workflow_dispatch:
+  push:
+    paths: ["tools/covers.txt"]
+
+permissions:
+  contents: write
+
+jobs:
+  covers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cover aus tools/covers.txt herunterladen
+        run: |
+          mkdir -p img/covers
+          while read -r name url; do
+            [ -z "$name" ] && continue
+            [ -f "img/covers/$name.jpg" ] || curl -sfL "$url" -o "img/covers/$name.jpg" || echo "Fehler: $name"
+          done < tools/covers.txt
+          git config user.name "softblech-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add img/covers
+          git diff --cached --quiet || (git commit -m "Cover geladen" && git push)
