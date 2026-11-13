@@ -30,6 +30,7 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{background:var(--black);color:var(--chrome);font-family:var(--body);font-size:16px;line-height:1.55;margin:0}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--red)}
@@ -57,7 +58,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .hero h1{font-size:clamp(46px,8.4vw,128px);color:var(--chrome);margin-top:10px}
 .hero h1 span{color:var(--red)}
 .btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
-.btn{display:inline-block;text-decoration:none;font-family:var(--display);font-stretch:70%;font-weight:850;text-transform:uppercase;font-size:20px;letter-spacing:.03em;padding:10px 22px;border:2px solid var(--red);transition:background .15s,color .15s}
+.btn{display:inline-block;background:transparent;cursor:pointer;text-decoration:none;font-family:var(--display);font-stretch:70%;font-weight:850;text-transform:uppercase;font-size:20px;letter-spacing:.03em;padding:10px 22px;border:2px solid var(--red);transition:background .15s,color .15s}
 .btn.solid{background:var(--red);color:var(--black)}
 .btn.solid:hover{background:var(--chrome);border-color:var(--chrome)}
 .btn.ghost{color:var(--red)}
@@ -156,7 +157,7 @@ footer{padding-block:48px 40px;text-align:center}
 .social a:hover{color:var(--chrome);transform:translateY(-2px)}
 .social svg{width:30px;height:30px}
 .foot-links{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 26px;margin-bottom:14px}
-.foot-links a,.copyr{font-family:var(--display);font-stretch:75%;font-weight:800;text-transform:uppercase;font-size:14px;letter-spacing:.05em;color:var(--red);text-decoration:none}
+.foot-links a,.foot-links button,.copyr{font-family:var(--display);font-stretch:75%;font-weight:800;text-transform:uppercase;font-size:14px;letter-spacing:.05em;color:var(--red);text-decoration:none}
 .foot-links a:hover{text-decoration:underline}
 
 @media (max-width:860px){
@@ -178,6 +179,45 @@ footer{padding-block:48px 40px;text-align:center}
   .show .btn{font-size:15px;padding:8px 12px}
   .date b{font-size:34px}
 }
+
+/* Einbettungen (erst nach Zustimmung) */
+.listen{margin-top:clamp(40px,5vw,64px)}
+.listen h3,.sub-h{font-size:clamp(30px,3.6vw,48px);color:var(--chrome);margin-bottom:16px}
+.embed{position:relative;background:var(--black-2);border:1px solid var(--line);max-width:100%}
+.embed iframe{display:block;width:100%;border:0}
+.embed.spotify{min-height:352px}
+.embed.video{aspect-ratio:16/9}
+.embed.video iframe{height:100%}
+.gate{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:14px;padding:28px;min-height:inherit;height:100%}
+.gate p{margin:0;max-width:56ch;color:var(--muted);font-size:15px}
+.gate p a{color:var(--chrome)}
+.videos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.vtitle{margin:10px 0 0;font-family:var(--display);font-stretch:75%;font-weight:800;text-transform:uppercase;letter-spacing:.03em}
+
+/* Newsletter */
+.nl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 16px;max-width:900px}
+.nl label{display:flex;flex-direction:column;gap:6px;font-family:var(--display);font-stretch:75%;font-weight:800;text-transform:uppercase;letter-spacing:.05em;font-size:14px;min-width:0}
+.nl input[type=email],.nl input[type=text]{font:inherit;font-family:var(--body);font-stretch:100%;text-transform:none;letter-spacing:0;font-size:17px;padding:12px;background:transparent;color:var(--black);border:2px solid var(--black);border-radius:0;width:100%}
+.nl input::placeholder{color:rgba(12,11,11,.5)}
+.nl .check{grid-column:1/-1;flex-direction:row;align-items:flex-start;gap:10px;font-family:var(--body);font-stretch:100%;text-transform:none;letter-spacing:0;font-weight:500;font-size:15px}
+.nl .check input{width:20px;height:20px;margin-top:2px;accent-color:var(--black);flex:none}
+.nl .actions{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:16px}
+.nl .msg{font-weight:700}
+
+/* Cookie-Banner */
+.cookie{position:fixed;left:0;right:0;bottom:0;z-index:100;background:var(--black);border-top:3px solid var(--red);padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -10px 40px rgba(0,0,0,.5)}
+.cookie .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px;padding-block:20px}
+.cookie .txt{flex:1 1 420px;min-width:0}
+.cookie .txt b{display:block;font-family:var(--display);font-stretch:70%;font-weight:850;text-transform:uppercase;font-size:24px;color:var(--red);margin-bottom:4px}
+.cookie .txt p{margin:0;font-size:15px;max-width:70ch}
+.cookie .txt a{color:var(--red)}
+.cookie .opts{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:12px;font-size:15px}
+.cookie .opts label{display:flex;align-items:center;gap:8px}
+.cookie .opts input{width:18px;height:18px;accent-color:var(--red)}
+.cookie .btns{margin-top:0}
+.cookie .btn{font-size:17px;padding:9px 18px}
+.linkbtn{background:none;border:0;padding:0;cursor:pointer}
+@media (max-width:860px){.videos,.nl{grid-template-columns:minmax(0,1fr)}}
 </style>
 
 </head>
@@ -191,6 +231,7 @@ footer{padding-block:48px 40px;text-align:center}
       <a href="#band">Band</a>
       <a href="#fotos">Fotos</a>
       <a href="#presse">Presse</a>
+      <a href="#newsletter">Newsletter</a>
       <a href="#kontakt">Kontakt</a>
     </nav>
   </div>
@@ -248,6 +289,17 @@ footer{padding-block:48px 40px;text-align:center}
         <a class="single" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2024</span><span class="t cond">Leave Me Now</span></a>
         <a class="single" href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener"><span class="y">2024 · Debüt</span><span class="t cond">Love Me Now</span></a>
       </div>
+      <div class="listen">
+        <h3 class="cond">Reinhören</h3>
+        <div class="embed spotify" data-embed="spotify" data-src="https://open.spotify.com/embed/artist/2jYXnyDOvsZcopHLQgBgt6?utm_source=generator&amp;theme=0" data-height="352" data-title="Softblech auf Spotify"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="videos" class="sec" style="padding-top:0" hidden>
+    <div class="wrap">
+      <h2 class="cond">Videos</h2>
+      <div class="videos" id="video-list"></div>
     </div>
   </section>
 
@@ -326,6 +378,21 @@ footer{padding-block:48px 40px;text-align:center}
     </div>
   </section>
 
+  <section id="newsletter" class="sec on-red">
+    <div class="wrap">
+      <h2 class="cond">Newsletter</h2>
+      <p style="max-width:60ch;margin:0 0 28px;font-weight:600;font-size:18px">Neue Songs und Konzerte direkt ins Postfach. Kein Spam, höchstens ein paar Mails im Jahr.</p>
+      <form class="nl" id="nl-form" method="post" novalidate>
+        <label for="nl-email">E-Mail<input id="nl-email" name="EMAIL" type="email" autocomplete="email" required placeholder="du@beispiel.de"></label>
+        <label for="nl-name">Vorname (optional)<input id="nl-name" name="FIRSTNAME" type="text" autocomplete="given-name" placeholder="Vorname"></label>
+        <label class="check" for="nl-ok"><input id="nl-ok" name="OPT_IN" type="checkbox" value="1" required><span>Ich möchte den Newsletter von SOFTBLECH per E-Mail bekommen. Ich kann mich jederzeit über den Link in jeder Mail wieder abmelden. Mehr dazu in der <a href="datenschutz.html">Datenschutzerklärung</a>.</span></label>
+        <input type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+        <input type="hidden" name="locale" value="de">
+        <div class="actions"><button class="btn solid" type="submit">Anmelden</button><span class="msg" id="nl-msg" role="status"></span></div>
+      </form>
+    </div>
+  </section>
+
   <section id="kontakt" class="sec">
     <div class="wrap contact">
       <div>
@@ -363,13 +430,107 @@ footer{padding-block:48px 40px;text-align:center}
     <div class="foot-links">
       <a href="impressum.html">Impressum</a>
       <a href="datenschutz.html">Datenschutz</a>
+      <button class="linkbtn foot-cookie" type="button" data-open-cookies>Cookie-Einstellungen</button>
       <a href="#kontakt">Kontakt</a>
     </div>
     <div class="copyr">© 2026 Softblech</div>
   </div>
 </footer>
 
+
+<div class="cookie" id="cookie" role="dialog" aria-labelledby="cookie-title" hidden>
+  <div class="wrap">
+    <div class="txt">
+      <b id="cookie-title">Cookies &amp; externe Inhalte</b>
+      <p>Wir würden gern zählen, wie viele Leute unsere Seite besuchen, und dir Spotify und YouTube direkt hier zeigen. Dabei werden Daten an Google bzw. Spotify übertragen. Das passiert nur, wenn du zustimmst. Mehr in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+      <div class="opts" id="cookie-opts" hidden>
+        <label for="c-need"><input id="c-need" type="checkbox" checked disabled> Notwendig</label>
+        <label for="c-media"><input id="c-media" type="checkbox"> Externe Medien (Spotify, YouTube)</label>
+        <label for="c-stats"><input id="c-stats" type="checkbox"> Statistik (Google Analytics)</label>
+      </div>
+    </div>
+    <div class="btns">
+      <button class="btn solid" type="button" id="c-all">Alle akzeptieren</button>
+      <button class="btn ghost" type="button" id="c-none">Nur notwendige</button>
+      <button class="btn ghost" type="button" id="c-choose">Auswählen</button>
+      <button class="btn ghost" type="button" id="c-save" hidden>Auswahl speichern</button>
+    </div>
+  </div>
+</div>
 <script>
+/* ===== EINSTELLUNGEN – hier trägt man später IDs ein ===== */
+var SB = {
+  gaId: "",              /* Google-Analytics-ID, z. B. "G-ABC123XYZ" */
+  youtube: [             /* Videos: { id: "YouTube-ID", title: "Titel" } */
+  ],
+  newsletterAction: ""   /* Formular-Adresse von Brevo (https://...sibforms.com/serve/...) */
+};
+/* ========================================================= */
+(function(){
+  var KEY="sb-consent-v1", consent=null;
+  try{consent=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+  var box=document.getElementById('cookie'), opts=document.getElementById('cookie-opts');
+  var cM=document.getElementById('c-media'), cS=document.getElementById('c-stats');
+  var bSave=document.getElementById('c-save'), bChoose=document.getElementById('c-choose');
+
+  function openBox(){ if(consent){cM.checked=!!consent.media;cS.checked=!!consent.stats} box.hidden=false; }
+  function save(c){ consent=c; try{localStorage.setItem(KEY,JSON.stringify(c))}catch(e){} box.hidden=true; apply(); }
+  document.getElementById('c-all').onclick=function(){save({media:true,stats:true})};
+  document.getElementById('c-none').onclick=function(){save({media:false,stats:false})};
+  bChoose.onclick=function(){opts.hidden=false;bSave.hidden=false;bChoose.hidden=true};
+  bSave.onclick=function(){save({media:cM.checked,stats:cS.checked})};
+  document.querySelectorAll('[data-open-cookies]').forEach(function(b){b.onclick=function(){opts.hidden=false;bSave.hidden=false;bChoose.hidden=true;openBox()}});
+
+  /* Videos aufbauen */
+  var list=document.getElementById('video-list');
+  if(SB.youtube.length){
+    document.getElementById('videos').hidden=false;
+    SB.youtube.forEach(function(v){
+      var w=document.createElement('div');
+      w.innerHTML='<div class="embed video" data-embed="youtube" data-src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(v.id)+'" data-title="'+(v.title||'Video').replace(/"/g,'&quot;')+'"></div><p class="vtitle">'+(v.title||'')+'</p>';
+      list.appendChild(w);
+    });
+  }
+
+  function gate(el){
+    var name=el.dataset.embed==='youtube'?'YouTube':'Spotify';
+    el.innerHTML='<div class="gate"><p>Hier wird ein Player von '+name+' angezeigt. Beim Laden werden Daten an '+name+' übertragen.</p><button class="btn solid" type="button">'+name+' laden</button></div>';
+    el.querySelector('button').onclick=function(){ save({media:true,stats:consent?!!consent.stats:false}); };
+  }
+  function load(el){
+    if(el.querySelector('iframe')) return;
+    var f=document.createElement('iframe');
+    f.src=el.dataset.src; f.title=el.dataset.title||''; f.loading='lazy';
+    f.allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+    if(el.dataset.height) f.height=el.dataset.height;
+    el.innerHTML=''; el.appendChild(f);
+  }
+  var gaLoaded=false;
+  function loadGA(){
+    if(gaLoaded||!SB.gaId) return; gaLoaded=true;
+    var s=document.createElement('script'); s.async=true; s.src='https://www.googletagmanager.com/gtag/js?id='+SB.gaId; document.head.appendChild(s);
+    window.dataLayer=window.dataLayer||[]; window.gtag=function(){dataLayer.push(arguments)};
+    gtag('js',new Date()); gtag('config',SB.gaId,{anonymize_ip:true});
+  }
+  function apply(){
+    document.querySelectorAll('[data-embed]').forEach(function(el){ (consent&&consent.media)?load(el):gate(el); });
+    if(consent&&consent.stats) loadGA();
+    else if(gaLoaded){ location.reload(); }
+  }
+  apply();
+  if(!consent) openBox();
+
+  /* Newsletter */
+  var form=document.getElementById('nl-form'), msg=document.getElementById('nl-msg');
+  form.addEventListener('submit',function(e){
+    var mail=document.getElementById('nl-email'), ok=document.getElementById('nl-ok');
+    if(!mail.value||!mail.checkValidity()){e.preventDefault();msg.textContent='Bitte gib eine gültige E-Mail-Adresse ein.';mail.focus();return}
+    if(!ok.checked){e.preventDefault();msg.textContent='Bitte setz noch das Häkchen.';ok.focus();return}
+    if(!SB.newsletterAction){e.preventDefault();msg.textContent='Der Newsletter startet bald. Bis dahin: softblech@gmail.com';return}
+    form.action=SB.newsletterAction;
+    msg.textContent='Danke! Bitte bestätige die Anmeldung über den Link in der Mail, die wir dir gerade schicken.';
+  });
+})();
 (function(){
   var b=document.getElementById('copy-mail');
   if(!b) return;
