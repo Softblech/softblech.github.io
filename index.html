@@ -85,7 +85,8 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .tiles a{display:flex;align-items:center;justify-content:center;min-height:clamp(120px,15vw,210px);text-decoration:none;font-size:clamp(48px,8vw,120px);transition:background .2s,color .2s}
 .tiles a:nth-child(odd){background:var(--red);color:var(--black)}
 .tiles a:nth-child(even){background:var(--black);color:var(--red)}
-.tiles a:hover{background:var(--chrome);color:var(--black)}
+.tiles a:hover,.tiles a:active,.tiles a:focus-visible{background:var(--black);color:var(--red)}
+.tiles a:nth-child(even):hover,.tiles a:nth-child(even):active{background:var(--black);color:var(--chrome)}
 
 /* Lauf-Band */
 .marquee{background:var(--black);color:var(--red);overflow:hidden;border-bottom:2px solid var(--black)}
@@ -453,7 +454,6 @@ footer{padding-block:48px 40px;text-align:center}
             <dt>Mastering</dt><dd><a href="https://jaccoherhaus.com" target="_blank" rel="noopener">Jacco Herhaus</a></dd>
             <dt>Fotos &amp; Cover</dt><dd><a href="https://www.instagram.com/keevvkeevv" target="_blank" rel="noopener">Kevin Pawlak</a>, <a href="https://karlaschradi.de" target="_blank" rel="noopener">Karla Schradi</a>, <a href="https://www.instagram.com/caro_hanneforth/" target="_blank" rel="noopener">Caro Hanneforth</a>, <a href="https://www.instagram.com/alina.thiemann/" target="_blank" rel="noopener">Alina Thiemann</a>, <a href="https://www.instagram.com/ben0nline/" target="_blank" rel="noopener">Benjamin Cohen</a></dd>
             <dt>Stimme</dt><dd><a href="https://www.instagram.com/anastasiatonkha/" target="_blank" rel="noopener">Anastasia Tonkha</a> („I Want To Be With You“)</dd>
-            <dt>Live-Visuals</dt><dd>Fede Torres</dd>
           </dl>
         </div>
       </div>
