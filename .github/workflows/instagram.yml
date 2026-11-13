@@ -1,0 +1,54 @@
+name: Instagram-Bilder holen
+
+on:
+  schedule:
+    - cron: "41 */6 * * *"   # alle 6 Stunden
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  BEHOLD_FEED_ID: ""          # Feed-ID von behold.so hier eintragen
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Neueste Posts laden und Bilder lokal speichern
+        env:
+          FEED: ${{ vars.BEHOLD_FEED_ID || env.BEHOLD_FEED_ID }}
+        run: |
+          set -e
+          if [ -z "$FEED" ]; then echo "Keine Feed-ID gesetzt"; exit 0; fi
+          curl -sf "https://feeds.behold.so/$FEED" -o /tmp/feed.json
+          python3 - <<'PY'
+          import json, os, urllib.request, glob
+          d = json.load(open('/tmp/feed.json'))
+          posts = d.get('posts', d) if isinstance(d, dict) else d
+          os.makedirs('img/insta', exist_ok=True)
+          out, keep = [], set()
+          for p in posts[:8]:
+              s = (p.get('sizes') or {}).get('medium') or {}
+              src = s.get('mediaUrl') or p.get('thumbnailUrl') or p.get('mediaUrl')
+              if not src: continue
+              fn = f"img/insta/{p['id']}.jpg"
+              if not os.path.exists(fn):
+                  urllib.request.urlretrieve(src, fn)
+              keep.add(fn)
+              cap = (p.get('prunedCaption') or p.get('caption') or '').strip()
+              out.append({'img': fn, 'link': p.get('permalink', 'https://www.instagram.com/softblech'),
+                          'caption': cap[:160], 'date': (p.get('timestamp') or '')[:10],
+                          'video': p.get('mediaType') == 'VIDEO'})
+          for f in glob.glob('img/insta/*.jpg'):
+              if f not in keep: os.remove(f)
+          if out:
+              json.dump({'posts': out}, open('data/instagram.json', 'w'), ensure_ascii=False, indent=1)
+          PY
+      - name: Speichern, falls sich etwas geändert hat
+        run: |
+          git config user.name "softblech-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A img/insta data/instagram.json 2>/dev/null || true
+          git diff --cached --quiet || (git commit -m "Instagram-Bilder aktualisiert" && git push)
