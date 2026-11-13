@@ -32,4 +32,4 @@ jobs:
           git config user.name "softblech-bot"
           git config user.email "actions@users.noreply.github.com"
           git add img/covers img/press
-          git diff --cached --quiet || (git commit -m "Cover geladen" && git push)
+          git diff --cached --quiet || (git commit -m "Cover geladen" && git pull --rebase -q && git push)
