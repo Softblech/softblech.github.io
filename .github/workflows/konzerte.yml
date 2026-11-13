@@ -1,0 +1,46 @@
+name: Konzerte von Bandsintown holen
+
+on:
+  schedule:
+    - cron: "17 */3 * * *"   # alle 3 Stunden
+  workflow_dispatch:          # per Knopfdruck unter "Actions"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Termine laden
+        run: |
+          set -e
+          curl -sf "https://rest.bandsintown.com/artists/id_15651849/events?app_id=js_widget&date=upcoming" -o /tmp/events.json
+          # nur übernehmen, wenn gültiges JSON-Array
+          python3 - <<'PY'
+          import json
+          ev = json.load(open('/tmp/events.json'))
+          assert isinstance(ev, list)
+          out = []
+          for e in ev:
+              v = e.get('venue') or {}
+              offers = [o.get('url') for o in (e.get('offers') or []) if o.get('url')]
+              out.append({
+                  'datetime': e.get('datetime'),
+                  'title': e.get('title') or '',
+                  'venue': v.get('name') or '',
+                  'city': v.get('city') or '',
+                  'country': v.get('country') or '',
+                  'description': (e.get('description') or '')[:200],
+                  'url': offers[0] if offers else e.get('url') or '',
+                  'tickets': bool(offers),
+              })
+          json.dump({'events': out}, open('data/konzerte.json', 'w'), ensure_ascii=False, indent=1)
+          PY
+      - name: Speichern, falls sich etwas geändert hat
+        run: |
+          git config user.name "softblech-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/konzerte.json
+          git diff --cached --quiet || (git commit -m "Konzerte aktualisiert (Bandsintown)" && git push)
