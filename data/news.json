@@ -10,12 +10,12 @@
    "position": "50% 35%",
    "buttons": [
     [
-     "Zum Song",
-     "i-want-to-be-with-you/"
+     "Anhören",
+     "#play:i-want-to-be-with-you"
     ],
     [
-     "Spotify",
-     "https://open.spotify.com/track/3QPbj1t4wVA0xUqkVoVLPV"
+     "Zum Song",
+     "i-want-to-be-with-you/"
     ]
    ],
    "image_mobile": "img/hero.jpg"
@@ -33,7 +33,7 @@
      "#newsletter"
     ]
    ],
-   "image_mobile": "img/press/kevin-pawlak-1.jpg"
+   "image_mobile": "img/press/softblech-band-berlin-kevin-pawlak-1.jpg"
   }
  ]
 }

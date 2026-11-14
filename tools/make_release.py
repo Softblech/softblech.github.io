@@ -58,6 +58,13 @@ def build(c):
         credits = f'<dt>{bi("Länge", "Length")}</dt><dd>{e(c["length"])}</dd>' + credits
     url = f"https://softblech.com/{slug}/"
     desc_de = c.get("teaser_de") or c.get("pitch_de") or f"{c['title']}, {t_de} von SOFTBLECH"
+    # Strukturierte Daten für Suchmaschinen (schema.org MusicRecording)
+    ld = {"@context": "https://schema.org", "@type": "MusicRecording", "name": c["title"], "url": url,
+          "datePublished": c["date"], "image": f"https://softblech.com/{c['cover']}", "description": desc_de,
+          "genre": ["Post Wave", "Post-Punk", "Dark Wave"],
+          "byArtist": {"@type": "MusicGroup", "name": "SOFTBLECH", "url": "https://softblech.com/"},
+          "sameAs": [u for n, u in c["links"] if u.startswith("http")]}
+    ld_json = json.dumps(ld, ensure_ascii=False).replace("</", "<\\/")
     teaser = (f'<p class="teaser">{bi(e(c.get("teaser_de")), e(c.get("teaser_en")))}</p>'
               if c.get("teaser_de") or c.get("teaser_en") else "")
 
@@ -113,6 +120,7 @@ def build(c):
 <meta property="og:image" content="https://softblech.com/{e(c['cover'])}">
 <meta property="og:url" content="{url}">
 <meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{ld_json}</script>
 <link rel="stylesheet" href="../release.css">
 </head>
 <body>
