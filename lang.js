@@ -39,6 +39,7 @@
     "Laptop und Audio-Interface bringen wir selbst mit":"We bring our own laptop and audio interface",
     "Den vollständigen Technical Rider schicken wir gern mit.":"We're happy to send the full technical rider.",
     "Booking anfragen":"Booking request",
+    "Mail an uns":"Email us","Mail ans Booking":"Email booking",
     "Hohe Auflösung · Google Drive":"High resolution · Google Drive",
     "PDF · Bio, Fakten, Releases, Presse":"PDF · Bio, facts, releases, press",
     "PDF · Für Veranstalter":"PDF · For promoters",
