@@ -39,6 +39,7 @@
     "Laptop und Audio-Interface bringen wir selbst mit":"We bring our own laptop and audio interface",
     "Den vollständigen Technical Rider schicken wir gern mit.":"We're happy to send the full technical rider.",
     "Booking anfragen":"Booking request",
+    "Für Presse und alles andere. Wir antworten persönlich.":"For press and everything else. We answer personally.",
     "Ihr wollt uns live erleben, in eurem Club oder auf eurem Festival?":"Want us to play your club or festival?",
     "Booking & Technik":"Booking & tech",
     "Anhören":"Listen",
