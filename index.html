@@ -189,7 +189,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .hero .stop svg{width:1em;height:1em}
 .hero h1{font-size:clamp(46px,8.4vw,128px);color:var(--chrome);margin-top:10px}
 .hero h1 span{color:var(--red)}
-.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.btns{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px}
 .btn{display:inline-block;background:transparent;cursor:pointer;text-decoration:none;font-family:var(--display);font-stretch:70%;font-weight:850;text-transform:uppercase;font-size:20px;letter-spacing:.03em;padding:10px 22px;border:2px solid var(--red);transition:background .15s,color .15s}
 .btn.solid{background:var(--red);color:var(--black)}
 .btn.solid:hover{background:var(--chrome);border-color:var(--chrome)}
@@ -218,7 +218,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 
 /* Sektionen */
 section{scroll-margin-top:64px}
-.sec{padding-block:clamp(48px,7vw,96px)}
+.sec{padding-block:clamp(72px,8vw,112px)}
 .sec h2{font-size:clamp(52px,7vw,104px);color:var(--red);margin-bottom:clamp(24px,3vw,40px)}
 .on-red{background:var(--red);color:var(--black)}
 .on-red h2{color:var(--black)}
@@ -452,6 +452,16 @@ footer{padding-block:48px 40px;text-align:center}
   .cookie .btn{font-size:16px;padding:8px 10px;min-height:44px}
 }
 
+
+.dls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--line)}
+.dl{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;gap:6px 16px;align-items:center;padding:26px 24px 26px 0;border-bottom:1px solid var(--line);color:var(--chrome);text-decoration:none}
+.dl .t{font-size:clamp(28px,3vw,40px);color:var(--chrome);line-height:1}
+.dl .s{grid-column:1;color:var(--muted);font-size:14px}
+.dl .arr{grid-column:2;grid-row:1/3;font-size:28px;color:var(--red)}
+.dl:hover .t{color:var(--red)}
+#downloads{padding-bottom:0}
+#kontakt{border-top:0}
+@media (max-width:860px){.dls{grid-template-columns:1fr}.dl{padding:22px 4px}}
 /* Presskit + Booking */
 .pk{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(24px,5vw,72px);align-items:start}
 .pk h3{font-size:clamp(26px,3vw,36px);margin-bottom:12px}
@@ -490,11 +500,11 @@ body.has-mini{padding-bottom:110px}
       <a href="#musik">Musik</a>
       <a href="#live">Live</a>
       <a href="#band">Band</a>
-      <a href="#presskit">Presskit</a>
       <a href="#videos">Videos</a>
       <a href="#fotos">Fotos</a>
       <a href="#presse">Presse</a>
       <a href="#newsletter">Newsletter</a>
+      <a href="#downloads">Downloads</a>
       <a href="#kontakt">Kontakt</a>
     </nav>
     <div class="lang" role="group" aria-label="Sprache / Language"><button type="button" data-lang="de" aria-pressed="true">DE</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
@@ -590,7 +600,7 @@ body.has-mini{padding-bottom:110px}
           <li><span>Hebebühne, Hamburg · mit Dews Pegahorn</span><span></span></li>
         </ul>
       </div>
-      <p class="live-book">Ihr wollt uns live erleben, in eurem Club oder auf eurem Festival? <a href="#booking">Booking &amp; Technik</a></p>
+      <p class="live-book">Ihr wollt uns live erleben, in eurem Club oder auf eurem Festival? <a href="#kontakt">Booking &amp; Kontakt</a></p>
     </div>
   </section>
 
@@ -622,30 +632,8 @@ body.has-mini{padding-bottom:110px}
     </div>
   </section>
 
-  <section id="presskit" class="sec on-red">
-    <div class="wrap">
-      <h2 class="cond">Presskit</h2>
-      <div class="pk">
-        <div>
-          <p class="pk-lead">Bio, Fakten, Releases, Presse und Kontakte auf zwei Seiten.</p>
-          <div class="btns">
-            <a class="btn solid" href="downloads/softblech-presskit.pdf" download>Presskit (PDF)</a>
-            <a class="btn ghost" href="https://drive.google.com/drive/folders/1K4uR7UvWpCNpZ2IkZ0Ao4phFAWkuovKI" target="_blank" rel="noopener">Pressefotos</a>
-          </div>
-        </div>
-        <div class="book" id="booking">
-          <h3 class="cond">Für Veranstalter</h3>
-          <p>Booking: <a href="mailto:aaron@loft.de?subject=Booking%20SOFTBLECH" style="color:inherit">Aaron Widdig (LOFT)</a></p>
-          <div class="btns">
-            <a class="btn solid" href="mailto:aaron@loft.de?subject=Booking%20SOFTBLECH">Booking anfragen</a>
-            <a class="btn ghost" href="downloads/softblech-technical-rider.pdf" download>Technical Rider (PDF)</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <section id="fotos" class="sec" style="padding-top:0">
+  <section id="fotos" class="sec">
     <div class="wrap">
       <h2 class="cond">Fotos</h2>
       <div class="insta" id="insta" hidden></div>
@@ -699,6 +687,17 @@ body.has-mini{padding-bottom:110px}
         <div class="actions"><button class="btn solid" type="submit">Anmelden</button><span class="msg" id="nl-msg" role="status"></span></div>
       </form>
     </div>
+    </div>
+  </section>
+
+  <section id="downloads" class="sec">
+    <div class="wrap">
+      <h2 class="cond">Downloads</h2>
+      <div class="dls">
+        <a class="dl" href="downloads/softblech-presskit.pdf" download><span class="t cond">Presskit</span><span class="s">PDF · Bio, Fakten, Releases, Presse</span><span class="arr" aria-hidden="true">↓</span></a>
+        <a class="dl" href="https://drive.google.com/drive/folders/1K4uR7UvWpCNpZ2IkZ0Ao4phFAWkuovKI" target="_blank" rel="noopener"><span class="t cond">Pressefotos</span><span class="s">Hohe Auflösung · Google Drive</span><span class="arr" aria-hidden="true">↗</span></a>
+        <a class="dl" href="downloads/softblech-technical-rider.pdf" download><span class="t cond">Technical Rider</span><span class="s">PDF · Für Veranstalter</span><span class="arr" aria-hidden="true">↓</span></a>
+      </div>
     </div>
   </section>
 
