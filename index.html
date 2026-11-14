@@ -160,9 +160,11 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .top nav a:hover{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:2px}
 
 /* Sprache DE | EN */
-.lang{display:flex;border:2px solid var(--black);flex:none}
-.lang button{font-family:var(--display);font-stretch:75%;font-weight:800;font-size:15px;line-height:1;background:transparent;color:var(--black);border:0;padding:8px 10px;cursor:pointer}
-.lang button[aria-pressed=true]{background:var(--black);color:var(--red)}
+.lang{display:flex;align-items:center;flex:none;gap:2px}
+.lang button{font-family:var(--display);font-stretch:75%;font-weight:800;font-size:14px;letter-spacing:.04em;line-height:1;background:transparent;color:var(--black);border:0;padding:6px 5px;cursor:pointer;opacity:.45}
+.lang button+button::before{content:"/";display:inline-block;margin-right:7px;opacity:.6;font-weight:600;text-decoration:none}
+.lang button[aria-pressed=true]{opacity:1;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+.lang button:hover{opacity:1}
 .top nav{margin-left:auto}
 @media (max-width:860px){.top .lang{margin-left:auto}.burger{order:3}}
 /* Hero */
@@ -343,7 +345,7 @@ footer{padding-block:48px 40px;text-align:center}
 }
 @media (max-width:520px){
   .top .wrap{flex-direction:column;align-items:flex-start;gap:6px}
-  .top .logo img{height:34px}
+  .top .logo img{height:36px}
   .top nav{justify-content:flex-start;gap:2px 14px}
   .show .btn{font-size:15px;padding:8px 12px}
   .date b{font-size:34px}
@@ -394,13 +396,13 @@ footer{padding-block:48px 40px;text-align:center}
 .burger{display:none}
 @media (max-width:860px){
   .top .wrap{flex-direction:row;align-items:center;padding-block:10px}
-  .top .logo img{height:34px}
-  .burger{display:flex;flex-direction:column;justify-content:center;gap:8px;width:48px;height:44px;padding:8px 4px;background:transparent;border:0;cursor:pointer;position:relative}
-  .burger span{display:block;height:5px;background:var(--black);transition:transform .2s}
+  .top .logo img{height:36px}
+  .burger{display:flex;flex-direction:column;justify-content:center;gap:7px;width:44px;height:44px;padding:8px 8px;background:transparent;border:0;cursor:pointer;position:relative}
+  .burger span{display:block;height:2.5px;background:var(--black);transition:transform .2s}
   .burger span:nth-child(3){display:none}
   .burger b{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-  .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
-  .burger[aria-expanded="true"] span:nth-child(2){transform:translateY(-6.5px) rotate(-45deg)}
+  .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(4.75px) rotate(45deg)}
+  .burger[aria-expanded="true"] span:nth-child(2){transform:translateY(-4.75px) rotate(-45deg)}
   .top nav{display:none;position:absolute;left:0;right:0;top:100%;background:var(--red);border-bottom:2px solid var(--black);flex-direction:column;gap:0;padding:4px var(--gutter-r) 16px var(--gutter-l)}
   .top nav.open{display:flex}
   .top nav a{font-size:34px;font-stretch:62%;font-weight:850;padding-block:6px;border-bottom:1px solid var(--line-red)}

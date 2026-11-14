@@ -15,9 +15,11 @@ html[data-lang=de] [data-l=en],html[data-lang=en] [data-l=de]{display:none!impor
 .top{position:sticky;top:0;z-index:50;background:var(--red);color:var(--black);border-bottom:2px solid var(--black)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;padding-block:8px}
 .top .logo img{height:40px;width:auto}
-.lang{display:flex;border:2px solid var(--black)}
-.lang button{font:800 15px/1 var(--display);font-stretch:75%;background:transparent;color:var(--black);border:0;padding:8px 12px;cursor:pointer}
-.lang button[aria-pressed=true]{background:var(--black);color:var(--red)}
+.lang{display:flex;align-items:center;gap:2px}
+.lang button{font:800 14px/1 var(--display);font-stretch:75%;letter-spacing:.04em;background:transparent;color:var(--black);border:0;padding:6px 5px;cursor:pointer;opacity:.45}
+.lang button+button::before{content:"/";display:inline-block;margin-right:7px;opacity:.6;font-weight:600;text-decoration:none}
+.lang button:hover{opacity:1}
+.lang button[aria-pressed=true]{opacity:1;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
 .rhero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:48px;align-items:center;padding-block:56px}
 .cover{width:100%;aspect-ratio:1;object-fit:cover;box-shadow:0 20px 60px rgba(0,0,0,.6)}
 .eyebrow{color:var(--red);font-family:var(--display);font-stretch:75%;font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:15px}
