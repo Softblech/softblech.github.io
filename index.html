@@ -277,7 +277,9 @@ section{scroll-margin-top:64px}
 .members b{display:block;font-size:30px;color:var(--red)}
 .members span{color:var(--muted)}
 .crew{margin-top:32px;padding-top:20px;border-top:1px solid var(--line)}
-.crew h3{font-size:clamp(26px,3vw,36px);color:var(--red);margin-bottom:12px}
+.crew summary,.more summary{cursor:pointer;font-family:var(--display);font-stretch:75%;font-weight:850;text-transform:uppercase;letter-spacing:.03em;color:var(--red)}
+.crew summary{font-size:clamp(22px,2.4vw,30px)}.crew[open] summary{margin-bottom:12px}
+.more{margin:4px 0 0}.more summary{font-size:18px;margin-bottom:12px}
 .crew dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px 24px;margin:0}
 .crew dt{color:var(--muted)}
 .crew dd{margin:0}
@@ -459,6 +461,7 @@ footer{padding-block:48px 40px;text-align:center}
 .pk details[open] summary{margin-bottom:14px}
 .pk .book{background:var(--black);color:var(--chrome);padding:clamp(20px,3vw,32px)}
 .pk .book h3{color:var(--red)}
+.pk-lead{font-size:clamp(18px,1.8vw,22px);font-weight:600}
 .pk .book ul{margin:0 0 18px;padding-left:1.1em}
 .pk .book li{margin:0 0 6px}
 .pk .book .btn.solid{background:var(--red);color:var(--black);border-color:var(--red)}
@@ -597,21 +600,24 @@ body.has-mini{padding-bottom:110px}
       <div class="text">
         <h2 class="cond">Band</h2>
         <p class="lead">SOFTBLECH sind ein Post-Wave-Duo aus Berlin. Post Wave liegt genau zwischen Post-Punk und Dark Wave: irgendwo zwischen The Cure und Fontaines D.C.</p>
+        <details class="more">
+          <summary>Mehr über uns</summary>
         <p>Sie schreiben von innen nach außen. Ihre Songs versuchen nicht, schwierige Gefühle zu erklären, sondern ehrlich in ihnen zu bleiben. Trennungen, Zweifel, Liebe, die ihre Form verändert, die Angst, jemanden ein zweites Mal zu verlieren.</p>
         <p>Als Duo ohne Schlagzeuger haben sie aus der Not eine Tugend gemacht: Die Drum Machine ist kein Kompromiss, sondern ihre Handschrift. Seit ihrer Gründung 2024 in Hamburg haben SOFTBLECH eine ganze Reihe von Singles veröffentlicht. Ihre Debütsingle „Love Me Now“ lief im Podcast „Fest &amp; Flauschig“. Ihre Musik wurde mehr als 215.000 Mal gestreamt.</p>
+        </details>
         <div class="members">
           <div><b class="cond">Dennis Hörtinger</b><span>Bass, Gesang</span></div>
           <div><b class="cond">Henri Röttger</b><span>Gitarre, Gesang</span></div>
         </div>
-        <div class="crew">
-          <h3 class="cond">Mit uns gearbeitet haben</h3>
+        <details class="crew">
+          <summary class="cond">Mit uns gearbeitet haben</summary>
           <dl>
             <dt>Produktion</dt><dd><a href="https://www.instagram.com/leonschmeon/" target="_blank" rel="noopener">Leon Kaack</a>, <a href="https://www.birkbuttchereyt.com" target="_blank" rel="noopener">Birk Buttchereyt</a>, <a href="https://lukas-kurz.com" target="_blank" rel="noopener">Lukas Kurz</a>, <a href="https://www.instagram.com/arnesrm/" target="_blank" rel="noopener">Arne Schramm</a></dd>
             <dt>Mastering</dt><dd><a href="https://jaccoherhaus.com" target="_blank" rel="noopener">Jacco Herhaus</a></dd>
             <dt>Fotos &amp; Cover</dt><dd><a href="https://www.instagram.com/keevvkeevv" target="_blank" rel="noopener">Kevin Pawlak</a>, <a href="https://karlaschradi.de" target="_blank" rel="noopener">Karla Schradi</a>, <a href="https://www.instagram.com/caro_hanneforth/" target="_blank" rel="noopener">Caro Hanneforth</a>, <a href="https://www.instagram.com/alina.thiemann/" target="_blank" rel="noopener">Alina Thiemann</a>, <a href="https://www.instagram.com/ben0nline/" target="_blank" rel="noopener">Benjamin Cohen</a>, <a href="https://www.instagram.com/oliviaklug_/" target="_blank" rel="noopener">Olivia Klug</a>, <a href="https://www.instagram.com/jeremias_otto/" target="_blank" rel="noopener">Jeremias Otto</a>, <a href="https://www.instagram.com/leons_zeug/" target="_blank" rel="noopener">@leons_zeug</a></dd>
             <dt>Stimme</dt><dd><a href="https://www.instagram.com/anastasiatonkha/" target="_blank" rel="noopener">Anastasia Tonkha</a> („I Want To Be With You“)</dd>
           </dl>
-        </div>
+        </details>
       </div>
     </div>
   </section>
@@ -621,33 +627,18 @@ body.has-mini{padding-bottom:110px}
       <h2 class="cond">Presskit</h2>
       <div class="pk">
         <div>
-          <h3 class="cond">Kurzbio</h3>
-          <p>SOFTBLECH sind ein Post-Wave-Duo aus Berlin. Zwischen The Cure und Fontaines D.C. schichten Dennis Hörtinger (Bass/Gesang) und Henri Röttger (Gitarre/Gesang) E-Bass und Gitarre über treibende Drum-Machine-Beats und schreiben Songs, die ehrlich in schwierigen Gefühlen bleiben.</p>
-          <details>
-            <summary>Lange Bio lesen</summary>
-            <p>SOFTBLECH sind ein Post-Wave-Duo aus Berlin: Dennis Hörtinger (Bass/Gesang) und Henri Röttger (Gitarre/Gesang). Post Wave liegt genau zwischen Post-Punk und Dark Wave: irgendwo zwischen The Cure und Fontaines D.C. Sie schreiben über das, was sie tief bewegt, und schichten E-Bass und Gitarre über treibende Drum-Machine-Beats.</p>
-            <p>Sie schreiben von innen nach außen. Ihre Songs versuchen nicht, schwierige Gefühle zu erklären, sondern ehrlich in ihnen zu bleiben. Trennungen, Zweifel, Liebe, die ihre Form verändert, die Angst, jemanden ein zweites Mal zu verlieren. Gefühle, die sich nur schwer in Worte fassen lassen, und genau deshalb versuchen sie es immer wieder.</p>
-            <p>Als Duo ohne Schlagzeuger haben sie aus der Not eine Tugend gemacht: Die Drum Machine ist kein Kompromiss, sondern ihre Handschrift. Seit ihrer Gründung 2024 in Hamburg haben SOFTBLECH eine ganze Reihe von Singles veröffentlicht, produziert mit Leon Kaack, Birk Buttchereyt, Lukas Kurz und Arne Schramm. Ihre Debütsingle „Love Me Now“ lief im Podcast „Fest &amp; Flauschig“. Bisher wurde ihre Musik mehr als 215.000 Mal gestreamt und auf Spotify in über 1.500 Playlists aufgenommen. Sie standen mit Night Tapes (Urban Spree, Berlin), Dews Pegahorn (Lark, Berlin &amp; Hebebühne, Hamburg), WU LYF (Lido, Berlin), Day We Ran (Privatclub, Berlin) und Tauchen auf der Bühne und spielten in der Kantine am Berghain.</p>
-            <p>Neben diesen Support-Slots haben SOFTBLECH in Berliner Bars mehrere eigene Indie-Abende veranstaltet und als Headliner gespielt, jedes Mal vor vollem Haus. Daraus ist eine kleine, treue Fanbase gewachsen, die die Songs kennt und immer wieder zu ihren Konzerten kommt.</p>
-          </details>
+          <p class="pk-lead">Bio, Fakten, Releases, Presse und Kontakte auf zwei Seiten.</p>
           <div class="btns">
-            <a class="btn solid" href="https://drive.google.com/drive/folders/1K4uR7UvWpCNpZ2IkZ0Ao4phFAWkuovKI" target="_blank" rel="noopener">Presskit &amp; Pressefotos</a>
-            <a class="btn ghost" href="#fotos">Fotos ansehen</a>
+            <a class="btn solid" href="downloads/softblech-presskit.pdf" download>Presskit (PDF)</a>
+            <a class="btn ghost" href="https://drive.google.com/drive/folders/1K4uR7UvWpCNpZ2IkZ0Ao4phFAWkuovKI" target="_blank" rel="noopener">Pressefotos</a>
           </div>
         </div>
         <div class="book" id="booking">
           <h3 class="cond">Für Veranstalter</h3>
-          <ul>
-            <li>2 Musiker + DJ (Backing Tracks vom Laptop)</li>
-            <li>Gitarre und Bass über Amp-Modeler direkt ins Pult</li>
-            <li>2 Gesangsmikrofone, 1 bis 3 Monitore</li>
-            <li>Hoher Tisch mit Strom für den DJ</li>
-            <li>Laptop und Audio-Interface bringen wir selbst mit</li>
-          </ul>
-          <p>Den vollständigen Technical Rider schicken wir gern mit.</p>
           <p>Booking: <a href="mailto:aaron@loft.de?subject=Booking%20SOFTBLECH" style="color:inherit">Aaron Widdig (LOFT)</a></p>
           <div class="btns">
             <a class="btn solid" href="mailto:aaron@loft.de?subject=Booking%20SOFTBLECH">Booking anfragen</a>
+            <a class="btn ghost" href="downloads/softblech-technical-rider.pdf" download>Technical Rider (PDF)</a>
           </div>
         </div>
       </div>
@@ -693,7 +684,7 @@ body.has-mini{padding-bottom:110px}
         </a>
       </div>
       <div class="btns" style="margin-top:28px">
-        <a class="btn solid" href="https://drive.google.com/drive/folders/1K4uR7UvWpCNpZ2IkZ0Ao4phFAWkuovKI" target="_blank" rel="noopener">Pressefotos &amp; Presskit</a>
+        <a class="btn solid" href="downloads/softblech-presskit.pdf" download>Presskit (PDF)</a>
       </div>
     </div>
       <div id="newsletter">
