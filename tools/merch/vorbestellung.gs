@@ -45,11 +45,14 @@ function einrichten() {
   rows.push(['Shirts gesamt', '=SUM(B2:B' + (GROESSEN.length + 1) + ')']);
   rows.push(['', '']);
   rows.push(['Bestellungen', '=COUNTA(' + BLATT + '!B2:B)']);
-  rows.push(['Davon bezahlt', '=COUNTIF(' + BLATT + '!' + col('Bezahlt') + '2:' + col('Bezahlt') + ',TRUE)']);
+  // Formeln ohne Komma/Semikolon und ohne TRUE/WAHR, damit sie in jeder Spracheinstellung funktionieren
+  var bez = BLATT + '!' + col('Bezahlt') + '2:' + col('Bezahlt');
+  var bet = BLATT + '!' + col('Betrag (€)') + '2:' + col('Betrag (€)');
+  rows.push(['Davon bezahlt', '=SUMPRODUCT(' + bez + '*1)']);
   rows.push(['Betrag gesamt (€)', '=SUM(' + BLATT + '!' + col('Betrag (€)') + '2:' + col('Betrag (€)') + ')']);
-  rows.push(['Davon bezahlt (€)', '=SUMIF(' + BLATT + '!' + col('Bezahlt') + '2:' + col('Bezahlt') + ',TRUE,' + BLATT + '!' + col('Betrag (€)') + '2:' + col('Betrag (€)') + ')']);
-  rows.push(['Zum Versand', '=COUNTIF(' + BLATT + '!F2:F,"Versand")']);
-  rows.push(['Zur Abholung', '=COUNTIF(' + BLATT + '!F2:F,"Abholung")']);
+  rows.push(['Davon bezahlt (€)', '=SUMPRODUCT(' + bez + '*' + bet + ')']);
+  rows.push(['Zum Versand', '=SUMPRODUCT(--(' + BLATT + '!F2:F="Versand"))']);
+  rows.push(['Zur Abholung', '=SUMPRODUCT(--(' + BLATT + '!F2:F="Abholung"))']);
   // Beschriftungen als Werte, Formeln extra (setFormula versteht immer die englische Schreibweise mit Komma)
   ue.getRange(1, 1, rows.length, 1).setValues(rows.map(function (r) { return [r[0]]; }));
   rows.forEach(function (r, i) {
