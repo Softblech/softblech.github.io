@@ -6,7 +6,7 @@
 var MERCH = {
   offen: true,                 // false = Formular aus, Hinweis "geschlossen"
   // Web-App-Adresse aus Google Apps Script (endet auf /exec). Leer = Testmodus.
-  endpoint: '',
+  endpoint: 'https://script.google.com/macros/s/AKfycbyDGxcsI9g2Wr1Pr-fyA2FmWhAnjRMlLy1juPrJn0NavL8r07UcXUy1oMe5WlSAWJNwTQ/exec',
   titel: 'SOFTBLECH Shirt',
   bild: 'shirt.jpg',           // Bild im Ordner merch/
   preis: 25,                   // Euro pro Shirt
