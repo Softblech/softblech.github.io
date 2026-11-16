@@ -1,6 +1,6 @@
 /**
  * SOFTBLECH Merch-Vorbestellung
- * Google Apps Script, gehört in eine Google-Tabelle (Erweiterungen > Apps Script).
+ * Google Apps Script (eigenständiges Projekt, schreibt in die Tabelle TABELLE_ID).
  * Speichert jede Vorbestellung von softblech.com/merch als neue Zeile
  * und schickt eine Bestätigungsmail mit der Bestellnummer.
  * Anleitung: tools/merch/ANLEITUNG.md
@@ -18,6 +18,9 @@ var KOPIE_AN = '';       // z. B. 'softblech@gmail.com' für eine Info bei jeder
 // ================================================================
 
 var BLATT = 'Bestellungen';
+// Die Tabelle "Shirt Bestellungen" im Softblech-Drive
+var TABELLE_ID = '1xm_5h0RCXv8rXa44IDjITip3Okn9e7MJ5GIrw6QC134';
+function tabelle_() { return SpreadsheetApp.openById(TABELLE_ID); }
 
 function kopfzeile_() {
   return ['Eingang', 'Bestellnr.', 'Vorname', 'Nachname', 'E-Mail', 'Lieferung']
@@ -27,7 +30,7 @@ function kopfzeile_() {
 
 /** Einmal von Hand ausführen: legt die Blätter "Bestellungen" und "Übersicht" an. */
 function einrichten() {
-  var ss = SpreadsheetApp.getActive();
+  var ss = tabelle_();
   var sh = ss.getSheetByName(BLATT) || ss.insertSheet(BLATT);
   var kopf = kopfzeile_();
   sh.getRange(1, 1, 1, kopf.length).setValues([kopf]).setFontWeight('bold').setBackground('#ff2f3f');
@@ -78,7 +81,7 @@ function doPost(e) {
     var betrag = Math.round((summeShirts * PREIS + (lieferung === 'Versand' ? VERSAND : 0)) * 100) / 100;
 
     lock.waitLock(20000);
-    var sh = SpreadsheetApp.getActive().getSheetByName(BLATT);
+    var sh = tabelle_().getSheetByName(BLATT);
     // Fortlaufende Nummer, bleibt eindeutig, auch wenn Zeilen gelöscht werden
     var props = PropertiesService.getScriptProperties();
     var zaehler = parseInt(props.getProperty('zaehler') || '0', 10) + 1;
