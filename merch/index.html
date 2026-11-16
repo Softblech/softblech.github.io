@@ -2,7 +2,7 @@
 <html lang="de" data-lang="de">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src 'self' https://script.google.com https://script.googleusercontent.com; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.sibforms.com; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Merch vorbestellen · SOFTBLECH</title>
@@ -86,6 +86,8 @@
       </div>
       <label><span data-l="de">Nachricht an uns (optional)</span><span data-l="en">Message to us (optional)</span><textarea name="nachricht" rows="3" maxlength="500"></textarea></label>
     </fieldset>
+
+    <label class="radio nl"><input type="checkbox" name="newsletter" value="ja"><span><span data-l="de">Ich möchte auch den SOFTBLECH-Newsletter per E-Mail bekommen (neue Songs, Konzerte, Merch). Du bekommst dafür eine Mail mit Bestätigungslink und kannst dich jederzeit abmelden.</span><span data-l="en">I'd also like to get the SOFTBLECH newsletter by email (new songs, shows, merch). You'll get an email with a confirmation link and can unsubscribe at any time.</span></span></label>
 
     <!-- Falle für Spam-Bots: Menschen sehen dieses Feld nicht -->
     <div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
