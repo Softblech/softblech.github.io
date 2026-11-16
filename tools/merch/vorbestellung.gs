@@ -14,7 +14,7 @@ var MAX_PRO_GROESSE = 10;
 var PAYPAL = '';         // leer = Zahlungsinfos schickt ihr persönlich
 var ZAHLEN_IN_TAGEN = 7;
 var BESTAETIGUNG_SENDEN = true;
-var KOPIE_AN = '';       // z. B. 'softblech@gmail.com' für eine Info bei jeder Bestellung (leer = keine)
+var KOPIE_AN = 'softblech@gmail.com'; // Hinweis-Mail bei jeder Bestellung (leer = keine)
 // ================================================================
 
 var BLATT = 'Bestellungen';
@@ -25,7 +25,7 @@ function tabelle_() { return SpreadsheetApp.openById(TABELLE_ID); }
 function kopfzeile_() {
   return ['Eingang', 'Bestellnr.', 'Vorname', 'Nachname', 'E-Mail', 'Lieferung']
     .concat(GROESSEN)
-    .concat(['Shirts gesamt', 'Betrag (€)', 'Straße', 'Adresszusatz', 'PLZ', 'Ort', 'Land', 'Nachricht', 'Sprache', 'Bezahlt', 'Verschickt / abgeholt']);
+    .concat(['Shirts gesamt', 'Betrag (€)', 'Straße', 'Adresszusatz', 'PLZ', 'Ort', 'Land', 'Nachricht', 'Sprache', 'Bezahlt', 'Verschickt / abgeholt', 'Newsletter']);
 }
 
 /** Einmal von Hand ausführen: legt die Blätter "Bestellungen" und "Übersicht" an. */
@@ -45,12 +45,20 @@ function einrichten() {
   rows.push(['Shirts gesamt', '=SUM(B2:B' + (GROESSEN.length + 1) + ')']);
   rows.push(['', '']);
   rows.push(['Bestellungen', '=COUNTA(' + BLATT + '!B2:B)']);
-  rows.push(['Davon bezahlt', '=COUNTIF(' + BLATT + '!' + col('Bezahlt') + '2:' + col('Bezahlt') + ',TRUE)']);
+  // Formeln ohne Komma/Semikolon und ohne TRUE/WAHR, damit sie in jeder Spracheinstellung funktionieren
+  var bez = BLATT + '!' + col('Bezahlt') + '2:' + col('Bezahlt');
+  var bet = BLATT + '!' + col('Betrag (€)') + '2:' + col('Betrag (€)');
+  rows.push(['Davon bezahlt', '=SUMPRODUCT(' + bez + '*1)']);
   rows.push(['Betrag gesamt (€)', '=SUM(' + BLATT + '!' + col('Betrag (€)') + '2:' + col('Betrag (€)') + ')']);
-  rows.push(['Davon bezahlt (€)', '=SUMIF(' + BLATT + '!' + col('Bezahlt') + '2:' + col('Bezahlt') + ',TRUE,' + BLATT + '!' + col('Betrag (€)') + '2:' + col('Betrag (€)') + ')']);
-  rows.push(['Zum Versand', '=COUNTIF(' + BLATT + '!F2:F,"Versand")']);
-  rows.push(['Zur Abholung', '=COUNTIF(' + BLATT + '!F2:F,"Abholung")']);
-  ue.getRange(1, 1, rows.length, 2).setValues(rows);
+  rows.push(['Davon bezahlt (€)', '=SUMPRODUCT(' + bez + '*' + bet + ')']);
+  rows.push(['Zum Versand', '=SUMPRODUCT(--(' + BLATT + '!F2:F="Versand"))']);
+  rows.push(['Zur Abholung', '=SUMPRODUCT(--(' + BLATT + '!F2:F="Abholung"))']);
+  // Beschriftungen als Werte, Formeln extra (setFormula versteht immer die englische Schreibweise mit Komma)
+  ue.getRange(1, 1, rows.length, 1).setValues(rows.map(function (r) { return [r[0]]; }));
+  rows.forEach(function (r, i) {
+    var c = ue.getRange(i + 1, 2);
+    if (String(r[1]).charAt(0) === '=') c.setFormula(r[1]); else c.setValue(r[1]);
+  });
   ue.getRange('A1:B1').setFontWeight('bold').setBackground('#ff2f3f');
   ue.autoResizeColumns(1, 2);
 }
@@ -89,7 +97,7 @@ function doPost(e) {
     var nr = 'SB-' + ('00' + zaehler).slice(-3);
     var zeile = [new Date(), nr, safe_(t('vorname', 80)), safe_(t('nachname', 80)), safe_(email), lieferung]
       .concat(anzahl)
-      .concat([summeShirts, betrag, safe_(t('strasse')), safe_(t('zusatz')), safe_(t('plz', 12)), safe_(t('ort', 80)), safe_(t('land', 60)), safe_(t('nachricht', 500)), p.sprache === 'en' ? 'en' : 'de', false, false]);
+      .concat([summeShirts, betrag, safe_(t('strasse')), safe_(t('zusatz')), safe_(t('plz', 12)), safe_(t('ort', 80)), safe_(t('land', 60)), safe_(t('nachricht', 500)), p.sprache === 'en' ? 'en' : 'de', false, false, p.newsletter === 'ja' ? 'ja' : '']);
     sh.appendRow(zeile);
     var r = sh.getLastRow(), kopf = kopfzeile_();
     sh.getRange(r, kopf.indexOf('Bezahlt') + 1, 1, 2).insertCheckboxes();
@@ -100,7 +108,24 @@ function doPost(e) {
       try { mail_(p.sprache === 'en', email, t('vorname', 80), nr, anzahl, lieferung, betrag); } catch (err) { console.error(err); }
     }
     if (KOPIE_AN) {
-      try { MailApp.sendEmail(KOPIE_AN, 'Neue Merch-Vorbestellung ' + nr, t('vorname') + ' ' + t('nachname') + ': ' + summeShirts + ' Shirt(s), ' + betrag + ' €, ' + lieferung); } catch (err) { console.error(err); }
+      try {
+        var groessen = GROESSEN.map(function (g, i) { return anzahl[i] ? anzahl[i] + ' × ' + g : ''; }).filter(String).join(', ');
+        var adresse = lieferung === 'Versand' ? [t('strasse'), t('zusatz'), t('plz') + ' ' + t('ort'), t('land')].filter(String).join('\n') : 'Abholung bei einem Konzert';
+        MailApp.sendEmail({
+          to: KOPIE_AN,
+          subject: 'Neue Shirt-Bestellung ' + nr + ': ' + groessen,
+          body: 'Neue Vorbestellung über softblech.com/merch\n\n' +
+            'Bestellnummer: ' + nr + '\nName: ' + t('vorname') + ' ' + t('nachname') + '\nE-Mail: ' + email +
+            '\nShirts: ' + groessen + '\nBetrag: ' + betrag.toFixed(2).replace('.', ',') + ' €' +
+            '\n\nLieferung:\n' + adresse +
+            (t('nachricht', 500) ? '\n\nNachricht: ' + t('nachricht', 500) : '') +
+            '\nNewsletter: ' + (p.newsletter === 'ja' ? 'ja' : 'nein') +
+            '\n\nNächster Schritt: PayPal-Infos an ' + email + ' schicken (Verwendungszweck ' + nr + ').\n' +
+            'Tabelle: https://docs.google.com/spreadsheets/d/' + TABELLE_ID + '/edit',
+          name: 'SOFTBLECH Merch',
+          replyTo: email
+        });
+      } catch (err) { console.error(err); }
     }
     return json_({ ok: true, nr: nr, summe: betrag });
   } catch (err) {

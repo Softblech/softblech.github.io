@@ -14,6 +14,8 @@ var MERCH = {
   groessen: ['XS', 'S', 'M', 'L', 'XL'],
   maxProGroesse: 10,
   bis: '',                     // z. B. '2026-12-15' (leer = ohne Datum)
+  // Brevo-Formularadresse (gleich wie SB.newsletterAction in index.html)
+  newsletter: 'https://4a6dbfd6.sibforms.com/serve/MUIFAMwR_m5h8o1wltsYbSCL7N-QMkxqJUoEVb_HBoeFtIwxgZZst1DJeTa-DguGFJctrygaBhK5eTaY9OMlEblkh8J50NXY2i4jN8-niLvTT9qEuoETD_KrCktzgieUgJNxSoE3nzt0x5q3pnvh9-7T5rGj5rN5tNrGP_zIDFhjXlRyv7Ma3OdJQnfqodpfR2hNcHu-zTpUljvZAg==',
   paypal: ''                   // leer = Zahlungsinfos schickt ihr persönlich (so gewünscht, 16.11.)
 };
 /* ===================================================================== */
@@ -119,6 +121,8 @@ var MERCH = {
     if (!shipping()) ['strasse', 'zusatz', 'plz', 'ort', 'land'].forEach(function (n) { data.set(n, ''); });
     MERCH.groessen.forEach(function (g) { data.append('g_' + g, k.c[g]); });
     data.append('sprache', en() ? 'en' : 'de');
+    var nl = form.newsletter.checked;
+    data.append('newsletter', nl ? 'ja' : '');
 
     if (!MERCH.endpoint) {
       // Testmodus: nichts wird gespeichert
@@ -132,6 +136,7 @@ var MERCH = {
       .then(function (r) {
         if (!r.ok) throw new Error(r.error || 'Fehler');
         success(r);
+        if (nl) newsletter();
       })
       .catch(function () {
         btn.disabled = false;
@@ -139,6 +144,18 @@ var MERCH = {
                   : 'Das hat leider nicht geklappt. Versuch es bitte gleich noch einmal oder schreib uns an softblech@gmail.com.');
       });
   });
+
+  // Newsletter-Anmeldung bei Brevo (Double-Opt-in: Brevo schickt eine Bestätigungsmail)
+  function newsletter() {
+    if (!MERCH.newsletter) return;
+    var d = new URLSearchParams();
+    d.append('EMAIL', form.email.value.trim());
+    d.append('VORNAME', form.vorname.value.trim());
+    d.append('OPT_IN', '1');
+    d.append('email_address_check', '');
+    d.append('locale', en() ? 'en' : 'de');
+    fetch(MERCH.newsletter, { method: 'POST', mode: 'no-cors', body: d }).catch(function () {});
+  }
 
   function success(r) {
     form.hidden = true;
