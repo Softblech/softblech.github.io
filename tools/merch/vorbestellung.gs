@@ -7,9 +7,9 @@
  */
 
 // ===== EINSTELLUNGEN (gleich wie in merch/merch.js halten) =====
-var GROESSEN = ['S', 'M', 'L', 'XL', 'XXL'];
+var GROESSEN = ['XS', 'S', 'M', 'L', 'XL'];
 var PREIS = 25;          // Euro pro Shirt
-var VERSAND = 5;         // Euro pro Bestellung bei Versand
+var VERSAND = 4.19;      // Euro pro Bestellung, DHL Päckchen S (Stand 2026)
 var MAX_PRO_GROESSE = 10;
 var PAYPAL = '';         // z. B. 'https://paypal.me/softblech' oder 'softblech@gmail.com'
 var ZAHLEN_IN_TAGEN = 7;
@@ -75,7 +75,7 @@ function doPost(e) {
     if (!t('vorname') || !t('nachname') || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json_({ ok: false, error: 'Pflichtfelder' });
     if (lieferung === 'Versand' && (!t('strasse') || !t('plz') || !t('ort') || !t('land'))) return json_({ ok: false, error: 'Adresse' });
 
-    var betrag = summeShirts * PREIS + (lieferung === 'Versand' ? VERSAND : 0);
+    var betrag = Math.round((summeShirts * PREIS + (lieferung === 'Versand' ? VERSAND : 0)) * 100) / 100;
 
     lock.waitLock(20000);
     var sh = SpreadsheetApp.getActive().getSheetByName(BLATT);
@@ -114,11 +114,11 @@ function mail_(en, an, vorname, nr, anzahl, lieferung, betrag) {
   var paypal = PAYPAL || (en ? '(we will send you the PayPal address shortly)' : '(die PayPal-Adresse schicken wir dir gleich noch)');
   var text = en
     ? 'Hi ' + vorname + ',\n\nthanks for pre-ordering our shirt!\n\nOrder number: ' + nr + '\nShirts: ' + liste + '\n' +
-      (lieferung === 'Versand' ? 'Delivery: by post' : 'Delivery: pick-up at a show') + '\nTotal: ' + euro + '\n\n' +
+      (lieferung === 'Versand' ? 'Delivery: DHL' : 'Delivery: pick-up at a show') + '\nTotal: ' + euro + '\n\n' +
       'Please send ' + euro + ' via PayPal to ' + paypal + ' within ' + ZAHLEN_IN_TAGEN + ' days and use ' + nr + ' as the reference.\n\n' +
       'We will let you know as soon as the shirts are printed.\n\nLove,\nDennis & Henri\nSOFTBLECH\nsoftblech.com'
     : 'Hey ' + vorname + ',\n\ndanke für deine Vorbestellung!\n\nBestellnummer: ' + nr + '\nShirts: ' + liste + '\n' +
-      (lieferung === 'Versand' ? 'Lieferung: per Post' : 'Lieferung: Abholung bei einem Konzert') + '\nBetrag: ' + euro + '\n\n' +
+      (lieferung === 'Versand' ? 'Lieferung: Versand mit DHL' : 'Lieferung: Abholung bei einem Konzert') + '\nBetrag: ' + euro + '\n\n' +
       'Bitte überweise ' + euro + ' innerhalb von ' + ZAHLEN_IN_TAGEN + ' Tagen per PayPal an ' + paypal + ' und schreib ' + nr + ' in den Verwendungszweck.\n\n' +
       'Sobald die Shirts gedruckt sind, melden wir uns.\n\nLiebe Grüße\nDennis & Henri\nSOFTBLECH\nsoftblech.com';
   MailApp.sendEmail({ to: an, subject: (en ? 'Your SOFTBLECH pre-order ' : 'Deine SOFTBLECH-Vorbestellung ') + nr, body: text, name: 'SOFTBLECH', replyTo: 'softblech@gmail.com' });

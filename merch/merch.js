@@ -9,9 +9,9 @@ var MERCH = {
   endpoint: '',
   titel: 'SOFTBLECH Shirt',
   bild: 'shirt-platzhalter.svg', // später z. B. 'shirt.jpg' in den Ordner merch/ legen
-  preis: 25,                   // Euro pro Shirt (PLATZHALTER)
-  versand: 5,                  // Euro pro Bestellung bei Versand (PLATZHALTER)
-  groessen: ['S', 'M', 'L', 'XL', 'XXL'], // PLATZHALTER
+  preis: 25,                   // Euro pro Shirt
+  versand: 4.19,               // Euro pro Bestellung, DHL Päckchen S (Stand 2026)
+  groessen: ['XS', 'S', 'M', 'L', 'XL'],
   maxProGroesse: 10,
   bis: '',                     // z. B. '2026-12-15' (leer = ohne Datum)
   paypal: ''                   // z. B. 'https://paypal.me/softblech' oder 'softblech@gmail.com'
@@ -72,7 +72,7 @@ var MERCH = {
     return { c: c, n: n };
   }
   function shipping() { return form.lieferung.value === 'Versand'; }
-  function total(n) { return n * MERCH.preis + (n && shipping() ? MERCH.versand : 0); }
+  function total(n) { return Math.round((n * MERCH.preis + (n && shipping() ? MERCH.versand : 0)) * 100) / 100; }
 
   function render() {
     var k = counts();
