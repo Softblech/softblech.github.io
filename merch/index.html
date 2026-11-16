@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="de" data-lang="de">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src 'self' https://script.google.com https://script.googleusercontent.com; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Merch vorbestellen · SOFTBLECH</title>
+<meta name="description" content="Das erste SOFTBLECH-Shirt. Jetzt vorbestellen, damit wir wissen, wie viele wir drucken lassen.">
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta name="theme-color" content="#ff2f3f">
+<link rel="canonical" href="https://softblech.com/merch/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SOFTBLECH – Shirt vorbestellen">
+<meta property="og:description" content="Das erste SOFTBLECH-Shirt. Jetzt vorbestellen.">
+<meta property="og:url" content="https://softblech.com/merch/">
+<link rel="stylesheet" href="../release.css">
+<link rel="stylesheet" href="merch.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="logo" href="../" aria-label="Zur Startseite"><img src="../img/logo-schwarz.png" alt="SOFTBLECH" width="400" height="139"></a>
+  <div class="lang" role="group" aria-label="Sprache / Language">
+    <button type="button" data-lang="de" aria-pressed="true">DE</button><button type="button" data-lang="en" aria-pressed="false">EN</button>
+  </div>
+</div></header>
+
+<main>
+<section class="rhero"><div class="wrap">
+  <figure class="shirt">
+    <!-- Platzhalter, bis das echte Motiv da ist: merch/shirt.jpg ablegen und in merch.js bei "bild" eintragen -->
+    <img id="shirt-img" src="shirt-platzhalter.svg" alt="SOFTBLECH T-Shirt" width="640" height="640">
+  </figure>
+  <div class="info">
+    <div class="eyebrow"><span data-l="de">Merch · Vorbestellung</span><span data-l="en">Merch · Pre-order</span></div>
+    <h1 class="cond" id="m-title">SOFTBLECH Shirt</h1>
+    <p class="teaser"><span data-l="de">Unser erstes Shirt. Bestell jetzt vor, damit wir wissen, wie viele wir drucken lassen sollen. Gedruckt wird in Berlin.</span><span data-l="en">Our first shirt. Pre-order now so we know how many to print. Printed in Berlin.</span></p>
+    <dl class="facts">
+      <dt><span data-l="de">Preis</span><span data-l="en">Price</span></dt><dd id="m-price">–</dd>
+      <dt id="m-ship-dt"><span data-l="de">Versand</span><span data-l="en">Shipping</span></dt><dd id="m-ship">–</dd>
+      <dt id="m-deadline-dt"><span data-l="de">Vorbestellen bis</span><span data-l="en">Pre-order until</span></dt><dd id="m-deadline">–</dd>
+    </dl>
+    <div class="btns"><a class="btn solid" href="#bestellen"><span data-l="de">Jetzt vorbestellen</span><span data-l="en">Pre-order now</span></a></div>
+  </div>
+</div></section>
+
+<section class="sec" id="bestellen"><div class="wrap narrow">
+  <h2 class="cond"><span data-l="de">Vorbestellen</span><span data-l="en">Pre-order</span></h2>
+
+  <p class="closed" id="m-closed" hidden><span data-l="de">Die Vorbestellung ist gerade geschlossen. Schreib uns gern an <a href="mailto:softblech@gmail.com">softblech@gmail.com</a>.</span><span data-l="en">Pre-orders are closed right now. Feel free to email us at <a href="mailto:softblech@gmail.com">softblech@gmail.com</a>.</span></p>
+
+  <form id="order" novalidate>
+    <fieldset>
+      <legend><span data-l="de">1. Größe und Anzahl</span><span data-l="en">1. Size and quantity</span></legend>
+      <p class="help"><span data-l="de">Trag bei jeder Größe ein, wie viele Shirts du möchtest.</span><span data-l="en">Enter how many shirts you want in each size.</span></p>
+      <div class="sizes" id="sizes"></div>
+      <p class="sum" id="sum" aria-live="polite"></p>
+    </fieldset>
+
+    <fieldset>
+      <legend><span data-l="de">2. Über dich</span><span data-l="en">2. About you</span></legend>
+      <div class="row2">
+        <label><span data-l="de">Vorname</span><span data-l="en">First name</span><input name="vorname" autocomplete="given-name" required maxlength="80"></label>
+        <label><span data-l="de">Nachname</span><span data-l="en">Last name</span><input name="nachname" autocomplete="family-name" required maxlength="80"></label>
+      </div>
+      <label><span data-l="de">E-Mail (dorthin schicken wir die Bestätigung und die Zahlungsinfos)</span><span data-l="en">Email (we send the confirmation and payment details here)</span><input name="email" type="email" autocomplete="email" required maxlength="120"></label>
+    </fieldset>
+
+    <fieldset>
+      <legend><span data-l="de">3. Wie kommt das Shirt zu dir?</span><span data-l="en">3. How do you get your shirt?</span></legend>
+      <div class="choice" id="delivery">
+        <label class="radio"><input type="radio" name="lieferung" value="Versand" checked><span><span data-l="de">Versand per Post</span><span data-l="en">Shipping by post</span> <small id="m-ship-small"></small></span></label>
+        <label class="radio"><input type="radio" name="lieferung" value="Abholung"><span><span data-l="de">Abholung bei einem Konzert (kostenlos)</span><span data-l="en">Pick up at a show (free)</span></span></label>
+      </div>
+      <div id="address">
+        <label><span data-l="de">Straße und Hausnummer</span><span data-l="en">Street and number</span><input name="strasse" autocomplete="address-line1" maxlength="120"></label>
+        <label><span data-l="de">Adresszusatz (optional)</span><span data-l="en">Address line 2 (optional)</span><input name="zusatz" autocomplete="address-line2" maxlength="120"></label>
+        <div class="row2 plz">
+          <label><span data-l="de">PLZ</span><span data-l="en">Postcode</span><input name="plz" autocomplete="postal-code" maxlength="12"></label>
+          <label><span data-l="de">Ort</span><span data-l="en">City</span><input name="ort" autocomplete="address-level2" maxlength="80"></label>
+        </div>
+        <label><span data-l="de">Land</span><span data-l="en">Country</span><input name="land" autocomplete="country-name" value="Deutschland" maxlength="60"></label>
+      </div>
+      <label><span data-l="de">Nachricht an uns (optional)</span><span data-l="en">Message to us (optional)</span><textarea name="nachricht" rows="3" maxlength="500"></textarea></label>
+    </fieldset>
+
+    <!-- Falle für Spam-Bots: Menschen sehen dieses Feld nicht -->
+    <div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+
+    <p class="pay" id="m-pay-note"></p>
+    <p class="privacy"><span data-l="de">Wir nutzen deine Angaben nur, um deine Bestellung abzuwickeln. Mehr dazu in der <a href="../datenschutz.html#merch">Datenschutzerklärung</a>.</span><span data-l="en">We only use your details to process your order. More in our <a href="../datenschutz.html#merch">privacy policy</a> (German).</span></p>
+
+    <p class="err" id="err" role="alert" hidden></p>
+    <button class="btn solid big" type="submit" id="submit"><span data-l="de">Verbindlich vorbestellen</span><span data-l="en">Place pre-order</span></button>
+  </form>
+
+  <div class="done" id="done" hidden tabindex="-1">
+    <h3 class="cond"><span data-l="de">Danke!</span><span data-l="en">Thank you!</span></h3>
+    <p><span data-l="de">Deine Vorbestellung ist bei uns angekommen. Deine Bestellnummer:</span><span data-l="en">We got your pre-order. Your order number:</span> <b id="d-nr"></b></p>
+    <p id="d-pay"></p>
+    <p class="help"><span data-l="de">Wir haben dir alles auch per Mail geschickt. Keine Mail da? Schau bitte im Spam-Ordner nach.</span><span data-l="en">We also sent you everything by email. Nothing there? Please check your spam folder.</span></p>
+    <div class="btns"><a class="btn solid" id="d-paypal" href="#" target="_blank" rel="noopener" hidden><span data-l="de">Zu PayPal</span><span data-l="en">Go to PayPal</span></a><a class="btn" href="../"><span data-l="de">Zur Startseite</span><span data-l="en">Back to home</span></a></div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <a href="../">softblech.com</a>
+  <a href="../impressum.html">Impressum</a>
+  <a href="../datenschutz.html">Datenschutz</a>
+  <span>© 2026 Softblech</span>
+</div></footer>
+<script src="merch.js"></script>
+</body>
+</html>

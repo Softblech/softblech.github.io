@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="640" height="640">
+  <rect width="640" height="640" fill="#171515"/>
+  <path d="M232 92 L170 112 L72 176 L118 278 L176 250 L176 560 L464 560 L464 250 L522 278 L568 176 L470 112 L408 92 C394 128 360 148 320 148 C280 148 246 128 232 92 Z" fill="#0c0b0b" stroke="#ff2f3f" stroke-width="4" stroke-linejoin="round"/>
+  <text x="320" y="330" text-anchor="middle" font-family="'Arial Narrow',Arial,sans-serif" font-weight="900" font-size="42" fill="#ff2f3f" letter-spacing="1">SOFTBLECH</text>
+  <text x="320" y="380" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="20" fill="#9a9393" letter-spacing="3">MOTIV FOLGT</text>
+</svg>
