@@ -50,7 +50,12 @@ function einrichten() {
   rows.push(['Davon bezahlt (€)', '=SUMIF(' + BLATT + '!' + col('Bezahlt') + '2:' + col('Bezahlt') + ',TRUE,' + BLATT + '!' + col('Betrag (€)') + '2:' + col('Betrag (€)') + ')']);
   rows.push(['Zum Versand', '=COUNTIF(' + BLATT + '!F2:F,"Versand")']);
   rows.push(['Zur Abholung', '=COUNTIF(' + BLATT + '!F2:F,"Abholung")']);
-  ue.getRange(1, 1, rows.length, 2).setValues(rows);
+  // Beschriftungen als Werte, Formeln extra (setFormula versteht immer die englische Schreibweise mit Komma)
+  ue.getRange(1, 1, rows.length, 1).setValues(rows.map(function (r) { return [r[0]]; }));
+  rows.forEach(function (r, i) {
+    var c = ue.getRange(i + 1, 2);
+    if (String(r[1]).charAt(0) === '=') c.setFormula(r[1]); else c.setValue(r[1]);
+  });
   ue.getRange('A1:B1').setFontWeight('bold').setBackground('#ff2f3f');
   ue.autoResizeColumns(1, 2);
 }
