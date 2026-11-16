@@ -1,5 +1,6 @@
 .shirt{margin:0}
-.shirt img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--black-2)}
+.shirt img{width:100%;aspect-ratio:4/5;object-fit:cover;background:#f5f3f1}
+@media (max-width:860px){.shirt img{max-width:520px}}
 .facts{display:grid;grid-template-columns:auto 1fr;gap:6px 20px;margin:22px 0 0;font-size:18px}
 .facts dt{color:var(--muted)}.facts dd{margin:0;font-weight:700}
 #bestellen h2{margin-bottom:8px}

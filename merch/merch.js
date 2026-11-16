@@ -8,13 +8,13 @@ var MERCH = {
   // Web-App-Adresse aus Google Apps Script (endet auf /exec). Leer = Testmodus.
   endpoint: '',
   titel: 'SOFTBLECH Shirt',
-  bild: 'shirt-platzhalter.svg', // später z. B. 'shirt.jpg' in den Ordner merch/ legen
+  bild: 'shirt.jpg',           // Bild im Ordner merch/
   preis: 25,                   // Euro pro Shirt
   versand: 4.19,               // Euro pro Bestellung, DHL Päckchen S (Stand 2026)
   groessen: ['XS', 'S', 'M', 'L', 'XL'],
   maxProGroesse: 10,
   bis: '',                     // z. B. '2026-12-15' (leer = ohne Datum)
-  paypal: ''                   // z. B. 'https://paypal.me/softblech' oder 'softblech@gmail.com'
+  paypal: ''                   // leer = Zahlungsinfos schickt ihr persönlich (so gewünscht, 16.11.)
 };
 /* ===================================================================== */
 
@@ -86,8 +86,8 @@ var MERCH = {
     $('m-deadline-dt').hidden = $('m-deadline').hidden = !MERCH.bis;
     if (MERCH.bis) $('m-deadline').textContent = date(MERCH.bis);
     $('m-pay-note').textContent = en()
-      ? 'After ordering you will get an order number and the PayPal details. Please pay within 7 days, stating your order number.'
-      : 'Nach dem Absenden bekommst du eine Bestellnummer und die PayPal-Daten. Bitte zahl innerhalb von 7 Tagen und gib dabei deine Bestellnummer an.';
+      ? 'After ordering you get an order number by email. We will send you the PayPal payment details personally.'
+      : 'Nach dem Absenden bekommst du eine Bestellnummer per Mail. Die PayPal-Zahlungsinfos schicken wir dir persönlich.';
   }
 
   $('shirt-img').src = MERCH.bild;
@@ -143,12 +143,13 @@ var MERCH = {
   function success(r) {
     form.hidden = true;
     $('d-nr').textContent = r.nr;
-    var p = MERCH.paypal || (en() ? '(PayPal address follows)' : '(PayPal-Adresse folgt)');
-    $('d-pay').textContent = en()
-      ? 'Please send ' + eur(r.summe) + ' via PayPal to ' + p + ' and write ' + r.nr + ' as the reference.'
-      : 'Bitte überweise ' + eur(r.summe) + ' per PayPal an ' + p + ' und schreib ' + r.nr + ' in den Verwendungszweck.';
+    $('d-pay').textContent = MERCH.paypal
+      ? (en() ? 'Please send ' + eur(r.summe) + ' via PayPal to ' + MERCH.paypal + ' and write ' + r.nr + ' as the reference.'
+              : 'Bitte überweise ' + eur(r.summe) + ' per PayPal an ' + MERCH.paypal + ' und schreib ' + r.nr + ' in den Verwendungszweck.')
+      : (en() ? 'Total: ' + eur(r.summe) + '. We will send you the PayPal payment details personally in the next few days.'
+              : 'Betrag: ' + eur(r.summe) + '. Die PayPal-Zahlungsinfos schicken wir dir in den nächsten Tagen persönlich.');
     var u = paypalUrl();
-    if (u) { $('d-paypal').href = u.replace(/\/$/, '') + (/paypal\.me\//.test(u) ? '/' + String(r.summe).replace(',', '.') + 'EUR' : ''); $('d-paypal').hidden = false; }
+    if (u) { $('d-paypal').href = u; $('d-paypal').hidden = false; }
     $('done').hidden = false; $('done').focus();
   }
 

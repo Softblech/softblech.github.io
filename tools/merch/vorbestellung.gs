@@ -2,7 +2,7 @@
  * SOFTBLECH Merch-Vorbestellung
  * Google Apps Script, gehört in eine Google-Tabelle (Erweiterungen > Apps Script).
  * Speichert jede Vorbestellung von softblech.com/merch als neue Zeile
- * und schickt eine Bestätigungsmail mit den PayPal-Infos.
+ * und schickt eine Bestätigungsmail mit der Bestellnummer.
  * Anleitung: tools/merch/ANLEITUNG.md
  */
 
@@ -11,7 +11,7 @@ var GROESSEN = ['XS', 'S', 'M', 'L', 'XL'];
 var PREIS = 25;          // Euro pro Shirt
 var VERSAND = 4.19;      // Euro pro Bestellung, DHL Päckchen S (Stand 2026)
 var MAX_PRO_GROESSE = 10;
-var PAYPAL = '';         // z. B. 'https://paypal.me/softblech' oder 'softblech@gmail.com'
+var PAYPAL = '';         // leer = Zahlungsinfos schickt ihr persönlich
 var ZAHLEN_IN_TAGEN = 7;
 var BESTAETIGUNG_SENDEN = true;
 var KOPIE_AN = '';       // z. B. 'softblech@gmail.com' für eine Info bei jeder Bestellung (leer = keine)
@@ -111,15 +111,18 @@ function doPost(e) {
 function mail_(en, an, vorname, nr, anzahl, lieferung, betrag) {
   var liste = GROESSEN.map(function (g, i) { return anzahl[i] ? anzahl[i] + ' × ' + g : ''; }).filter(String).join(', ');
   var euro = betrag.toFixed(2).replace('.', en ? '.' : ',') + ' €';
-  var paypal = PAYPAL || (en ? '(we will send you the PayPal address shortly)' : '(die PayPal-Adresse schicken wir dir gleich noch)');
+  var zahlEn = PAYPAL
+    ? 'Please send ' + euro + ' via PayPal to ' + PAYPAL + ' within ' + ZAHLEN_IN_TAGEN + ' days and use ' + nr + ' as the reference.'
+    : 'We will send you the PayPal payment details personally in the next few days.';
+  var zahlDe = PAYPAL
+    ? 'Bitte überweise ' + euro + ' innerhalb von ' + ZAHLEN_IN_TAGEN + ' Tagen per PayPal an ' + PAYPAL + ' und schreib ' + nr + ' in den Verwendungszweck.'
+    : 'Die PayPal-Zahlungsinfos schicken wir dir in den nächsten Tagen persönlich.';
   var text = en
     ? 'Hi ' + vorname + ',\n\nthanks for pre-ordering our shirt!\n\nOrder number: ' + nr + '\nShirts: ' + liste + '\n' +
-      (lieferung === 'Versand' ? 'Delivery: DHL' : 'Delivery: pick-up at a show') + '\nTotal: ' + euro + '\n\n' +
-      'Please send ' + euro + ' via PayPal to ' + paypal + ' within ' + ZAHLEN_IN_TAGEN + ' days and use ' + nr + ' as the reference.\n\n' +
+      (lieferung === 'Versand' ? 'Delivery: DHL' : 'Delivery: pick-up at a show') + '\nTotal: ' + euro + '\n\n' + zahlEn + '\n\n' +
       'We will let you know as soon as the shirts are printed.\n\nLove,\nDennis & Henri\nSOFTBLECH\nsoftblech.com'
     : 'Hey ' + vorname + ',\n\ndanke für deine Vorbestellung!\n\nBestellnummer: ' + nr + '\nShirts: ' + liste + '\n' +
-      (lieferung === 'Versand' ? 'Lieferung: Versand mit DHL' : 'Lieferung: Abholung bei einem Konzert') + '\nBetrag: ' + euro + '\n\n' +
-      'Bitte überweise ' + euro + ' innerhalb von ' + ZAHLEN_IN_TAGEN + ' Tagen per PayPal an ' + paypal + ' und schreib ' + nr + ' in den Verwendungszweck.\n\n' +
+      (lieferung === 'Versand' ? 'Lieferung: Versand mit DHL' : 'Lieferung: Abholung bei einem Konzert') + '\nBetrag: ' + euro + '\n\n' + zahlDe + '\n\n' +
       'Sobald die Shirts gedruckt sind, melden wir uns.\n\nLiebe Grüße\nDennis & Henri\nSOFTBLECH\nsoftblech.com';
   MailApp.sendEmail({ to: an, subject: (en ? 'Your SOFTBLECH pre-order ' : 'Deine SOFTBLECH-Vorbestellung ') + nr, body: text, name: 'SOFTBLECH', replyTo: 'softblech@gmail.com' });
 }

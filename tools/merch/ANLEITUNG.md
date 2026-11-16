@@ -49,10 +49,10 @@ In der Tabelle: **Datei > Herunterladen > Microsoft Excel (.xlsx)**.
 
 ## Was passiert bei einer Bestellung?
 
-1. Fan füllt das Formular aus und bekommt sofort eine Bestellnummer (z. B. SB-007) und die PayPal-Infos.
+1. Fan füllt das Formular aus und bekommt sofort eine Bestellnummer (z. B. SB-007).
 2. Die Bestellung steht als neue Zeile in der Tabelle.
 3. Der Fan bekommt eine Bestätigungsmail von softblech@gmail.com.
-4. Ihr gleicht PayPal-Zahlungen über die Bestellnummer im Verwendungszweck ab und setzt das Häkchen „Bezahlt“.
+4. Ihr schickt jedem persönlich die PayPal-Infos (Bestellnummer als Verwendungszweck), gleicht die Zahlungen ab und setzt das Häkchen „Bezahlt“.
 
 ## Vorbestellung beenden
 
