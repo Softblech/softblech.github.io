@@ -11,6 +11,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32.png">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <meta name="theme-color" content="#ff2f3f">
+<meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="https://softblech.com/merch/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="SOFTBLECH – Shirt vorbestellen">
@@ -29,7 +30,18 @@
   </div>
 </div></header>
 
-<main>
+<section class="gate" id="gate"><div class="wrap narrow">
+  <div class="eyebrow"><span data-l="de">Merch · Vorbestellung</span><span data-l="en">Merch · Pre-order</span></div>
+  <h1 class="cond"><span data-l="de">Nur mit Code</span><span data-l="en">Code only</span></h1>
+  <p><span data-l="de">Die Vorbestellung ist gerade nur für einen kleinen Kreis offen. Gib den Code ein, den du von uns bekommen hast.</span><span data-l="en">Pre-orders are open to a small circle for now. Enter the code you got from us.</span></p>
+  <form id="gate-form" novalidate>
+    <label><span data-l="de">Zugangscode</span><span data-l="en">Access code</span><input name="code" autocomplete="off" autocapitalize="characters" spellcheck="false" required></label>
+    <p class="err" id="gate-err" role="alert" hidden><span data-l="de">Der Code stimmt leider nicht.</span><span data-l="en">Sorry, that code is not right.</span></p>
+    <button class="btn solid big" type="submit"><span data-l="de">Weiter</span><span data-l="en">Continue</span></button>
+  </form>
+</div></section>
+
+<main id="content" hidden>
 <section class="rhero"><div class="wrap">
   <figure class="shirt">
     <img id="shirt-img" src="shirt.jpg" alt="Schwarzes T-Shirt mit kleinem SOFTBLECH-Logo in Chrom mittig auf der Brust" width="1080" height="1350">
