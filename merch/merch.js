@@ -16,6 +16,9 @@ var MERCH = {
   bis: '',                     // z. B. '2026-12-15' (leer = ohne Datum)
   // Brevo-Formularadresse (gleich wie SB.newsletterAction in index.html)
   newsletter: 'https://4a6dbfd6.sibforms.com/serve/MUIFAMwR_m5h8o1wltsYbSCL7N-QMkxqJUoEVb_HBoeFtIwxgZZst1DJeTa-DguGFJctrygaBhK5eTaY9OMlEblkh8J50NXY2i4jN8-niLvTT9qEuoETD_KrCktzgieUgJNxSoE3nzt0x5q3pnvh9-7T5rGj5rN5tNrGP_zIDFhjXlRyv7Ma3OdJQnfqodpfR2hNcHu-zTpUljvZAg==',
+  // Zugangscode: nur der SHA-256-Fingerabdruck steht hier, nicht der Code selbst.
+  // Neuen Code setzen: Claude fragen, oder in der Browser-Konsole den Fingerabdruck von code.toLowerCase() erzeugen.
+  codeHash: '8aad4a30e90b995a916cc7f467bd7aefbfa699f438cb27a4ceea9d2ed6ad14f1', // leer = Seite ohne Code
   paypal: ''                   // leer = Zahlungsinfos schickt ihr persönlich (so gewünscht, 16.11.)
 };
 /* ===================================================================== */
@@ -88,8 +91,8 @@ var MERCH = {
     $('m-deadline-dt').hidden = $('m-deadline').hidden = !MERCH.bis;
     if (MERCH.bis) $('m-deadline').textContent = date(MERCH.bis);
     $('m-pay-note').textContent = en()
-      ? 'After ordering you get an order number by email. We will send you the PayPal payment details personally.'
-      : 'Nach dem Absenden bekommst du eine Bestellnummer per Mail. Die PayPal-Zahlungsinfos schicken wir dir persönlich.';
+      ? 'After ordering you get an order number by email. You pay via PayPal (Friends & Family), we will send you the details personally.'
+      : 'Nach dem Absenden bekommst du eine Bestellnummer per Mail. Bezahlt wird per PayPal (Freunde & Familie), die Infos schicken wir dir persönlich.';
   }
 
   $('shirt-img').src = MERCH.bild;
@@ -168,6 +171,30 @@ var MERCH = {
     var u = paypalUrl();
     if (u) { $('d-paypal').href = u; $('d-paypal').hidden = false; }
     $('done').hidden = false; $('done').focus();
+  }
+
+  // Zugangscode-Abfrage (?code=... im Link schaltet direkt frei)
+  function sha(t) {
+    return crypto.subtle.digest('SHA-256', new TextEncoder().encode(t.trim().toLowerCase())).then(function (b) {
+      return Array.from(new Uint8Array(b)).map(function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+    });
+  }
+  function unlock() {
+    $('gate').hidden = true; $('content').hidden = false;
+    try { sessionStorage.setItem('sb-merch', MERCH.codeHash); } catch (e) {}
+  }
+  var ok = !MERCH.codeHash;
+  try { ok = ok || sessionStorage.getItem('sb-merch') === MERCH.codeHash; } catch (e) {}
+  if (ok) unlock();
+  else {
+    var c = new URLSearchParams(location.search).get('code');
+    if (c) sha(c).then(function (h) { if (h === MERCH.codeHash) unlock(); else $('gate-form').code.value = c; });
+    $('gate-form').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      sha($('gate-form').code.value).then(function (h) {
+        if (h === MERCH.codeHash) unlock(); else { $('gate-err').hidden = false; $('gate-form').code.select(); }
+      });
+    });
   }
 
   var q = new URLSearchParams(location.search).get('lang'), saved = null;

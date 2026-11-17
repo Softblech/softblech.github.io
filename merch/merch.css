@@ -39,4 +39,9 @@ input[aria-invalid=true]{border-color:var(--red)}
 .done h3{font-size:clamp(44px,7vw,72px);color:var(--red);margin:0 0 12px}
 .done b{color:var(--red)}
 .closed{font-size:18px}
+.gate{padding-block:72px 96px;min-height:60vh}
+.gate h1{font-size:clamp(52px,9vw,104px);margin:10px 0 18px}
+.gate p{font-size:18px;max-width:46ch}
+.gate form{max-width:420px;margin-top:24px}
+.gate input{text-transform:uppercase;letter-spacing:.08em;font-weight:700}
 @media (max-width:560px){.row2,.row2.plz{grid-template-columns:1fr}}
