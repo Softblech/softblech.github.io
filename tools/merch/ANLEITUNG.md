@@ -51,7 +51,7 @@ In der Tabelle: **Datei > Herunterladen > Microsoft Excel (.xlsx)**.
 
 1. Fan füllt das Formular aus und bekommt sofort eine Bestellnummer (z. B. SB-007).
 2. Die Bestellung steht als neue Zeile in der Tabelle.
-3. Der Fan bekommt eine Bestätigungsmail von softblech@gmail.com.
+3. Der Fan bekommt eine Bestätigungsmail (Absender softblech@gmail.com, Antworten gehen an hallo@softblech.com).
 4. Ihr schickt jedem persönlich die PayPal-Infos (Bestellnummer als Verwendungszweck), gleicht die Zahlungen ab und setzt das Häkchen „Bezahlt“.
 
 ## Vorbestellung beenden

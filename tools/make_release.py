@@ -171,7 +171,7 @@ def build(c):
 
 <section class="sec contact"><div class="wrap narrow">
   <h2 class="cond">{bi("Kontakt", "Contact")}</h2>
-  <p>{bi("Fragen, Interviews, Konzertanfragen:", "Questions, interviews, bookings:")} <a href="mailto:softblech@gmail.com">softblech@gmail.com</a></p>
+  <p>{bi("Fragen, Interviews, Konzertanfragen:", "Questions, interviews, bookings:")} <a href="mailto:hallo@softblech.com">hallo@softblech.com</a></p>
 </div></section>
 
 <section class="sec"><div class="wrap">
