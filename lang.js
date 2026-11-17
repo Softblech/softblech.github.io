@@ -5,6 +5,9 @@
   var D={
     "Menü":"Menu","Musik":"Music","Fotos":"Photos","Medien":"Media","Presse":"Press","Kontakt":"Contact",
     "I Want To Be With You – die neue Single – out now":"I Want To Be With You – the new single – out now",
+    "Bald erhältlich":"Coming soon","Code anfragen":"Ask for a code","Ich habe einen Code":"I have a code",
+    "Ja, es ist wahr: Es gibt endlich Merch! Das erste SOFTBLECH-Shirt, schwarz, mit unserem Logo in Chrom.":"Yes, it's true: merch is finally here! The first SOFTBLECH shirt, black, with our chrome logo.",
+    "Im Moment gibt es die Vorbestellung aber exklusiv für Freunde und Bekannte, mit einem Code. Du willst auch einen? Schreib uns gern, wir schauen, was sich machen lässt.":"For now, pre-orders are exclusive to friends and family with a code. Want one too? Just write to us and we'll see what we can do.",
     "Post Wave aus Berlin":"Post wave from Berlin",
     "Zum Song":"Listen","Abspielen":"Play","Mehr zum Song":"More about the song","Reinhören":"Listen",
     "Neue Single":"New single","Debütsingle":"Debut single","Debüt":"Debut","2024 · Debüt":"2024 · Debut",
