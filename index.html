@@ -270,6 +270,7 @@ section{scroll-margin-top:64px}
 .merch-home{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,5vw,72px);align-items:center}
 .merch-img img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#f5f3f1}
 .merch-home .lead{font-size:clamp(20px,2vw,24px);font-weight:600}
+@media (min-width:861px){.merch-home{grid-template-columns:minmax(0,6fr) minmax(0,5fr)}.merch-home .merch-img{order:2}}
 @media (max-width:860px){.merch-home{grid-template-columns:minmax(0,1fr)}.merch-img img{max-width:520px}}
 .band{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,5vw,72px);align-items:start}
 .band-photo{margin:0}
@@ -380,6 +381,11 @@ footer{padding-block:48px 40px;text-align:center}
 .nl .check input{width:20px;height:20px;margin-top:2px;accent-color:var(--black);flex:none}
 .nl .actions{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:16px}
 .nl .msg{font-weight:700}
+.sec:not(.on-red) .nl input[type=email],.sec:not(.on-red) .nl input[type=text]{color:var(--chrome);border-color:var(--chrome)}
+.sec:not(.on-red) .nl input::placeholder{color:var(--muted)}
+.sec:not(.on-red) .nl input:focus{border-color:var(--red);outline:none}
+.sec:not(.on-red) .nl .check input{accent-color:var(--red)}
+.sec:not(.on-red) .nl .check a{color:var(--red)}
 
 /* Cookie-Banner */
 .cookie{position:fixed;left:0;right:0;bottom:0;z-index:100;background:var(--black);border-top:3px solid var(--red);padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -10px 40px rgba(0,0,0,.5)}
@@ -629,11 +635,10 @@ body.has-mini{padding-bottom:110px}
     </div>
   </section>
 
-  <section id="merch" class="sec">
+  <section id="merch" class="sec on-red">
     <div class="wrap merch-home">
       <a class="merch-img" href="merch/"><img src="merch/shirt.jpg" alt="Schwarzes T-Shirt mit kleinem SOFTBLECH-Logo in Chrom mittig auf der Brust" width="1080" height="1350" loading="lazy"></a>
       <div class="text">
-        <div class="eyebrow" style="color:var(--red)">Bald erhältlich</div>
         <h2 class="cond">Merch</h2>
         <p class="lead">Ja, es ist wahr: Es gibt endlich Merch! Das erste SOFTBLECH-Shirt, schwarz, mit unserem Logo in Chrom.</p>
         <p>Im Moment gibt es die Vorbestellung aber exklusiv für Freunde und Bekannte, mit einem Code. Du willst auch einen? Schreib uns gern, wir schauen, was sich machen lässt.</p>
@@ -645,7 +650,7 @@ body.has-mini{padding-bottom:110px}
     </div>
   </section>
 
-  <section id="medien" class="sec on-red">
+  <section id="medien" class="sec">
     <div class="wrap">
       <h2 class="cond">Medien</h2>
       <div id="videos" hidden>
@@ -694,7 +699,7 @@ body.has-mini{padding-bottom:110px}
     </div>
   </section>
 
-  <section id="newsletter" class="sec on-red">
+  <section id="newsletter" class="sec">
     <div class="wrap">
       <h2 class="cond">Newsletter</h2>
       <p style="max-width:60ch;margin:0 0 28px;font-weight:600;font-size:18px">Stay close. Neue Songs, Konzerttermine und kleine Einblicke hinter die Kulissen. Kein Spam, nur ab und zu eine Mail.</p>
@@ -709,7 +714,7 @@ body.has-mini{padding-bottom:110px}
     </div>
   </section>
 
-  <section id="kontakt" class="sec">
+  <section id="kontakt" class="sec on-red">
     <div class="wrap contact">
       <div>
         <h2 class="cond">Kontakt</h2>
