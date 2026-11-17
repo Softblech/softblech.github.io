@@ -11,11 +11,41 @@ var GROESSEN = ['XS', 'S', 'M', 'L', 'XL'];
 var PREIS = 25;          // Euro pro Shirt
 var VERSAND = 4.19;      // Euro pro Bestellung, DHL Päckchen S (Stand 2026)
 var MAX_PRO_GROESSE = 10;
-var PAYPAL = 'https://www.paypal.me/henrisoen'; // PayPal-Link für die Bestätigungsmail (leer = Infos persönlich)
-var ZAHLEN_IN_TAGEN = 7;
-var BESTAETIGUNG_SENDEN = true;
-var KOPIE_AN = 'softblech@gmail.com'; // Hinweis-Mail bei jeder Bestellung (direkt ans Gmail-Konto, nicht über hallo@ – Gmail blendet an sich selbst weitergeleitete Mails sonst aus)
 // ================================================================
+// Alles Weitere (PayPal-Link, Mail-Adressen, Zahlungsfrist, Zusatztexte)
+// steht im Tabellenblatt "Einstellungen" und wird dort geändert.
+// Dafür muss das Skript NICHT neu eingefügt oder bereitgestellt werden.
+
+var STANDARD = [
+  ['PayPal-Link', 'https://www.paypal.me/henrisoen', 'Steht in der Bestätigungsmail. Leer = "Zahlungsinfos schicken wir persönlich".'],
+  ['Hinweis-Mail an', 'softblech@gmail.com', 'Bekommt bei jeder Bestellung eine Mail. Leer = keine. Am besten direkt die Gmail-Adresse.'],
+  ['Antworten an', 'hallo@softblech.com', 'Wenn Fans auf die Bestätigung antworten, landet es hier.'],
+  ['Zahlungsfrist (Tage)', 7, 'Wird in der Bestätigungsmail genannt.'],
+  ['Bestätigungsmail senden', 'ja', 'ja oder nein'],
+  ['Zusatztext Mail (DE)', '', 'Optional, steht vor dem Gruß, z. B. "Die Shirts kommen Mitte Dezember."'],
+  ['Zusatztext Mail (EN)', '', 'Optional, englische Version für Bestellungen auf Englisch.']
+];
+
+/** Liest das Blatt "Einstellungen" (fehlende Werte = Standard). */
+function cfg_() {
+  var o = {};
+  STANDARD.forEach(function (r) { o[r[0]] = r[1]; });
+  var sh = tabelle_().getSheetByName('Einstellungen');
+  if (sh && sh.getLastRow() > 1) {
+    sh.getRange(2, 1, sh.getLastRow() - 1, 2).getValues().forEach(function (r) {
+      if (r[0] !== '' && o.hasOwnProperty(String(r[0]).trim())) o[String(r[0]).trim()] = r[1];
+    });
+  }
+  return {
+    paypal: String(o['PayPal-Link'] || '').trim(),
+    kopieAn: String(o['Hinweis-Mail an'] || '').trim(),
+    antwortAn: String(o['Antworten an'] || '').trim() || 'hallo@softblech.com',
+    frist: parseInt(o['Zahlungsfrist (Tage)'], 10) || 7,
+    senden: !/^(nein|no|false|0)$/i.test(String(o['Bestätigungsmail senden']).trim()),
+    zusatzDe: String(o['Zusatztext Mail (DE)'] || '').trim(),
+    zusatzEn: String(o['Zusatztext Mail (EN)'] || '').trim()
+  };
+}
 
 var BLATT = 'Bestellungen';
 // Die Tabelle "Shirt Bestellungen" im Softblech-Drive
@@ -61,6 +91,18 @@ function einrichten() {
   });
   ue.getRange('A1:B1').setFontWeight('bold').setBackground('#ff2f3f');
   ue.autoResizeColumns(1, 2);
+
+  // Einstellungen: vorhandene Werte bleiben erhalten, fehlende Zeilen werden ergänzt
+  var es = ss.getSheetByName('Einstellungen') || ss.insertSheet('Einstellungen');
+  var alt = {};
+  if (es.getLastRow() > 1) es.getRange(2, 1, es.getLastRow() - 1, 2).getValues().forEach(function (r) { if (r[0] !== '') alt[String(r[0]).trim()] = r[1]; });
+  var zeilen = [['Einstellung', 'Wert', 'Erklärung']].concat(STANDARD.map(function (r) {
+    return [r[0], alt.hasOwnProperty(r[0]) ? alt[r[0]] : r[1], r[2]];
+  }));
+  es.clear();
+  es.getRange(1, 1, zeilen.length, 3).setValues(zeilen);
+  es.getRange('A1:C1').setFontWeight('bold').setBackground('#ff2f3f');
+  es.setColumnWidth(1, 200); es.setColumnWidth(2, 320); es.setColumnWidth(3, 480);
 }
 
 function doGet() {
@@ -104,15 +146,16 @@ function doPost(e) {
     SpreadsheetApp.flush();
     lock.releaseLock();
 
-    if (BESTAETIGUNG_SENDEN) {
-      try { mail_(p.sprache === 'en', email, t('vorname', 80), nr, anzahl, lieferung, betrag); } catch (err) { console.error(err); }
+    var c = cfg_();
+    if (c.senden) {
+      try { mail_(c, p.sprache === 'en', email, t('vorname', 80), nr, anzahl, lieferung, betrag); } catch (err) { console.error(err); }
     }
-    if (KOPIE_AN) {
+    if (c.kopieAn) {
       try {
         var groessen = GROESSEN.map(function (g, i) { return anzahl[i] ? anzahl[i] + ' × ' + g : ''; }).filter(String).join(', ');
         var adresse = lieferung === 'Versand' ? [t('strasse'), t('zusatz'), t('plz') + ' ' + t('ort'), t('land')].filter(String).join('\n') : 'Abholung bei einem Konzert';
         MailApp.sendEmail({
-          to: KOPIE_AN,
+          to: c.kopieAn,
           subject: 'Neue Shirt-Bestellung ' + nr + ': ' + groessen,
           body: 'Neue Vorbestellung über softblech.com/merch\n\n' +
             'Bestellnummer: ' + nr + '\nName: ' + t('vorname') + ' ' + t('nachname') + '\nE-Mail: ' + email +
@@ -120,7 +163,7 @@ function doPost(e) {
             '\n\nLieferung:\n' + adresse +
             (t('nachricht', 500) ? '\n\nNachricht: ' + t('nachricht', 500) : '') +
             '\nNewsletter: ' + (p.newsletter === 'ja' ? 'ja' : 'nein') +
-            (PAYPAL ? '\n\nDer Link ' + PAYPAL + ' steht in der Bestätigungsmail. Zahlung mit ' + nr + ' abgleichen und "Bezahlt" abhaken.\n' : '\n\nNächster Schritt: PayPal-Infos an ' + email + ' schicken (Verwendungszweck ' + nr + ').\n') +
+            (c.paypal ? '\n\nDer Link ' + c.paypal + ' steht in der Bestätigungsmail. Zahlung mit ' + nr + ' abgleichen und "Bezahlt" abhaken.\n' : '\n\nNächster Schritt: PayPal-Infos an ' + email + ' schicken (Verwendungszweck ' + nr + ').\n') +
             'Tabelle: https://docs.google.com/spreadsheets/d/' + TABELLE_ID + '/edit',
           name: 'SOFTBLECH Merch',
           replyTo: email
@@ -136,9 +179,10 @@ function doPost(e) {
   }
 }
 
-function mail_(en, an, vorname, nr, anzahl, lieferung, betrag) {
+function mail_(c, en, an, vorname, nr, anzahl, lieferung, betrag) {
   var liste = GROESSEN.map(function (g, i) { return anzahl[i] ? anzahl[i] + ' × ' + g : ''; }).filter(String).join(', ');
   var euro = betrag.toFixed(2).replace('.', en ? '.' : ',') + ' €';
+  var PAYPAL = c.paypal, ZAHLEN_IN_TAGEN = c.frist;
   var zahlEn = PAYPAL
     ? 'Please send ' + euro + ' via PayPal within ' + ZAHLEN_IN_TAGEN + ' days:\n' + PAYPAL + '\nPlease add your order number ' + nr + ' as a note.'
     : 'We will send you the PayPal payment details personally in the next few days.';
@@ -148,11 +192,11 @@ function mail_(en, an, vorname, nr, anzahl, lieferung, betrag) {
   var text = en
     ? 'Hi ' + vorname + ',\n\nthanks for pre-ordering our shirt!\n\nOrder number: ' + nr + '\nShirts: ' + liste + '\n' +
       (lieferung === 'Versand' ? 'Delivery: DHL' : 'Delivery: pick-up at a show') + '\nTotal: ' + euro + '\n\n' + zahlEn + '\n\n' +
-      'We will let you know as soon as the shirts are printed.\n\nLove,\nDennis & Henri\nSOFTBLECH\nsoftblech.com'
+      (c.zusatzEn ? c.zusatzEn + '\n\n' : '') + 'We will let you know as soon as the shirts are printed.\n\nLove,\nDennis & Henri\nSOFTBLECH\nsoftblech.com'
     : 'Hey ' + vorname + ',\n\ndanke für deine Vorbestellung!\n\nBestellnummer: ' + nr + '\nShirts: ' + liste + '\n' +
       (lieferung === 'Versand' ? 'Lieferung: Versand mit DHL' : 'Lieferung: Abholung bei einem Konzert') + '\nBetrag: ' + euro + '\n\n' + zahlDe + '\n\n' +
-      'Sobald die Shirts gedruckt sind, melden wir uns.\n\nLiebe Grüße\nDennis & Henri\nSOFTBLECH\nsoftblech.com';
-  MailApp.sendEmail({ to: an, subject: (en ? 'Your SOFTBLECH pre-order ' : 'Deine SOFTBLECH-Vorbestellung ') + nr, body: text, name: 'SOFTBLECH', replyTo: 'hallo@softblech.com' });
+      (c.zusatzDe ? c.zusatzDe + '\n\n' : '') + 'Sobald die Shirts gedruckt sind, melden wir uns.\n\nLiebe Grüße\nDennis & Henri\nSOFTBLECH\nsoftblech.com';
+  MailApp.sendEmail({ to: an, subject: (en ? 'Your SOFTBLECH pre-order ' : 'Deine SOFTBLECH-Vorbestellung ') + nr, body: text, name: 'SOFTBLECH', replyTo: c.antwortAn });
 }
 
 // Verhindert, dass Eingaben wie "=..." als Formel in der Tabelle landen
