@@ -3,7 +3,7 @@
    Neue Texte auf der Seite: hier unten in D ergänzen. */
 (function(){
   var D={
-    "Menü":"Menu","Musik":"Music","Fotos":"Photos","Presse":"Press","Kontakt":"Contact",
+    "Menü":"Menu","Musik":"Music","Fotos":"Photos","Medien":"Media","Presse":"Press","Kontakt":"Contact",
     "I Want To Be With You – die neue Single – out now":"I Want To Be With You – the new single – out now",
     "Post Wave aus Berlin":"Post wave from Berlin",
     "Zum Song":"Listen","Abspielen":"Play","Mehr zum Song":"More about the song","Reinhören":"Listen",
