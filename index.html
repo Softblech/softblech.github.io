@@ -473,6 +473,15 @@ footer{padding-block:48px 40px;text-align:center}
 .dl:hover .t{color:var(--red)}
 #videos{margin-bottom:clamp(32px,5vw,64px)}
 #presse .sub-h{margin-top:clamp(48px,6vw,80px)}
+.on-red .quote{border-color:var(--black)}
+.on-red .quote:hover{background:var(--black);color:var(--red)}
+.on-red .quote .src{color:rgba(12,11,11,.7)}
+.on-red .quote:hover .src{color:var(--red)}
+.on-red .sub-h{color:var(--black)}
+.on-red .dls,.on-red .dl{border-color:var(--line-red)}
+.on-red .dl,.on-red .dl .t,.on-red .dl .arr{color:var(--black)}
+.on-red .dl .s{color:rgba(12,11,11,.7)}
+.on-red .dl:hover .t{color:var(--chrome)}
 #presse .press{margin-bottom:0}
 #kontakt{border-top:0}
 @media (max-width:860px){.dls{grid-template-columns:1fr}.dl{padding:22px 4px}}
@@ -669,7 +678,7 @@ body.has-mini{padding-bottom:110px}
     </div>
   </section>
 
-  <section id="presse" class="sec">
+  <section id="presse" class="sec on-red">
     <div class="wrap">
       <h2 class="cond">Presse</h2>
       <div class="press">
