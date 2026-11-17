@@ -17,10 +17,10 @@
 <meta property="og:title" content="SOFTBLECH – Shirt vorbestellen">
 <meta property="og:description" content="Das erste SOFTBLECH-Shirt. Jetzt vorbestellen.">
 <meta property="og:url" content="https://softblech.com/merch/">
-<meta property="og:image" content="https://softblech.com/merch/shirt.jpg">
+<meta property="og:image" content="https://softblech.com/merch/shirt-foto.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="../release.css">
-<link rel="stylesheet" href="merch.css?v=20261117">
+<link rel="stylesheet" href="merch.css?v=20261117b">
 </head>
 <body>
 <header class="top"><div class="wrap">
@@ -43,8 +43,14 @@
 
 <main id="content" hidden>
 <section class="rhero"><div class="wrap">
-  <figure class="shirt">
-    <img id="shirt-img" src="shirt.jpg" alt="Schwarzes T-Shirt mit kleinem SOFTBLECH-Logo in Chrom mittig auf der Brust" width="1080" height="1350">
+  <figure class="shirt carousel" id="carousel" aria-roledescription="carousel" aria-label="Fotos vom Shirt">
+    <div class="track" id="track" tabindex="0">
+      <img src="shirt-foto.jpg" alt="Dennis von SOFTBLECH trägt das schwarze Shirt mit dem kleinen Chrom-Logo auf der Brust, daneben Henri" width="1080" height="1350">
+      <img src="shirt.jpg" alt="Schwarzes T-Shirt mit kleinem SOFTBLECH-Logo in Chrom mittig auf der Brust" width="1080" height="1350" loading="lazy">
+    </div>
+    <button type="button" class="nav prev" id="c-prev" aria-label="Vorheriges Bild">‹</button>
+    <button type="button" class="nav next" id="c-next" aria-label="Nächstes Bild">›</button>
+    <div class="dots" id="c-dots"></div>
   </figure>
   <div class="info">
     <div class="eyebrow"><span data-l="de">Merch · Vorbestellung</span><span data-l="en">Merch · Pre-order</span></div>
@@ -127,6 +133,6 @@
   <a href="../datenschutz.html">Datenschutz</a>
   <span>© 2026 Softblech</span>
 </div></footer>
-<script src="merch.js?v=20261117"></script>
+<script src="merch.js?v=20261117b"></script>
 </body>
 </html>
