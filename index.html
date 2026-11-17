@@ -461,7 +461,9 @@ footer{padding-block:48px 40px;text-align:center}
 .dl .s{grid-column:1;color:var(--muted);font-size:14px}
 .dl .arr{grid-column:2;grid-row:1/3;font-size:28px;color:var(--red)}
 .dl:hover .t{color:var(--red)}
-#downloads{padding-bottom:0}
+#videos{margin-bottom:clamp(32px,5vw,64px)}
+#presse .sub-h{margin-top:clamp(48px,6vw,80px)}
+#presse .press{margin-bottom:0}
 #kontakt{border-top:0}
 @media (max-width:860px){.dls{grid-template-columns:1fr}.dl{padding:22px 4px}}
 /* Presskit + Booking */
@@ -502,12 +504,9 @@ body.has-mini{padding-bottom:110px}
       <a href="#musik">Musik</a>
       <a href="#live">Live</a>
       <a href="#band">Band</a>
-      <a href="#videos">Videos</a>
-      <a href="#fotos">Fotos</a>
-      <a href="#presse">Presse</a>
       <a href="merch/">Merch</a>
-      <a href="#newsletter">Newsletter</a>
-      <a href="#downloads">Downloads</a>
+      <a href="#medien">Medien</a>
+      <a href="#presse">Presse</a>
       <a href="#kontakt">Kontakt</a>
     </nav>
     <div class="lang" role="group" aria-label="Sprache / Language"><button type="button" data-lang="de" aria-pressed="true">DE</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
@@ -535,9 +534,6 @@ body.has-mini{padding-bottom:110px}
   </div>
   <div class="cnav" hidden><button type="button" class="prev" aria-label="Vorherige News">‹</button><div class="dots"></div><button type="button" class="next" aria-label="Nächste News">›</button></div>
   </section>
-
-
-
 
   <section id="musik" class="sec">
     <div class="wrap">
@@ -572,12 +568,6 @@ body.has-mini{padding-bottom:110px}
     </div>
   </section>
 
-  <section id="videos" class="sec" style="padding-top:0" hidden>
-    <div class="wrap">
-      <h2 class="cond">Videos</h2>
-      <div class="videos" id="video-list"></div>
-    </div>
-  </section>
 
   <section id="live" class="sec on-red">
     <div class="wrap">
@@ -635,10 +625,12 @@ body.has-mini{padding-bottom:110px}
     </div>
   </section>
 
-
-  <section id="fotos" class="sec">
+  <section id="medien" class="sec on-red">
     <div class="wrap">
-      <h2 class="cond">Fotos</h2>
+      <h2 class="cond">Medien</h2>
+      <div id="videos" hidden>
+        <div class="videos" id="video-list"></div>
+      </div>
       <div class="insta" id="insta" hidden></div>
       <div class="photos" id="photos">
         <figure><img src="img/press/softblech-band-berlin-kevin-pawlak-1.jpg" alt="SOFTBLECH, Post-Wave-Band aus Berlin: Dennis und Henri auf einer Mauer vor einer Hauswand" loading="lazy"><figcaption>Foto: Kevin Pawlak</figcaption></figure>
@@ -652,30 +644,38 @@ body.has-mini{padding-bottom:110px}
     </div>
   </section>
 
-  <section class="sec on-red duo-sec">
-    <div class="wrap duo">
-      <div id="presse">
+  <section id="presse" class="sec">
+    <div class="wrap">
       <h2 class="cond">Presse</h2>
       <div class="press">
-        <a class="quote" style="border-color:var(--black)" href="https://regenmag.com/news/news-softblech-reveals-latest-single-from-upcoming-ep-exploring-secret-longings-temptations-and-addiction-to-scrolling-and-swiping/" target="_blank" rel="noopener">
+        <a class="quote" href="https://regenmag.com/news/news-softblech-reveals-latest-single-from-upcoming-ep-exploring-secret-longings-temptations-and-addiction-to-scrolling-and-swiping/" target="_blank" rel="noopener">
           <span class="q cond">„Secret Longings, Temptations and Addiction to Scrolling and Swiping“</span>
-          <span class="src" style="color:var(--black)">ReGen Magazine · November 2026</span>
+          <span class="src">ReGen Magazine · November 2026</span>
         </a>
-        <a class="quote" style="border-color:var(--black)" href="https://www.bohema-wien.com/artikel/s3oiqtrhukpia56k2ter5x5cxg519i" target="_blank" rel="noopener">
+        <a class="quote" href="https://www.bohema-wien.com/artikel/s3oiqtrhukpia56k2ter5x5cxg519i" target="_blank" rel="noopener">
           <span class="q cond">„Weiche Schale, Punk im Kern“</span>
-          <span class="src" style="color:var(--black)">Bohema Magazin Wien · November 2026</span>
+          <span class="src">Bohema Magazin Wien · November 2026</span>
         </a>
-        <a class="quote" style="border-color:var(--black)" href="https://www.kaltblut-magazine.com/the-anatomy-of-a-freefall-softblech-capture-heartbreak-on-in-the-end-i-only-think-of-you/" target="_blank" rel="noopener">
+        <a class="quote" href="https://www.kaltblut-magazine.com/the-anatomy-of-a-freefall-softblech-capture-heartbreak-on-in-the-end-i-only-think-of-you/" target="_blank" rel="noopener">
           <span class="q cond">„The Anatomy of a Freefall“</span>
-          <span class="src" style="color:var(--black)">KALTBLUT Magazine · September 2026</span>
+          <span class="src">KALTBLUT Magazine · September 2026</span>
         </a>
-        <a class="quote" style="border-color:var(--black)" href="https://www.radiohamburg.de/aktionen/stars_for_free/TOP-3-im-Check-So-klingt-Softblech-id1431622.html" target="_blank" rel="noopener">
+        <a class="quote" href="https://www.radiohamburg.de/aktionen/stars_for_free/TOP-3-im-Check-So-klingt-Softblech-id1431622.html" target="_blank" rel="noopener">
           <span class="q cond">„TOP 3 im Check: So klingt Softblech“</span>
-          <span class="src" style="color:var(--black)">Radio Hamburg · August 2025</span>
+          <span class="src">Radio Hamburg · August 2025</span>
         </a>
       </div>
+      <h3 class="cond sub-h" id="downloads">Downloads</h3>
+      <div class="dls">
+        <a class="dl" href="downloads/softblech-presskit.pdf" download><span class="t cond">Presskit</span><span class="s">PDF · Bio, Fakten, Releases, Presse</span><span class="arr" aria-hidden="true">↓</span></a>
+        <a class="dl" href="https://drive.google.com/drive/folders/1K4uR7UvWpCNpZ2IkZ0Ao4phFAWkuovKI" target="_blank" rel="noopener"><span class="t cond">Pressefotos</span><span class="s">Hohe Auflösung · Google Drive</span><span class="arr" aria-hidden="true">↗</span></a>
+        <a class="dl" href="downloads/softblech-technical-rider.pdf" download><span class="t cond">Technical Rider</span><span class="s">PDF · Für Veranstalter</span><span class="arr" aria-hidden="true">↓</span></a>
+      </div>
     </div>
-      <div id="newsletter">
+  </section>
+
+  <section id="newsletter" class="sec on-red">
+    <div class="wrap">
       <h2 class="cond">Newsletter</h2>
       <p style="max-width:60ch;margin:0 0 28px;font-weight:600;font-size:18px">Stay close. Neue Songs, Konzerttermine und kleine Einblicke hinter die Kulissen. Kein Spam, nur ab und zu eine Mail.</p>
       <form class="nl" id="nl-form" method="post" novalidate>
@@ -686,18 +686,6 @@ body.has-mini{padding-bottom:110px}
         <input type="hidden" name="locale" value="de">
         <div class="actions"><button class="btn solid" type="submit">Anmelden</button><span class="msg" id="nl-msg" role="status"></span></div>
       </form>
-    </div>
-    </div>
-  </section>
-
-  <section id="downloads" class="sec">
-    <div class="wrap">
-      <h2 class="cond">Downloads</h2>
-      <div class="dls">
-        <a class="dl" href="downloads/softblech-presskit.pdf" download><span class="t cond">Presskit</span><span class="s">PDF · Bio, Fakten, Releases, Presse</span><span class="arr" aria-hidden="true">↓</span></a>
-        <a class="dl" href="https://drive.google.com/drive/folders/1K4uR7UvWpCNpZ2IkZ0Ao4phFAWkuovKI" target="_blank" rel="noopener"><span class="t cond">Pressefotos</span><span class="s">Hohe Auflösung · Google Drive</span><span class="arr" aria-hidden="true">↗</span></a>
-        <a class="dl" href="downloads/softblech-technical-rider.pdf" download><span class="t cond">Technical Rider</span><span class="s">PDF · Für Veranstalter</span><span class="arr" aria-hidden="true">↓</span></a>
-      </div>
     </div>
   </section>
 
