@@ -5,7 +5,7 @@
 .carousel .track:focus-visible{outline:2px solid var(--red);outline-offset:3px}
 .carousel img{flex:0 0 100%;width:100%;height:100%;object-fit:cover;scroll-snap-align:start;display:block}
 .carousel .track{cursor:pointer}
-.carousel .bar{position:relative;height:6px;margin-top:12px;background:var(--line);cursor:pointer}
+.carousel .bar{position:relative;height:6px;margin:0 2px 0 0;background:#000;cursor:pointer}
 .carousel .bar span{position:absolute;left:0;top:0;bottom:0;background:var(--red);will-change:transform}
 @media (max-width:860px){.shirt{max-width:520px}}
 .facts{display:grid;grid-template-columns:auto 1fr;gap:6px 20px;margin:22px 0 0;font-size:18px}
