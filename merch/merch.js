@@ -17,8 +17,8 @@ var MERCH = {
   newsletter: 'https://4a6dbfd6.sibforms.com/serve/MUIFAMwR_m5h8o1wltsYbSCL7N-QMkxqJUoEVb_HBoeFtIwxgZZst1DJeTa-DguGFJctrygaBhK5eTaY9OMlEblkh8J50NXY2i4jN8-niLvTT9qEuoETD_KrCktzgieUgJNxSoE3nzt0x5q3pnvh9-7T5rGj5rN5tNrGP_zIDFhjXlRyv7Ma3OdJQnfqodpfR2hNcHu-zTpUljvZAg==',
   // Zugangscode: nur der SHA-256-Fingerabdruck steht hier, nicht der Code selbst.
   // Neuen Code setzen: Claude fragen, oder in der Browser-Konsole den Fingerabdruck des Codes in Kleinbuchstaben ohne Leerzeichen erzeugen.
-  codeHash: 'f41076623d336839144a33a7b55afff848ed35c0b1bc6420e29f49f62e0e1041', // leer = Seite ohne Code
-  paypal: ''                   // leer = Zahlungsinfos schickt ihr persönlich (so gewünscht, 16.11.)
+  codeHash: '5a075cc268499dcedb8b2c569d8150a15bcfb32eca6c391f9e71c8b956459f1c', // leer = Seite ohne Code
+  paypal: ''                   // leer = PayPal-Link steht nur in der Bestätigungsmail (Dennis 17.11.)
 };
 /* ===================================================================== */
 
@@ -90,8 +90,8 @@ var MERCH = {
     $('m-deadline-dt').hidden = $('m-deadline').hidden = !MERCH.bis;
     if (MERCH.bis) $('m-deadline').textContent = date(MERCH.bis);
     $('m-pay-note').textContent = en()
-      ? 'After ordering you get an order number by email. You pay via PayPal (Friends & Family), we will send you the details personally.'
-      : 'Nach dem Absenden bekommst du eine Bestellnummer per Mail. Bezahlt wird per PayPal (Freunde & Familie), die Infos schicken wir dir persönlich.';
+      ? 'After ordering you get an order number and the payment details by email. You pay via PayPal.'
+      : 'Nach dem Absenden bekommst du deine Bestellnummer und die Zahlungsdetails per Mail. Bezahlt wird per PayPal.';
   }
 
   // Bilder-Karussell: wischen, auf das Bild tippen oder den roten Balken anklicken
@@ -186,8 +186,8 @@ var MERCH = {
     $('d-pay').textContent = MERCH.paypal
       ? (en() ? 'Please send ' + eur(r.summe) + ' via PayPal to ' + MERCH.paypal + ' and write ' + r.nr + ' as the reference.'
               : 'Bitte überweise ' + eur(r.summe) + ' per PayPal an ' + MERCH.paypal + ' und schreib ' + r.nr + ' in den Verwendungszweck.')
-      : (en() ? 'Total: ' + eur(r.summe) + '. We will send you the PayPal payment details personally in the next few days.'
-              : 'Betrag: ' + eur(r.summe) + '. Die PayPal-Zahlungsinfos schicken wir dir in den nächsten Tagen persönlich.');
+      : (en() ? 'Total: ' + eur(r.summe) + '. You will find the payment details in your confirmation email.'
+              : 'Betrag: ' + eur(r.summe) + '. Die Zahlungsdetails findest du in deiner Bestätigungsmail.');
     var u = paypalUrl();
     if (u) { $('d-paypal').href = u; $('d-paypal').hidden = false; }
     $('done').hidden = false; $('done').focus();
