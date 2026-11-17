@@ -8,7 +8,6 @@ var MERCH = {
   // Web-App-Adresse aus Google Apps Script (endet auf /exec). Leer = Testmodus.
   endpoint: 'https://script.google.com/macros/s/AKfycbyDGxcsI9g2Wr1Pr-fyA2FmWhAnjRMlLy1juPrJn0NavL8r07UcXUy1oMe5WlSAWJNwTQ/exec',
   titel: 'SOFTBLECH Shirt',
-  bild: 'shirt.jpg',           // Bild im Ordner merch/
   preis: 25,                   // Euro pro Shirt
   versand: 4.19,               // Euro pro Bestellung, DHL Päckchen S (Stand 2026)
   groessen: ['XS', 'S', 'M', 'L', 'XL'],
@@ -95,7 +94,27 @@ var MERCH = {
       : 'Nach dem Absenden bekommst du eine Bestellnummer per Mail. Bezahlt wird per PayPal (Freunde & Familie), die Infos schicken wir dir persönlich.';
   }
 
-  $('shirt-img').src = MERCH.bild;
+  // Bilder-Karussell: wischen, Pfeile oder Punkte
+  (function () {
+    var track = $('track'), imgs = track.querySelectorAll('img'), dots = $('c-dots'), btns = [];
+    var idx = function () { return Math.round(track.scrollLeft / (track.clientWidth || 1)); };
+    var go = function (i) { i = (i + imgs.length) % imgs.length; track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' }); };
+    Array.prototype.forEach.call(imgs, function (im, i) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.setAttribute('aria-label', 'Bild ' + (i + 1));
+      b.addEventListener('click', function () { go(i); });
+      dots.appendChild(b); btns.push(b);
+    });
+    var mark = function () { var i = idx(); btns.forEach(function (b, j) { b.setAttribute('aria-current', j === i ? 'true' : 'false'); }); };
+    track.addEventListener('scroll', function () { window.requestAnimationFrame(mark); }, { passive: true });
+    $('c-prev').addEventListener('click', function () { go(idx() - 1); });
+    $('c-next').addEventListener('click', function () { go(idx() + 1); });
+    track.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(idx() + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); go(idx() - 1); }
+    });
+    mark();
+  })();
   var expired = MERCH.bis && new Date() > new Date(MERCH.bis + 'T23:59:59');
   if (!MERCH.offen || expired) { form.hidden = true; $('m-closed').hidden = false; }
 
