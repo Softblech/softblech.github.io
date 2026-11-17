@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://softblech.com/merch/shirt-foto.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="../release.css">
-<link rel="stylesheet" href="merch.css?v=20261118a">
+<link rel="stylesheet" href="merch.css?v=20261118b">
 </head>
 <body>
 <header class="top"><div class="wrap">
@@ -71,6 +71,7 @@
   <form id="order" novalidate>
     <fieldset>
       <legend><span data-l="de">1. Größe und Anzahl</span><span data-l="en">1. Size and quantity</span></legend>
+      <p class="help"><span data-l="de">Felder mit * müssen ausgefüllt werden.</span><span data-l="en">Fields marked with * are required.</span></p>
       <p class="help"><span data-l="de">Trag bei jeder Größe ein, wie viele Shirts du möchtest.</span><span data-l="en">Enter how many shirts you want in each size.</span></p>
       <div class="sizes" id="sizes"></div>
       <p class="sum" id="sum" aria-live="polite"></p>
@@ -79,10 +80,10 @@
     <fieldset>
       <legend><span data-l="de">2. Über dich</span><span data-l="en">2. About you</span></legend>
       <div class="row2">
-        <label><span data-l="de">Vorname</span><span data-l="en">First name</span><input name="vorname" autocomplete="given-name" required maxlength="80"></label>
-        <label><span data-l="de">Nachname</span><span data-l="en">Last name</span><input name="nachname" autocomplete="family-name" required maxlength="80"></label>
+        <label class="req"><span data-l="de">Vorname</span><span data-l="en">First name</span><input name="vorname" autocomplete="given-name" required maxlength="80"></label>
+        <label class="req"><span data-l="de">Nachname</span><span data-l="en">Last name</span><input name="nachname" autocomplete="family-name" required maxlength="80"></label>
       </div>
-      <label><span data-l="de">E-Mail (dorthin schicken wir die Bestätigung und die Zahlungsinfos)</span><span data-l="en">Email (we send the confirmation and payment details here)</span><input name="email" type="email" autocomplete="email" required maxlength="120"></label>
+      <label class="req"><span data-l="de">E-Mail (dorthin schicken wir die Bestätigung und die Zahlungsinfos)</span><span data-l="en">Email (we send the confirmation and payment details here)</span><input name="email" type="email" autocomplete="email" required maxlength="120"></label>
     </fieldset>
 
     <fieldset>
@@ -92,13 +93,13 @@
         <label class="radio"><input type="radio" name="lieferung" value="Abholung"><span><span data-l="de">Abholung bei einem Konzert (kostenlos)</span><span data-l="en">Pick up at a show (free)</span></span></label>
       </div>
       <div id="address">
-        <label><span data-l="de">Straße und Hausnummer</span><span data-l="en">Street and number</span><input name="strasse" autocomplete="address-line1" maxlength="120"></label>
+        <label class="req"><span data-l="de">Straße und Hausnummer</span><span data-l="en">Street and number</span><input name="strasse" autocomplete="address-line1" maxlength="120" required></label>
         <label><span data-l="de">Adresszusatz (optional)</span><span data-l="en">Address line 2 (optional)</span><input name="zusatz" autocomplete="address-line2" maxlength="120"></label>
         <div class="row2 plz">
-          <label><span data-l="de">PLZ</span><span data-l="en">Postcode</span><input name="plz" autocomplete="postal-code" maxlength="12"></label>
-          <label><span data-l="de">Ort</span><span data-l="en">City</span><input name="ort" autocomplete="address-level2" maxlength="80"></label>
+          <label class="req"><span data-l="de">PLZ</span><span data-l="en">Postcode</span><input name="plz" autocomplete="postal-code" maxlength="12" required></label>
+          <label class="req"><span data-l="de">Ort</span><span data-l="en">City</span><input name="ort" autocomplete="address-level2" maxlength="80" required></label>
         </div>
-        <label><span data-l="de">Land</span><span data-l="en">Country</span><input name="land" autocomplete="country-name" value="Deutschland" maxlength="60"></label>
+        <label class="req"><span data-l="de">Land</span><span data-l="en">Country</span><input name="land" autocomplete="country-name" value="Deutschland" maxlength="60" required></label>
       </div>
       <label><span data-l="de">Nachricht an uns (optional)</span><span data-l="en">Message to us (optional)</span><textarea name="nachricht" rows="3" maxlength="500"></textarea></label>
     </fieldset>
@@ -131,6 +132,6 @@
   <a href="../datenschutz.html">Datenschutz</a>
   <span>© 2026 Softblech</span>
 </div></footer>
-<script src="merch.js?v=20261118a"></script>
+<script src="merch.js?v=20261118b"></script>
 </body>
 </html>

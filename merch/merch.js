@@ -83,6 +83,7 @@ var MERCH = {
     document.querySelectorAll('.size').forEach(function (b) { b.classList.toggle('on', +b.querySelector('input').value > 0); });
     $('sum').textContent = k.n ? (en() ? k.n + (k.n === 1 ? ' shirt' : ' shirts') + ', total ' : k.n + ' Shirt' + (k.n === 1 ? '' : 's') + ', zusammen ') + eur(total(k.n)) + (shipping() ? (en() ? ' incl. shipping' : ' inkl. Versand') : '') : '';
     $('address').hidden = !shipping();
+    ['strasse', 'plz', 'ort', 'land'].forEach(function (n) { form[n].required = shipping(); });
     $('m-title').textContent = MERCH.titel;
     $('m-price').textContent = eur(MERCH.preis);
     $('m-ship').textContent = MERCH.versand ? eur(MERCH.versand) + (en() ? ' per order (or free pick-up at a show)' : ' pro Bestellung (oder kostenlos beim Konzert abholen)') : (en() ? 'free' : 'kostenlos');
@@ -131,9 +132,10 @@ var MERCH = {
     var k = counts();
     if (!k.n) return fail(en() ? 'Please choose at least one shirt.' : 'Bitte wähl mindestens ein Shirt aus.');
     var need = ['vorname', 'nachname', 'email'].concat(shipping() ? ['strasse', 'plz', 'ort', 'land'] : []);
-    for (var i = 0; i < need.length; i++) {
-      var f = form[need[i]];
-      if (!f.value.trim()) return fail(en() ? 'Please fill in all required fields.' : 'Bitte füll alle Pflichtfelder aus.', f);
+    var leer = need.map(function (n) { return form[n]; }).filter(function (f) { return !f.value.trim(); });
+    if (leer.length) {
+      leer.forEach(function (f) { f.setAttribute('aria-invalid', 'true'); });
+      return fail(en() ? 'Please fill in all fields marked with *. We need your address to send you the shirt.' : 'Bitte füll alle Felder mit * aus. Ohne Adresse können wir dir das Shirt nicht schicken.', leer[0]);
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.value.trim())) return fail(en() ? 'Please check your email address.' : 'Bitte prüf deine E-Mail-Adresse.', form.email);
 

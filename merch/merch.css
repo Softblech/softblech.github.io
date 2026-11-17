@@ -52,3 +52,4 @@ input[aria-invalid=true]{border-color:var(--red)}
 .gate form{max-width:420px;margin-top:24px}
 .gate input{font-weight:700}
 @media (max-width:560px){.row2,.row2.plz{grid-template-columns:1fr}}
+label.req > span[data-l]::after{content:" *";color:var(--red)}
