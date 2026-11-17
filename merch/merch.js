@@ -163,8 +163,8 @@ var MERCH = {
       })
       .catch(function () {
         btn.disabled = false;
-        fail(en() ? 'Sorry, that did not work. Please try again in a moment or email us at softblech@gmail.com.'
-                  : 'Das hat leider nicht geklappt. Versuch es bitte gleich noch einmal oder schreib uns an softblech@gmail.com.');
+        fail(en() ? 'Sorry, that did not work. Please try again in a moment or email us at hallo@softblech.com.'
+                  : 'Das hat leider nicht geklappt. Versuch es bitte gleich noch einmal oder schreib uns an hallo@softblech.com.');
       });
   });
 

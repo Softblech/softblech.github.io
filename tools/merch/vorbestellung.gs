@@ -14,7 +14,7 @@ var MAX_PRO_GROESSE = 10;
 var PAYPAL = 'https://www.paypal.me/henrisoen'; // PayPal-Link für die Bestätigungsmail (leer = Infos persönlich)
 var ZAHLEN_IN_TAGEN = 7;
 var BESTAETIGUNG_SENDEN = true;
-var KOPIE_AN = 'softblech@gmail.com'; // Hinweis-Mail bei jeder Bestellung (leer = keine)
+var KOPIE_AN = 'softblech@gmail.com'; // Hinweis-Mail bei jeder Bestellung (direkt ans Gmail-Konto, nicht über hallo@ – Gmail blendet an sich selbst weitergeleitete Mails sonst aus)
 // ================================================================
 
 var BLATT = 'Bestellungen';
@@ -152,7 +152,7 @@ function mail_(en, an, vorname, nr, anzahl, lieferung, betrag) {
     : 'Hey ' + vorname + ',\n\ndanke für deine Vorbestellung!\n\nBestellnummer: ' + nr + '\nShirts: ' + liste + '\n' +
       (lieferung === 'Versand' ? 'Lieferung: Versand mit DHL' : 'Lieferung: Abholung bei einem Konzert') + '\nBetrag: ' + euro + '\n\n' + zahlDe + '\n\n' +
       'Sobald die Shirts gedruckt sind, melden wir uns.\n\nLiebe Grüße\nDennis & Henri\nSOFTBLECH\nsoftblech.com';
-  MailApp.sendEmail({ to: an, subject: (en ? 'Your SOFTBLECH pre-order ' : 'Deine SOFTBLECH-Vorbestellung ') + nr, body: text, name: 'SOFTBLECH', replyTo: 'softblech@gmail.com' });
+  MailApp.sendEmail({ to: an, subject: (en ? 'Your SOFTBLECH pre-order ' : 'Deine SOFTBLECH-Vorbestellung ') + nr, body: text, name: 'SOFTBLECH', replyTo: 'hallo@softblech.com' });
 }
 
 // Verhindert, dass Eingaben wie "=..." als Formel in der Tabelle landen
