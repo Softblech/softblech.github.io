@@ -94,26 +94,27 @@ var MERCH = {
       : 'Nach dem Absenden bekommst du eine Bestellnummer per Mail. Bezahlt wird per PayPal (Freunde & Familie), die Infos schicken wir dir persönlich.';
   }
 
-  // Bilder-Karussell: wischen, Pfeile oder Punkte
+  // Bilder-Karussell: wischen, auf das Bild tippen oder den roten Balken anklicken
   (function () {
-    var track = $('track'), imgs = track.querySelectorAll('img'), dots = $('c-dots'), btns = [];
-    var idx = function () { return Math.round(track.scrollLeft / (track.getBoundingClientRect().width || 1)); };
-    var go = function (i) { i = (i + imgs.length) % imgs.length; track.scrollTo({ left: imgs[i].offsetLeft - track.offsetLeft, behavior: 'smooth' }); };
-    Array.prototype.forEach.call(imgs, function (im, i) {
-      var b = document.createElement('button');
-      b.type = 'button'; b.setAttribute('aria-label', 'Bild ' + (i + 1));
-      b.addEventListener('click', function () { go(i); });
-      dots.appendChild(b); btns.push(b);
-    });
-    var mark = function () { var i = idx(); btns.forEach(function (b, j) { b.setAttribute('aria-current', j === i ? 'true' : 'false'); }); };
-    track.addEventListener('scroll', function () { window.requestAnimationFrame(mark); }, { passive: true });
-    $('c-prev').addEventListener('click', function () { go(idx() - 1); });
-    $('c-next').addEventListener('click', function () { go(idx() + 1); });
+    var track = $('track'), imgs = track.querySelectorAll('img'), bar = $('c-bar'), thumb = $('c-thumb'), n = imgs.length;
+    var w = function () { return track.getBoundingClientRect().width || 1; };
+    var idx = function () { return Math.round(track.scrollLeft / w()); };
+    var go = function (i) { i = (i + n) % n; track.scrollTo({ left: imgs[i].offsetLeft - track.offsetLeft, behavior: 'smooth' }); };
+    thumb.style.width = (100 / n) + '%';
+    var move = function () {
+      var max = track.scrollWidth - track.clientWidth, f = max > 0 ? track.scrollLeft / max : 0;
+      thumb.style.transform = 'translateX(' + (f * (n - 1) * 100) + '%)';
+      bar.setAttribute('aria-valuenow', idx() + 1);
+    };
+    bar.setAttribute('aria-valuemax', n);
+    track.addEventListener('scroll', function () { window.requestAnimationFrame(move); }, { passive: true });
+    track.addEventListener('click', function () { go(idx() + 1); });
+    bar.addEventListener('click', function (e) { var r = bar.getBoundingClientRect(); go(Math.min(n - 1, Math.floor((e.clientX - r.left) / r.width * n))); });
     track.addEventListener('keydown', function (e) {
       if (e.key === 'ArrowRight') { e.preventDefault(); go(idx() + 1); }
       if (e.key === 'ArrowLeft') { e.preventDefault(); go(idx() - 1); }
     });
-    mark();
+    move();
   })();
   var expired = MERCH.bis && new Date() > new Date(MERCH.bis + 'T23:59:59');
   if (!MERCH.offen || expired) { form.hidden = true; $('m-closed').hidden = false; }

@@ -4,12 +4,9 @@
 .carousel .track::-webkit-scrollbar{display:none}
 .carousel .track:focus-visible{outline:2px solid var(--red);outline-offset:3px}
 .carousel img{flex:0 0 100%;width:100%;height:100%;object-fit:cover;scroll-snap-align:start;display:block}
-.carousel .nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border:0;background:rgba(0,0,0,.55);color:#fff;font:400 32px/1 sans-serif;cursor:pointer;padding:0 0 4px}
-.carousel .nav:hover{background:var(--red);color:var(--black)}
-.carousel .prev{left:10px}.carousel .next{right:10px}
-.carousel .dots{display:flex;justify-content:center;gap:10px;margin-top:12px}
-.carousel .dots button{width:12px;height:12px;border-radius:50%;border:2px solid var(--red);background:transparent;padding:0;cursor:pointer}
-.carousel .dots button[aria-current=true]{background:var(--red)}
+.carousel .track{cursor:pointer}
+.carousel .bar{position:relative;height:6px;margin-top:12px;background:var(--line);cursor:pointer}
+.carousel .bar span{position:absolute;left:0;top:0;bottom:0;background:var(--red);will-change:transform}
 @media (max-width:860px){.shirt{max-width:520px}}
 .facts{display:grid;grid-template-columns:auto 1fr;gap:6px 20px;margin:22px 0 0;font-size:18px}
 .facts dt{color:var(--muted)}.facts dd{margin:0;font-weight:700}
