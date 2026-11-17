@@ -16,7 +16,7 @@ Dauer: ca. 10 Minuten, einmalig.
 1. Im Menü **Erweiterungen > Apps Script** klicken. Ein neuer Tab öffnet sich.
 2. Dort steht schon etwas Code (`function myFunction() …`). Alles markieren und löschen.
 3. Den kompletten Inhalt der Datei `tools/merch/vorbestellung.gs` hineinkopieren.
-4. Ganz oben im Block **EINSTELLUNGEN** Preis, Versand, Größen und PayPal eintragen.
+4. Ganz oben im Block **EINSTELLUNGEN** stehen Preis, Versand und Größen (alles andere später im Blatt „Einstellungen“).
 5. Speichern (Disketten-Symbol oder Cmd+S).
 
 ## 3. Tabelle vorbereiten
@@ -37,6 +37,13 @@ Dauer: ca. 10 Minuten, einmalig.
 
 Wichtig: Wenn du später etwas am Skript änderst, unter **Bereitstellen > Bereitstellungen verwalten >
 Bearbeiten (Stift) > Version: Neue Version** neu bereitstellen. Die Adresse bleibt dann gleich.
+
+## Einstellungen ändern (ohne Code)
+
+Im Blatt **Einstellungen** der Tabelle stehen PayPal-Link, die Adresse für die Hinweis-Mail, die Antwort-Adresse,
+die Zahlungsfrist, ob Bestätigungsmails rausgehen, und optionale Zusatztexte für die Mail.
+Einfach den Wert in Spalte B ändern. Das gilt sofort für die nächste Bestellung, ohne neues Bereitstellen.
+Nur Preis, Versand und Größen stehen im Code, weil sie auch auf der Website (merch/merch.js) stehen müssen.
 
 ## 5. Excel-Liste herunterladen
 
