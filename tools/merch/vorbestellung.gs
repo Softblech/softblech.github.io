@@ -11,7 +11,7 @@ var GROESSEN = ['XS', 'S', 'M', 'L', 'XL'];
 var PREIS = 25;          // Euro pro Shirt
 var VERSAND = 4.19;      // Euro pro Bestellung, DHL Päckchen S (Stand 2026)
 var MAX_PRO_GROESSE = 10;
-var PAYPAL = '';         // leer = Zahlungsinfos schickt ihr persönlich
+var PAYPAL = 'https://www.paypal.me/henrisoen'; // PayPal-Link für die Bestätigungsmail (leer = Infos persönlich)
 var ZAHLEN_IN_TAGEN = 7;
 var BESTAETIGUNG_SENDEN = true;
 var KOPIE_AN = 'softblech@gmail.com'; // Hinweis-Mail bei jeder Bestellung (leer = keine)
@@ -120,7 +120,7 @@ function doPost(e) {
             '\n\nLieferung:\n' + adresse +
             (t('nachricht', 500) ? '\n\nNachricht: ' + t('nachricht', 500) : '') +
             '\nNewsletter: ' + (p.newsletter === 'ja' ? 'ja' : 'nein') +
-            '\n\nNächster Schritt: PayPal-Infos an ' + email + ' schicken (Verwendungszweck ' + nr + ').\n' +
+            (PAYPAL ? '\n\nDer Link ' + PAYPAL + ' steht in der Bestätigungsmail. Zahlung mit ' + nr + ' abgleichen und "Bezahlt" abhaken.\n' : '\n\nNächster Schritt: PayPal-Infos an ' + email + ' schicken (Verwendungszweck ' + nr + ').\n') +
             'Tabelle: https://docs.google.com/spreadsheets/d/' + TABELLE_ID + '/edit',
           name: 'SOFTBLECH Merch',
           replyTo: email
@@ -140,10 +140,10 @@ function mail_(en, an, vorname, nr, anzahl, lieferung, betrag) {
   var liste = GROESSEN.map(function (g, i) { return anzahl[i] ? anzahl[i] + ' × ' + g : ''; }).filter(String).join(', ');
   var euro = betrag.toFixed(2).replace('.', en ? '.' : ',') + ' €';
   var zahlEn = PAYPAL
-    ? 'Please send ' + euro + ' via PayPal to ' + PAYPAL + ' within ' + ZAHLEN_IN_TAGEN + ' days and use ' + nr + ' as the reference.'
+    ? 'Please send ' + euro + ' via PayPal within ' + ZAHLEN_IN_TAGEN + ' days:\n' + PAYPAL + '\nPlease add your order number ' + nr + ' as a note.'
     : 'We will send you the PayPal payment details personally in the next few days.';
   var zahlDe = PAYPAL
-    ? 'Bitte überweise ' + euro + ' innerhalb von ' + ZAHLEN_IN_TAGEN + ' Tagen per PayPal an ' + PAYPAL + ' und schreib ' + nr + ' in den Verwendungszweck.'
+    ? 'Bitte überweise ' + euro + ' innerhalb von ' + ZAHLEN_IN_TAGEN + ' Tagen per PayPal:\n' + PAYPAL + '\nSchreib bitte deine Bestellnummer ' + nr + ' in die Mitteilung.'
     : 'Die PayPal-Zahlungsinfos schicken wir dir in den nächsten Tagen persönlich.';
   var text = en
     ? 'Hi ' + vorname + ',\n\nthanks for pre-ordering our shirt!\n\nOrder number: ' + nr + '\nShirts: ' + liste + '\n' +
