@@ -104,7 +104,7 @@ def build(c):
 <html lang="de" data-lang="de">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src https://open.spotify.com; base-uri 'self'; object-src 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://connect.facebook.net; connect-src 'self' https://www.facebook.com https://connect.facebook.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src https://open.spotify.com; base-uri 'self'; object-src 'none'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{e(c['title'])} · SOFTBLECH</title>
@@ -184,8 +184,10 @@ def build(c):
   <a href="../">softblech.com</a>
   <a href="../impressum.html">Impressum</a>
   <a href="../datenschutz.html">Datenschutz</a>
+  <button class="linkbtn" type="button" data-open-cookies>Cookie-Einstellungen</button>
   <span>© 2026 Softblech</span>
 </div></footer>
+<script src="../meta-pixel.js"></script>
 <script src="../release.js"></script>
 </body>
 </html>
