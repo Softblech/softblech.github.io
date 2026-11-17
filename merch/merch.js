@@ -97,8 +97,8 @@ var MERCH = {
   // Bilder-Karussell: wischen, Pfeile oder Punkte
   (function () {
     var track = $('track'), imgs = track.querySelectorAll('img'), dots = $('c-dots'), btns = [];
-    var idx = function () { return Math.round(track.scrollLeft / (track.clientWidth || 1)); };
-    var go = function (i) { i = (i + imgs.length) % imgs.length; track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' }); };
+    var idx = function () { return Math.round(track.scrollLeft / (track.getBoundingClientRect().width || 1)); };
+    var go = function (i) { i = (i + imgs.length) % imgs.length; track.scrollTo({ left: imgs[i].offsetLeft - track.offsetLeft, behavior: 'smooth' }); };
     Array.prototype.forEach.call(imgs, function (im, i) {
       var b = document.createElement('button');
       b.type = 'button'; b.setAttribute('aria-label', 'Bild ' + (i + 1));
