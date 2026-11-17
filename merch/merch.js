@@ -17,8 +17,8 @@ var MERCH = {
   // Brevo-Formularadresse (gleich wie SB.newsletterAction in index.html)
   newsletter: 'https://4a6dbfd6.sibforms.com/serve/MUIFAMwR_m5h8o1wltsYbSCL7N-QMkxqJUoEVb_HBoeFtIwxgZZst1DJeTa-DguGFJctrygaBhK5eTaY9OMlEblkh8J50NXY2i4jN8-niLvTT9qEuoETD_KrCktzgieUgJNxSoE3nzt0x5q3pnvh9-7T5rGj5rN5tNrGP_zIDFhjXlRyv7Ma3OdJQnfqodpfR2hNcHu-zTpUljvZAg==',
   // Zugangscode: nur der SHA-256-Fingerabdruck steht hier, nicht der Code selbst.
-  // Neuen Code setzen: Claude fragen, oder in der Browser-Konsole den Fingerabdruck von code.toLowerCase() erzeugen.
-  codeHash: '8aad4a30e90b995a916cc7f467bd7aefbfa699f438cb27a4ceea9d2ed6ad14f1', // leer = Seite ohne Code
+  // Neuen Code setzen: Claude fragen, oder in der Browser-Konsole den Fingerabdruck des Codes in Kleinbuchstaben ohne Leerzeichen erzeugen.
+  codeHash: 'f41076623d336839144a33a7b55afff848ed35c0b1bc6420e29f49f62e0e1041', // leer = Seite ohne Code
   paypal: ''                   // leer = Zahlungsinfos schickt ihr persönlich (so gewünscht, 16.11.)
 };
 /* ===================================================================== */
@@ -175,7 +175,7 @@ var MERCH = {
 
   // Zugangscode-Abfrage (?code=... im Link schaltet direkt frei)
   function sha(t) {
-    return crypto.subtle.digest('SHA-256', new TextEncoder().encode(t.trim().toLowerCase())).then(function (b) {
+    return crypto.subtle.digest('SHA-256', new TextEncoder().encode(t.toLowerCase().replace(/\s+/g, ''))).then(function (b) {
       return Array.from(new Uint8Array(b)).map(function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
     });
   }
