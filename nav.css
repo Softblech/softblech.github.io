@@ -3,8 +3,8 @@
    Das HTML der Leiste wird mit tools/sync_nav.py aus index.html auf alle Unterseiten kopiert. */
 :root{--nav-gl:max(20px,env(safe-area-inset-left,0px));--nav-gr:max(20px,env(safe-area-inset-right,0px))}
 @media (min-width:861px){:root{--nav-gl:clamp(28px,3vw,72px);--nav-gr:clamp(28px,3vw,72px)}}
-html[data-lang=de] .top [data-l=en],html[data-lang=en] .top [data-l=de]{display:none!important}
-html:not([data-lang]) .top [data-l=en]{display:none!important}
+html[data-lang=de] .top [data-l=en],html[data-lang=en] .top [data-l=de],html[data-lang=de] .site-foot [data-l=en],html[data-lang=en] .site-foot [data-l=de]{display:none!important}
+html:not([data-lang]) .top [data-l=en],html:not([data-lang]) .site-foot [data-l=en]{display:none!important}
 .top{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0px);z-index:50;background:transparent;color:#e4e2e2;border-bottom:2px solid transparent;font-family:"Archivo","Arial Narrow","Helvetica Neue",Arial,sans-serif;transition:background .3s,border-color .3s,color .3s}
 .top.solid,.top.menu{background:#ff2f3f;border-bottom-color:#0c0b0b;color:#0c0b0b}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:none;margin:0;padding:10px var(--nav-gr) 10px var(--nav-gl)}
@@ -53,3 +53,13 @@ html:not([data-lang]) .top [data-l=en]{display:none!important}
 @media (prefers-reduced-motion:reduce){.top,.top .wrap,.top .logo img,.top .marquee{transition:none}.top .marquee .track{animation:none}}
 /* Unterseiten: Platz fuer die feste Leiste */
 body.has-nav{padding-top:var(--nav-h,64px)}
+/* Globaler Footer (wie die Navigation per tools/sync_nav.py aus index.html kopiert) */
+footer.site-foot{padding-block:48px 40px;text-align:center;font-size:14px;color:#ff2f3f}
+.site-foot .wrap{display:block;max-width:none;margin:0;padding:0 var(--nav-gr) 0 var(--nav-gl)}
+.site-foot .social{display:flex;justify-content:center;flex-wrap:wrap;gap:22px;margin-bottom:28px}
+.site-foot .social a{color:#ff2f3f;display:inline-flex;transition:color .15s,transform .15s}
+.site-foot .social a:hover{color:#e4e2e2;transform:translateY(-2px)}
+.site-foot .social svg{width:30px;height:30px}
+.site-foot .foot-links{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 26px;margin-bottom:14px}
+.site-foot .foot-links a,.site-foot .foot-links button,.site-foot .copyr{font-family:"Archivo","Arial Narrow","Helvetica Neue",Arial,sans-serif;font-stretch:75%;font-weight:800;text-transform:uppercase;font-size:14px;letter-spacing:.05em;color:#ff2f3f;text-decoration:none;line-height:1.6}
+.site-foot .foot-links a:hover{text-decoration:underline}

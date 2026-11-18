@@ -13,6 +13,7 @@ LEGAL = [ROOT / n for n in ('impressum.html', 'datenschutz.html', 'widerruf.html
 
 src = (ROOT / 'index.html').read_text(encoding='utf-8')
 header = re.search(r'<header class="top">.*?</header>', src, re.S).group(0)
+footer = re.search(r'<footer class="site-foot">.*?</footer>', src, re.S).group(0)
 D = dict(re.findall(r'"((?:[^"\\]|\\.)*)":"((?:[^"\\]|\\.)*)"', (ROOT / 'lang.js').read_text(encoding='utf-8')))
 
 
@@ -36,10 +37,27 @@ def build(prefix, i18n):
     return '<!-- NAV: automatisch aus index.html (tools/sync_nav.py), hier nicht von Hand aendern -->\n' + h
 
 
+def build_foot(prefix, i18n):
+    f = footer
+    # Cookie-Einstellungen gibt es nur auf der Startseite (dort liegt das Cookie-Banner)
+    f = re.sub(r'\s*<button [^>]*data-open-cookies[^>]*>.*?</button>', '', f, flags=re.S)
+    f = re.sub(r'href="(impressum|datenschutz|widerruf)\.html"', lambda m: f'href="{prefix}{m.group(1)}.html"', f)
+    if i18n:
+        tr = lambda m: m.group(1) + (f'<span data-l="de">{m.group(2)}</span><span data-l="en">{D[m.group(2).strip()]}</span>' if m.group(2).strip() in D else m.group(2)) + m.group(3)
+        f = re.sub(r'(<a [^>]*>)([^<]+)(</a>)', tr, f)
+    return '<!-- FOOTER: automatisch aus index.html (tools/sync_nav.py), hier nicht von Hand aendern -->\n' + f
+
+
 def patch(path, prefix, i18n):
     t = path.read_text(encoding='utf-8')
     new = build(prefix, i18n)
     t = re.sub(r'(<!-- NAV:[^\n]*-->\n)?<header\b.*?</header>', lambda m: new, t, count=1, flags=re.S)
+    foot = build_foot(prefix, i18n)
+    if re.search(r'<footer\b', t):
+        t = re.sub(r'(<!-- FOOTER:[^\n]*-->\n)?<footer\b.*?</footer>', lambda m: foot, t, count=1, flags=re.S)
+    else:
+        t = t.replace('</main>', '</main>\n' + foot, 1)
+    t = re.sub(r'nav\.css\?v=\d+', 'nav.css?v=3', t)
     if 'nav.css' not in t:
         t = t.replace('</head>', f'<link rel="stylesheet" href="{prefix}nav.css?v=2">\n</head>', 1)
     if 'nav.js' not in t:
