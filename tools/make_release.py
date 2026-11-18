@@ -211,3 +211,7 @@ for c in ALL:
                         "text_en": c.get("teaser_en") or c.get("pitch_en") or ""}
 (ROOT / "data/songs.json").write_text(json.dumps(songs, ensure_ascii=False, indent=1), encoding="utf-8")
 print("geschrieben: data/songs.json")
+
+# Globale Navigation aus index.html auf alle Unterseiten kopieren
+import subprocess, sys
+subprocess.run([sys.executable, str(ROOT / "tools/sync_nav.py")], check=True)

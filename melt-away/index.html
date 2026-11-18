@@ -20,14 +20,32 @@
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "MusicRecording", "name": "Melt Away", "url": "https://softblech.com/melt-away/", "datePublished": "2025-05-23", "image": "https://softblech.com/img/covers/melt-away.jpg", "description": "Melt Away, Single von SOFTBLECH", "genre": ["Post Wave", "Post-Punk", "Dark Wave"], "byArtist": {"@type": "MusicGroup", "name": "SOFTBLECH", "url": "https://softblech.com/"}, "sameAs": ["https://open.spotify.com/track/5VKDuDcFfE8EA6Kb9fIm1p", "https://music.apple.com/de/artist/softblech/1750294821", "https://www.youtube.com/@SoftblechMusic"]}</script>
 <link rel="stylesheet" href="../release.css">
+<link rel="stylesheet" href="../nav.css?v=2">
 </head>
-<body>
-<header class="top"><div class="wrap">
-  <a class="logo" href="../" aria-label="Zur Startseite"><img src="../img/logo-schwarz.png" alt="SOFTBLECH" width="400" height="139"></a>
-  <div class="lang" role="group" aria-label="Sprache / Language">
-    <button type="button" data-lang="de" aria-pressed="true">DE</button><button type="button" data-lang="en" aria-pressed="false">EN</button>
+<body class="has-nav">
+<!-- NAV: automatisch aus index.html (tools/sync_nav.py), hier nicht von Hand aendern -->
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="../" aria-label="Softblech Startseite"><img src="../img/logo-schwarz.png" alt="Softblech" width="400" height="139"></a>
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="mainnav"><span></span><span></span><span></span><b><span data-l="de">Menü</span><span data-l="en">Menu</span></b></button>
+    <nav aria-label="Hauptmenü" id="mainnav">
+      <a href="../#musik"><span data-l="de">Musik</span><span data-l="en">Music</span></a>
+      <a href="../#live">Live</a>
+      <a href="../#band">Band</a>
+      <a href="../#merch">Merch</a>
+      <a href="../#medien"><span data-l="de">Medien</span><span data-l="en">Media</span></a>
+      <a href="../#presse"><span data-l="de">Presse</span><span data-l="en">Press</span></a>
+      <a class="nav-btn" href="mailto:hallo@softblech.com"><span data-l="de">Kontakt</span><span data-l="en">Contact</span></a>
+    </nav>
+    <div class="lang" role="group" aria-label="Sprache / Language"><button type="button" data-lang="de" aria-pressed="true">DE</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
   </div>
-</div></header>
+  <div class="marquee cond" aria-hidden="true">
+  <div class="track">
+    <span><span data-l="de">I Want To Be With You – die neue Single – out now</span><span data-l="en">I Want To Be With You – the new single – out now</span></span><span><span data-l="de">Post Wave aus Berlin</span><span data-l="en">Post wave from Berlin</span></span><span>04.12. Valentin Stüberl</span>
+    <span><span data-l="de">I Want To Be With You – die neue Single – out now</span><span data-l="en">I Want To Be With You – the new single – out now</span></span><span><span data-l="de">Post Wave aus Berlin</span><span data-l="en">Post wave from Berlin</span></span><span>04.12. Valentin Stüberl</span>
+  </div>
+</div>
+</header>
 
 <main>
 <section class="rhero"><div class="wrap">
@@ -85,5 +103,6 @@
   <span>© 2026 Softblech</span>
 </div></footer>
 <script src="../release.js"></script>
+<script src="../nav.js?v=1"></script>
 </body>
 </html>
