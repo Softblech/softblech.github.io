@@ -9,7 +9,7 @@
     "Ja, es ist wahr: Es gibt endlich Merch! Das erste SOFTBLECH-Shirt, schwarz, mit unserem Logo in Chrom.":"Yes, it's true: merch is finally here! The first SOFTBLECH shirt, black, with our chrome logo.",
     "Im Moment gibt es die Vorbestellung aber exklusiv für Freunde und Bekannte, mit einem Code. Du willst auch einen? Schreib uns gern, wir schauen, was sich machen lässt.":"For now, pre-orders are exclusive to friends and family with a code. Want one too? Just write to us and we'll see what we can do.",
     "Post Wave aus Berlin":"Post wave from Berlin",
-    "Zum Song":"Listen","Abspielen":"Play","Mehr zum Song":"More about the song","Reinhören":"Listen",
+    "Zum Song":"To the song","Abspielen":"Play","Mehr zum Song":"More about the song","Reinhören":"Listen",
     "Neue Single":"New single","Debütsingle":"Debut single","Debüt":"Debut","2024 · Debüt":"2024 · Debut",
     "Ein Song über die Sehnsucht nach dem, was man nicht hat, selbst wenn man festhält, was man hat. Über Einsamkeit, die nicht verschwindet, nur weil jemand neben einem liegt.":
       "A song about longing for what you don't have, even when you're holding on to what you do. About a loneliness that doesn't go away just because someone is lying next to you.",
