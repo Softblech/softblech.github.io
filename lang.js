@@ -13,7 +13,7 @@
     "Neue Single":"New single","Debütsingle":"Debut single","Debüt":"Debut","2024 · Debüt":"2024 · Debut",
     "Ein Song über die Sehnsucht nach dem, was man nicht hat, selbst wenn man festhält, was man hat. Über Einsamkeit, die nicht verschwindet, nur weil jemand neben einem liegt.":
       "A song about longing for what you don't have, even when you're holding on to what you do. About a loneliness that doesn't go away just because someone is lying next to you.",
-    "Nichts verpassen":"Don't miss a thing","Eintragen":"Sign up","Alle Termine":"All dates","Infos":"Info",
+    "Nichts verpassen":"Don't miss a thing","Eintragen":"Sign up","Alle Termine":"All dates","Termine":"Dates","Infos":"Info",
     "Freitag, ab 19 Uhr · Eintritt auf Spendenbasis":"Friday, from 7 pm · Pay what you can",
     "Bisher auf der Bühne":"Past shows","Foto:":"Photo:","Fotos:":"Photos:",
     "Valentin Stüberl, Berlin · Release-Show":"Valentin Stüberl, Berlin · Release show",
