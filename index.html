@@ -511,6 +511,29 @@ footer{padding-block:48px 40px;text-align:center}
 .mini .x{background:transparent;border:0;color:var(--chrome);font-size:28px;line-height:1;cursor:pointer;padding:4px 8px}
 body.has-mini{padding-bottom:110px}
 @media (max-width:860px){.pk{grid-template-columns:1fr}}
+
+/* ===== Desktop (ab 861px): Navigation erst transparent, beim Scrollen rot; Seitenränder wie Fontaines ===== */
+@media (min-width:861px){
+  :root{--gutter-l:clamp(28px,3vw,72px);--gutter-r:clamp(28px,3vw,72px)}
+  .wrap{max-width:none}
+  .top{position:fixed;left:0;right:0;top:0;background:transparent;border-bottom-color:transparent;color:var(--chrome);transition:background .3s,border-color .3s,color .3s}
+  .top .wrap{padding-block:22px;transition:padding .3s}
+  .top .logo img{height:52px;filter:invert(1);transition:filter .3s,height .3s}
+  .top nav{gap:4px 26px}
+  .top nav a{font-size:21px}
+  .top .lang button{color:inherit}
+  .top.solid{background:var(--red);border-bottom-color:var(--black);color:var(--black)}
+  .top.solid .wrap{padding-block:10px}
+  .top.solid .logo img{height:44px;filter:none}
+  main#start{display:flex;flex-direction:column}
+  main#start > *{order:2}
+  main#start > .hero{order:0}
+  main#start > .marquee{order:1}
+  .hero{min-height:max(560px,100vh);min-height:max(560px,100lvh)}
+  .hero .slide::before{content:"";position:absolute;inset:0 0 auto 0;height:180px;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(12,11,11,.55),rgba(12,11,11,0))}
+  .hero .wrap{padding-block:40px 64px}
+}
+@media (min-width:861px) and (prefers-reduced-motion:reduce){.top,.top .wrap,.top .logo img{transition:none}}
 </style>
 
 </head>
