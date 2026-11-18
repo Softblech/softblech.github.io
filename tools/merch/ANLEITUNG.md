@@ -45,6 +45,23 @@ die Zahlungsfrist, ob Bestätigungsmails rausgehen, und optionale Zusatztexte f�
 Einfach den Wert in Spalte B ändern. Das gilt sofort für die nächste Bestellung, ohne neues Bereitstellen.
 Nur Preis, Versand und Größen stehen im Code, weil sie auch auf der Website (merch/merch.js) stehen müssen.
 
+**Zugangscode** und **Bestellungen offen** stehen ebenfalls dort (seit 18.11.2026):
+- *Zugangscode*: Den prüft das Skript, nicht mehr die Website. Neuer Code = der alte geht sofort nicht mehr.
+  Am besten 8 oder mehr Zeichen (z. B. Wort + Zahl), dann ist er nicht durchprobierbar.
+- *Bestellungen offen*: `nein` macht den Shop sofort zu, auch für Anfragen, die direkt an das Skript gehen.
+
+Eingebauter Schutz (Werte oben im Skript): höchstens 3 Bestellungen pro E-Mail-Adresse und Stunde,
+höchstens 40 Bestellungen pro Tag, nach 30 falschen Codes in 10 Minuten 10 Minuten Pause,
+doppelt abgeschickte Bestellungen (gleiche Mail, gleiche Shirts, 10 Minuten) werden nur einmal gespeichert.
+
+## Skript aktualisieren (neue Version einspielen)
+
+1. Tabelle öffnen > **Erweiterungen > Apps Script**.
+2. In `Code.gs` alles markieren (Cmd+A), löschen und den kompletten Inhalt von `tools/merch/vorbestellung.gs` einfügen. Speichern (Cmd+S).
+3. Oben in der Funktionsauswahl **einrichten** wählen und **Ausführen**. Das ergänzt neue Zeilen im Blatt Einstellungen, vorhandene Werte bleiben.
+4. **Bereitstellen > Bereitstellungen verwalten** > Stift-Symbol > bei Version **Neue Version** wählen > **Bereitstellen**.
+   Wichtig: NICHT „Neue Bereitstellung“, sonst ändert sich die Adresse und die Website findet das Skript nicht mehr.
+
 ## 5. Excel-Liste herunterladen
 
 In der Tabelle: **Datei > Herunterladen > Microsoft Excel (.xlsx)**.
@@ -63,5 +80,6 @@ In der Tabelle: **Datei > Herunterladen > Microsoft Excel (.xlsx)**.
 
 ## Vorbestellung beenden
 
-In `merch/merch.js` `offen: false` setzen oder bei `bis:` ein Datum eintragen. Danach zeigt die Seite
-„Die Vorbestellung ist gerade geschlossen“.
+Am schnellsten: im Blatt **Einstellungen** bei *Bestellungen offen* `nein` eintragen (wirkt sofort, auch serverseitig).
+Zusätzlich kann in `merch/merch.js` `offen: false` oder bei `bis:` ein Datum stehen. Dann zeigt die Seite
+„Die Vorbestellung ist gerade geschlossen“ schon vor der Code-Eingabe.

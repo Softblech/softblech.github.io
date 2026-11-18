@@ -15,9 +15,8 @@ var MERCH = {
   bis: '',                     // z. B. '2026-12-15' (leer = ohne Datum)
   // Brevo-Formularadresse (gleich wie SB.newsletterAction in index.html)
   newsletter: 'https://4a6dbfd6.sibforms.com/serve/MUIFAMwR_m5h8o1wltsYbSCL7N-QMkxqJUoEVb_HBoeFtIwxgZZst1DJeTa-DguGFJctrygaBhK5eTaY9OMlEblkh8J50NXY2i4jN8-niLvTT9qEuoETD_KrCktzgieUgJNxSoE3nzt0x5q3pnvh9-7T5rGj5rN5tNrGP_zIDFhjXlRyv7Ma3OdJQnfqodpfR2hNcHu-zTpUljvZAg==',
-  // Zugangscode: nur der SHA-256-Fingerabdruck steht hier, nicht der Code selbst.
-  // Neuen Code setzen: Claude fragen, oder in der Browser-Konsole den Fingerabdruck des Codes in Kleinbuchstaben ohne Leerzeichen erzeugen.
-  codeHash: '5a075cc268499dcedb8b2c569d8150a15bcfb32eca6c391f9e71c8b956459f1c', // leer = Seite ohne Code
+  // Zugangscode: steht NICHT mehr hier, sondern nur im Google-Blatt "Einstellungen" (Zeile "Zugangscode").
+  // Das Skript prüft ihn bei der Eingabe und bei jeder Bestellung.
   paypal: ''                   // leer = PayPal-Link steht nur in der Bestätigungsmail (Dennis 17.11.)
 };
 /* ===================================================================== */
@@ -148,6 +147,7 @@ var MERCH = {
     data.append('sprache', en() ? 'en' : 'de');
     var nl = form.newsletter.checked;
     data.append('newsletter', nl ? 'ja' : '');
+    data.append('code', code);
 
     if (!MERCH.endpoint) {
       // Testmodus: nichts wird gespeichert
@@ -159,12 +159,17 @@ var MERCH = {
     fetch(MERCH.endpoint, { method: 'POST', body: data })
       .then(function (r) { return r.json(); })
       .then(function (r) {
-        if (!r.ok) throw new Error(r.error || 'Fehler');
+        if (!r.ok) { var x = new Error(r.error || 'Fehler'); x.code = r.error; throw x; }
         success(r);
-        if (nl) newsletter();
+        if (nl && !r.doppelt) newsletter();
       })
-      .catch(function () {
+      .catch(function (err) {
         btn.disabled = false;
+        var c = err && err.code;
+        if (c === 'code' || c === 'gesperrt') return lock(c === 'gesperrt' ? 'gesperrt' : 'falsch');
+        if (c === 'geschlossen') { form.hidden = true; $('m-closed').hidden = false; return; }
+        if (c === 'limit') return fail(en() ? 'Too many orders right now. Please try again later or email us at hallo@softblech.com.'
+                                            : 'Gerade kommen zu viele Bestellungen an. Versuch es bitte später noch einmal oder schreib uns an hallo@softblech.com.');
         fail(en() ? 'Sorry, that did not work. Please try again in a moment or email us at hallo@softblech.com.'
                   : 'Das hat leider nicht geklappt. Versuch es bitte gleich noch einmal oder schreib uns an hallo@softblech.com.');
       });
@@ -195,29 +200,42 @@ var MERCH = {
     $('done').hidden = false; $('done').focus();
   }
 
-  // Zugangscode-Abfrage (?code=... im Link schaltet direkt frei)
-  function sha(t) {
-    return crypto.subtle.digest('SHA-256', new TextEncoder().encode(t.toLowerCase().replace(/\s+/g, ''))).then(function (b) {
-      return Array.from(new Uint8Array(b)).map(function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
-    });
+  // Zugangscode-Abfrage: das Google-Skript prüft den Code (?code=... im Link schaltet direkt frei)
+  var code = '';
+  function unlock(c) {
+    code = c; $('gate').hidden = true; $('content').hidden = false;
+    try { sessionStorage.setItem('sb-merch-code', c); } catch (e) {}
   }
-  function unlock() {
-    $('gate').hidden = true; $('content').hidden = false;
-    try { sessionStorage.setItem('sb-merch', MERCH.codeHash); } catch (e) {}
+  function lock(why) {
+    code = ''; try { sessionStorage.removeItem('sb-merch-code'); } catch (e) {}
+    $('content').hidden = true; $('gate').hidden = false;
+    var msg = {
+      falsch: en() ? 'Sorry, that code is not right.' : 'Der Code stimmt leider nicht.',
+      gesperrt: en() ? 'Too many wrong attempts. Please wait 10 minutes.' : 'Zu viele falsche Versuche. Bitte warte 10 Minuten.',
+      geschlossen: en() ? 'Pre-orders are closed right now.' : 'Die Vorbestellung ist gerade geschlossen.',
+      fehler: en() ? 'We could not check the code. Please try again in a moment.' : 'Der Code konnte gerade nicht geprüft werden. Versuch es bitte gleich noch einmal.'
+    }[why];
+    if (msg) { $('gate-err').textContent = msg; $('gate-err').hidden = false; }
   }
-  var ok = !MERCH.codeHash;
-  try { ok = ok || sessionStorage.getItem('sb-merch') === MERCH.codeHash; } catch (e) {}
-  if (ok) unlock();
+  function check(c) {
+    c = String(c || '').trim();
+    if (!c) return;
+    if (!MERCH.endpoint) return unlock(c); // Testmodus
+    var b = $('gate-form').querySelector('button'); b.disabled = true;
+    fetch(MERCH.endpoint + '?code=' + encodeURIComponent(c))
+      .then(function (r) { return r.json(); })
+      .then(function (r) { if (r.ok) unlock(c); else { lock(r.error === 'gesperrt' || r.error === 'geschlossen' ? r.error : 'falsch'); $('gate-form').code.value = c; $('gate-form').code.select(); } })
+      .catch(function () { lock('fehler'); })
+      .then(function () { b.disabled = false; });
+  }
+  var saved0 = null;
+  try { saved0 = sessionStorage.getItem('sb-merch-code'); } catch (e) {}
+  if (saved0) unlock(saved0);
   else {
-    var c = new URLSearchParams(location.search).get('code');
-    if (c) sha(c).then(function (h) { if (h === MERCH.codeHash) unlock(); else $('gate-form').code.value = c; });
-    $('gate-form').addEventListener('submit', function (ev) {
-      ev.preventDefault();
-      sha($('gate-form').code.value).then(function (h) {
-        if (h === MERCH.codeHash) unlock(); else { $('gate-err').hidden = false; $('gate-form').code.select(); }
-      });
-    });
+    var c0 = new URLSearchParams(location.search).get('code');
+    if (c0) check(c0);
   }
+  $('gate-form').addEventListener('submit', function (ev) { ev.preventDefault(); check($('gate-form').code.value); });
 
   var q = new URLSearchParams(location.search).get('lang'), saved = null;
   try { saved = localStorage.getItem('sb-lang'); } catch (e) {}
