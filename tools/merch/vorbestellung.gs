@@ -11,12 +11,17 @@ var GROESSEN = ['XS', 'S', 'M', 'L', 'XL'];
 var PREIS = 25;          // Euro pro Shirt
 var VERSAND = 4.19;      // Euro pro Bestellung, DHL Päckchen S (Stand 2026)
 var MAX_PRO_GROESSE = 10;
+var MAX_PRO_MAIL_STUNDE = 3;   // Bestellungen pro E-Mail-Adresse und Stunde
+var MAX_PRO_TAG = 40;          // Bestellungen pro Tag insgesamt (schützt das Mail-Limit von Google)
+var MAX_FEHLVERSUCHE = 30;     // falsche Codes in 10 Minuten, danach 10 Minuten Pause
 // ================================================================
 // Alles Weitere (PayPal-Link, Mail-Adressen, Zahlungsfrist, Zusatztexte)
 // steht im Tabellenblatt "Einstellungen" und wird dort geändert.
 // Dafür muss das Skript NICHT neu eingefügt oder bereitgestellt werden.
 
 var STANDARD = [
+  ['Bestellungen offen', 'ja', 'ja oder nein. Nein = Shop sofort zu, auch für direkte Anfragen.'],
+  ['Zugangscode', '041226', 'Code für softblech.com/merch. Ändern = der alte Code geht sofort nicht mehr. Lieber 8+ Zeichen.'],
   ['PayPal-Link', 'https://www.paypal.me/henrisoen', 'Steht in der Bestätigungsmail. Leer = "Zahlungsinfos schicken wir persönlich".'],
   ['Hinweis-Mail an', 'softblech@gmail.com', 'Bekommt bei jeder Bestellung eine Mail. Leer = keine. Am besten direkt die Gmail-Adresse.'],
   ['Antworten an', 'hallo@softblech.com', 'Wenn Fans auf die Bestätigung antworten, landet es hier.'],
@@ -37,6 +42,8 @@ function cfg_() {
     });
   }
   return {
+    offen: !/^(nein|no|false|0)$/i.test(String(o['Bestellungen offen']).trim()),
+    code: norm_(o['Zugangscode']),
     paypal: String(o['PayPal-Link'] || '').trim(),
     kopieAn: String(o['Hinweis-Mail an'] || '').trim(),
     antwortAn: String(o['Antworten an'] || '').trim() || 'hallo@softblech.com',
@@ -100,13 +107,36 @@ function einrichten() {
     return [r[0], alt.hasOwnProperty(r[0]) ? alt[r[0]] : r[1], r[2]];
   }));
   es.clear();
+  es.getRange('B:B').setNumberFormat('@'); // Codes wie 041226 als Text speichern
   es.getRange(1, 1, zeilen.length, 3).setValues(zeilen);
   es.getRange('A1:C1').setFontWeight('bold').setBackground('#ff2f3f');
   es.setColumnWidth(1, 200); es.setColumnWidth(2, 320); es.setColumnWidth(3, 480);
 }
 
-function doGet() {
-  return ContentService.createTextOutput('SOFTBLECH Merch-Vorbestellung läuft.');
+/** Code und Text vergleichbar machen: Kleinbuchstaben, ohne Leerzeichen */
+function norm_(s) {
+  var t = String(s == null ? '' : s).toLowerCase().replace(/\s+/g, '');
+  return /^\d+$/.test(t) ? t.replace(/^0+(?=\d)/, '') : t; // Tabelle macht aus 041226 die Zahl 41226
+}
+
+/** Prüft den Zugangscode. Viele Fehlversuche => 10 Minuten Pause (gegen Durchprobieren). */
+function codeOk_(c, code) {
+  var cache = CacheService.getScriptCache();
+  var fails = parseInt(cache.get('fails') || '0', 10);
+  if (fails >= MAX_FEHLVERSUCHE) return 'gesperrt';
+  if (!c.code || norm_(code) === c.code) return 'ok';
+  cache.put('fails', String(fails + 1), 600);
+  return 'falsch';
+}
+
+/** Merch-Seite fragt hier, ob der Code stimmt: ?code=... */
+function doGet(e) {
+  var p = (e && e.parameter) || {};
+  if (p.code === undefined) return ContentService.createTextOutput('SOFTBLECH Merch-Vorbestellung läuft.');
+  var c = cfg_();
+  if (!c.offen) return json_({ ok: false, error: 'geschlossen' });
+  var r = codeOk_(c, p.code);
+  return json_(r === 'ok' ? { ok: true } : { ok: false, error: r });
 }
 
 function doPost(e) {
@@ -114,13 +144,22 @@ function doPost(e) {
   try {
     var p = (e && e.parameter) || {};
     if (p.website) return json_({ ok: true, nr: 'SB-000', summe: 0 }); // Spam-Falle
+    var c = cfg_();
+    if (!c.offen) return json_({ ok: false, error: 'geschlossen' });
+    var cr = codeOk_(c, p.code);
+    if (cr !== 'ok') return json_({ ok: false, error: cr === 'gesperrt' ? 'gesperrt' : 'code' });
 
     var t = function (k, max) { return String(p[k] || '').trim().slice(0, max || 120); };
     var lieferung = p.lieferung === 'Abholung' ? 'Abholung' : 'Versand';
+    // Mengen streng prüfen: nur ganze Zahlen 0 bis MAX_PRO_GROESSE, sonst Fehler (nichts wird still geändert)
+    var falsch = false;
     var anzahl = GROESSEN.map(function (g) {
-      var n = parseInt(p['g_' + g], 10);
-      return isNaN(n) ? 0 : Math.max(0, Math.min(MAX_PRO_GROESSE, n));
+      var v = String(p['g_' + g] == null ? '' : p['g_' + g]).trim();
+      if (v === '') return 0;
+      if (!/^\d{1,2}$/.test(v) || +v > MAX_PRO_GROESSE) { falsch = true; return 0; }
+      return +v;
     });
+    if (falsch) return json_({ ok: false, error: 'Menge' });
     var summeShirts = anzahl.reduce(function (a, b) { return a + b; }, 0);
     var email = t('email');
 
@@ -131,12 +170,29 @@ function doPost(e) {
     var betrag = Math.round((summeShirts * PREIS + (lieferung === 'Versand' ? VERSAND : 0)) * 100) / 100;
 
     lock.waitLock(20000);
-    var sh = tabelle_().getSheetByName(BLATT);
-    // Fortlaufende Nummer, bleibt eindeutig, auch wenn Zeilen gelöscht werden
+    var cache = CacheService.getScriptCache();
+    var mailKey = 'm:' + email.toLowerCase();
+    // Doppelte Bestellung (gleiche Mail, gleiche Shirts, gleiche Lieferung in 10 Minuten): alte Nummer zurückgeben, nichts neu speichern
+    var dupKey = 'd:' + Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, email.toLowerCase() + '|' + anzahl.join(',') + '|' + lieferung));
+    var dup = cache.get(dupKey);
+    if (dup) { lock.releaseLock(); return json_({ ok: true, nr: dup, summe: betrag, doppelt: true }); }
+    // Limits: pro E-Mail und Stunde, pro Tag insgesamt
+    var proMail = parseInt(cache.get(mailKey) || '0', 10);
+    if (proMail >= MAX_PRO_MAIL_STUNDE) { lock.releaseLock(); return json_({ ok: false, error: 'limit' }); }
     var props = PropertiesService.getScriptProperties();
+    var heute = Utilities.formatDate(new Date(), 'Europe/Berlin', 'yyyy-MM-dd');
+    var tag = String(props.getProperty('tag') || '').split('|');
+    var proTag = tag[0] === heute ? parseInt(tag[1] || '0', 10) : 0;
+    if (proTag >= MAX_PRO_TAG) { lock.releaseLock(); return json_({ ok: false, error: 'limit' }); }
+
+    var sh = tabelle_().getSheetByName(BLATT);
+    // Fortlaufende Nummer, bleibt eindeutig, auch wenn Zeilen gelöscht werden (ab 1000 einfach vierstellig)
     var zaehler = parseInt(props.getProperty('zaehler') || '0', 10) + 1;
     props.setProperty('zaehler', String(zaehler));
-    var nr = 'SB-' + ('00' + zaehler).slice(-3);
+    props.setProperty('tag', heute + '|' + (proTag + 1));
+    cache.put(mailKey, String(proMail + 1), 3600);
+    var nr = 'SB-' + (zaehler < 1000 ? ('00' + zaehler).slice(-3) : String(zaehler));
+    cache.put(dupKey, nr, 600);
     var zeile = [new Date(), nr, safe_(t('vorname', 80)), safe_(t('nachname', 80)), safe_(email), lieferung]
       .concat(anzahl)
       .concat([summeShirts, betrag, safe_(t('strasse')), safe_(t('zusatz')), safe_(t('plz', 12)), safe_(t('ort', 80)), safe_(t('land', 60)), safe_(t('nachricht', 500)), p.sprache === 'en' ? 'en' : 'de', false, false, p.newsletter === 'ja' ? 'ja' : '']);
@@ -146,7 +202,6 @@ function doPost(e) {
     SpreadsheetApp.flush();
     lock.releaseLock();
 
-    var c = cfg_();
     if (c.senden) {
       try { mail_(c, p.sprache === 'en', email, t('vorname', 80), nr, anzahl, lieferung, betrag); } catch (err) { console.error(err); }
     }
