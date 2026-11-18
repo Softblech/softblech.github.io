@@ -536,7 +536,18 @@ body.has-mini{padding-bottom:110px}
   .hero .slide::before{content:"";position:absolute;inset:0 0 auto 0;height:180px;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(12,11,11,.55),rgba(12,11,11,0))}
   .hero .wrap{padding-block:40px 64px}
 }
-@media (min-width:861px) and (prefers-reduced-motion:reduce){.top,.top .wrap,.top .logo img{transition:none}}
+@media (prefers-reduced-motion:reduce){.top,.top .wrap,.top .logo img{transition:none}}
+/* ===== Handy (bis 860px): gleiche Idee wie Desktop ===== */
+@media (max-width:860px){
+  :root{--gutter-l:max(20px, env(safe-area-inset-left, 0px));--gutter-r:max(20px, env(safe-area-inset-right, 0px))}
+  .top{position:fixed;left:0;right:0;top:calc(var(--mq,0px) + env(safe-area-inset-top,0px));background:transparent;border-bottom-color:transparent;color:var(--chrome);transition:background .3s,border-color .3s,color .3s,top .3s}
+  .top .logo img{filter:invert(1);transition:filter .3s}
+  .top .lang button{color:inherit}
+  .burger{color:inherit}.burger span{background:currentColor}
+  .top.solid,.top.menu{background:var(--red);border-bottom-color:var(--black);color:var(--black);top:env(safe-area-inset-top,0px)}
+  .top.solid .logo img,.top.menu .logo img{filter:none}
+  .hero .slide::before{content:"";position:absolute;inset:0 0 auto 0;height:140px;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(12,11,11,.55),rgba(12,11,11,0))}
+}
 </style>
 
 </head>
@@ -1052,7 +1063,7 @@ var SB = {
 (function(){
   var b=document.getElementById('burger'), n=document.getElementById('mainnav');
   if(!b) return;
-  function set(o){n.classList.toggle('open',o);b.setAttribute('aria-expanded',o?'true':'false')}
+  function set(o){n.classList.toggle('open',o);var tp=document.querySelector('.top');if(tp)tp.classList.toggle('menu',o);b.setAttribute('aria-expanded',o?'true':'false')}
   b.addEventListener('click',function(){set(!n.classList.contains('open'))});
   n.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){set(false)})});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
