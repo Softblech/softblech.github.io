@@ -221,7 +221,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 @media (prefers-reduced-motion:reduce){.marquee .track{animation:none}html{scroll-behavior:auto}}
 
 /* Sektionen */
-section{scroll-margin-top:64px}
+section{scroll-margin-top:118px}
 .sec{padding-block:clamp(72px,8vw,112px)}
 .sec h2{font-size:clamp(52px,7vw,104px);color:var(--red);margin-bottom:clamp(24px,3vw,40px)}
 .on-red{background:var(--red);color:var(--black)}
@@ -419,9 +419,9 @@ footer{padding-block:48px 40px;text-align:center}
   .top nav.open{display:flex}
   .top nav a{font-size:34px;font-stretch:62%;font-weight:850;padding-block:6px;border-bottom:1px solid var(--line-red)}
   .top nav a.nav-btn{align-self:flex-start;margin-top:14px;padding:10px 18px 8px;border-bottom:0}
-  section{scroll-margin-top:60px}
+  section{scroll-margin-top:100px}
 
-  .hero{min-height:max(520px,calc(100vh - var(--hero-top,0px) - var(--mqh,48px)));min-height:max(520px,calc(100svh - var(--hero-top,0px) - var(--mqh,48px)));aspect-ratio:auto}
+  .hero{min-height:max(520px,100vh);min-height:max(520px,100lvh);aspect-ratio:auto}
   .hero img.bg{object-position:50% 8%}
   .hero .slide::after{background:linear-gradient(180deg,rgba(12,11,11,0) 58%,rgba(12,11,11,.9) 100%)}
   .hero .wrap{padding-block:16px 56px}
@@ -537,7 +537,10 @@ body.has-mini{padding-bottom:110px}
   .hero .wrap{padding-block:40px 64px}
 }
 @media (prefers-reduced-motion:reduce){.top,.top .wrap,.top .logo img{transition:none}}
-/* Laufband unter dem Startbild (alle Bildschirme) */
+/* Laufband sitzt in der Navigation und erscheint beim Scrollen mit der roten Leiste */
+.top .marquee{max-height:0;overflow:hidden;border-bottom:0;transition:max-height .3s}
+.top.solid .marquee{max-height:80px}
+@media (prefers-reduced-motion:reduce){.top .marquee{transition:none}}
 main#start{display:flex;flex-direction:column}
 main#start > *{order:2}
 main#start > .hero{order:0}
@@ -572,15 +575,15 @@ main#start > .marquee{order:1}
     </nav>
     <div class="lang" role="group" aria-label="Sprache / Language"><button type="button" data-lang="de" aria-pressed="true">DE</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
   </div>
+  <div class="marquee cond" aria-hidden="true">
+  <div class="track">
+    <span>I Want To Be With You – die neue Single – out now</span><span>Post Wave aus Berlin</span><span>04.12. Valentin Stüberl</span>
+    <span>I Want To Be With You – die neue Single – out now</span><span>Post Wave aus Berlin</span><span>04.12. Valentin Stüberl</span>
+  </div>
+</div>
 </header>
 
 <main id="start">
-  <div class="marquee cond" aria-hidden="true">
-    <div class="track">
-      <span>I Want To Be With You – die neue Single – out now</span><span>Post Wave aus Berlin</span><span>04.12. Valentin Stüberl</span>
-      <span>I Want To Be With You – die neue Single – out now</span><span>Post Wave aus Berlin</span><span>04.12. Valentin Stüberl</span>
-    </div>
-  </div>
   <section class="hero" id="news" aria-roledescription="Karussell" aria-label="News">
   <div class="slide on">
     <picture><source media="(max-width:860px)" srcset="img/hero.jpg"><img class="bg" src="img/header-sofa.jpg" style="--pos:50% 35%" alt="Dennis und Henri auf einem Sofa, Polaroid-Cover der Single I Want To Be With You"></picture>
@@ -1076,6 +1079,6 @@ var SB = {
 </script>
 
 <script src="lang.js"></script>
-<script src="hero.js?v=20261118d"></script>
+<script src="hero.js?v=20261118e"></script>
 </body>
 </html>
