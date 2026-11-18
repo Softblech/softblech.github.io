@@ -184,7 +184,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .hero .cnav button.prev::before,.hero .cnav button.next::before{content:"";display:block;width:11px;height:11px;border:solid currentColor;border-width:0 0 1.5px 1.5px;transform:rotate(45deg)}
 .hero .cnav button.next::before{transform:rotate(-135deg)}
 @media (hover:hover){.hero .cnav button.prev:hover,.hero .cnav button.next:hover{opacity:1}}
-.hero .cnav button.prev{left:0}.hero .cnav button.next{right:0}
+.hero .cnav button.prev{left:calc(var(--gutter-l) - 14px)}.hero .cnav button.next{right:calc(var(--gutter-r) - 14px)}
 .hero .dots{display:none}
 .hero .dots button{width:28px;height:5px;border:0;padding:0;background:rgba(228,226,226,.4);cursor:pointer}
 .hero .dots button[aria-current=true]{background:var(--red)}
