@@ -44,7 +44,7 @@
  },
  "image": "https://softblech.com/img/press/softblech-band-berlin-kevin-pawlak-4.jpg",
  "logo": "https://softblech.com/img/logo-schwarz.png",
- "email": "softblech@gmail.com",
+ "email": "hallo@softblech.com",
  "member": [
   {
    "@type": "OrganizationRole",
@@ -152,21 +152,8 @@ h1,h2,h3{margin:0;text-wrap:balance}
 :focus-visible{outline:3px solid var(--chrome);outline-offset:3px}
 
 /* Header */
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--red);color:var(--black);border-bottom:2px solid var(--black)}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:8px}
-.top .logo img{height:44px;width:auto}
-.top nav{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px 20px}
-.top nav a{text-decoration:none;font-family:var(--display);font-stretch:70%;font-weight:800;text-transform:uppercase;font-size:17px;letter-spacing:.02em}
-.top nav a:hover{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:2px}
 
 /* Sprache DE | EN */
-.lang{display:flex;align-items:center;flex:none;gap:2px}
-.lang button{font-family:var(--display);font-stretch:75%;font-weight:800;font-size:14px;letter-spacing:.04em;line-height:1;background:transparent;color:var(--black);border:0;padding:6px 5px;cursor:pointer;opacity:.45}
-.lang button+button::before{content:"/";display:inline-block;margin-right:7px;opacity:.6;font-weight:600;text-decoration:none}
-.lang button[aria-pressed=true]{opacity:1;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
-.lang button:hover{opacity:1}
-.top nav{margin-left:auto}
-@media (max-width:860px){.top .lang{margin-left:auto}.burger{order:3}}
 /* Hero */
 .hero{position:relative;min-height:max(460px,calc(100vh - var(--hero-top,115px)));min-height:max(460px,calc(100lvh - var(--hero-top,115px)));display:flex;align-items:flex-end;overflow:hidden;background:var(--black)}
 .hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pos,50% 22%);filter:saturate(1.05) contrast(1.05)}
@@ -182,7 +169,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .hero .cnav button.prev::before,.hero .cnav button.next::before{content:"";display:block;width:11px;height:11px;border:solid currentColor;border-width:0 0 1.5px 1.5px;transform:rotate(45deg)}
 .hero .cnav button.next::before{transform:rotate(-135deg)}
 @media (hover:hover){.hero .cnav button.prev:hover,.hero .cnav button.next:hover{opacity:1}}
-.hero .cnav button.prev{left:0}.hero .cnav button.next{right:0}
+.hero .cnav button.prev{left:calc(var(--gutter-l) - 14px)}.hero .cnav button.next{right:calc(var(--gutter-r) - 14px)}
 .hero .dots{display:none}
 .hero .dots button{width:28px;height:5px;border:0;padding:0;background:rgba(228,226,226,.4);cursor:pointer}
 .hero .dots button[aria-current=true]{background:var(--red)}
@@ -219,7 +206,7 @@ h1,h2,h3{margin:0;text-wrap:balance}
 @media (prefers-reduced-motion:reduce){.marquee .track{animation:none}html{scroll-behavior:auto}}
 
 /* Sektionen */
-section{scroll-margin-top:64px}
+section{scroll-margin-top:118px}
 .sec{padding-block:clamp(72px,8vw,112px)}
 .sec h2{font-size:clamp(52px,7vw,104px);color:var(--red);margin-bottom:clamp(24px,3vw,40px)}
 .on-red{background:var(--red);color:var(--black)}
@@ -267,6 +254,11 @@ section{scroll-margin-top:64px}
 .past li span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap;opacity:.75}
 
 /* Band */
+.merch-home{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,5vw,72px);align-items:center}
+.merch-img img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#f5f3f1}
+.merch-home .lead{font-size:clamp(20px,2vw,24px);font-weight:600}
+@media (min-width:861px){.merch-home{grid-template-columns:minmax(0,6fr) minmax(0,5fr)}.merch-home .merch-img{order:2}}
+@media (max-width:860px){.merch-home{grid-template-columns:minmax(0,1fr)}.merch-img img{max-width:520px}}
 .band{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,5vw,72px);align-items:start}
 .band-photo{margin:0}
 .band img{width:100%}
@@ -323,17 +315,8 @@ section{scroll-margin-top:64px}
 .copy{cursor:pointer}
 
 /* Footer */
-footer{padding-block:48px 40px;text-align:center}
-.social{display:flex;justify-content:center;flex-wrap:wrap;gap:22px;margin-bottom:28px}
-.social a{color:var(--red);display:inline-flex;transition:color .15s,transform .15s}
-.social a:hover{color:var(--chrome);transform:translateY(-2px)}
-.social svg{width:30px;height:30px}
-.foot-links{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 26px;margin-bottom:14px}
-.foot-links a,.foot-links button,.copyr{font-family:var(--display);font-stretch:75%;font-weight:800;text-transform:uppercase;font-size:14px;letter-spacing:.05em;color:var(--red);text-decoration:none}
-.foot-links a:hover{text-decoration:underline}
 
 @media (max-width:860px){
-  .top nav a{font-size:15px}
   .feature,.band,.contact{grid-template-columns:minmax(0,1fr)}
   .singles{grid-template-columns:repeat(2,minmax(0,1fr))}
   .show{grid-template-columns:70px minmax(0,1fr) auto;row-gap:4px}
@@ -344,9 +327,6 @@ footer{padding-block:48px 40px;text-align:center}
   .press{grid-template-columns:minmax(0,1fr)}
 }
 @media (max-width:520px){
-  .top .wrap{flex-direction:column;align-items:flex-start;gap:6px}
-  .top .logo img{height:36px}
-  .top nav{justify-content:flex-start;gap:2px 14px}
   .show .btn{font-size:15px;padding:8px 12px}
   .date b{font-size:34px}
 }
@@ -376,6 +356,11 @@ footer{padding-block:48px 40px;text-align:center}
 .nl .check input{width:20px;height:20px;margin-top:2px;accent-color:var(--black);flex:none}
 .nl .actions{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:16px}
 .nl .msg{font-weight:700}
+.sec:not(.on-red) .nl input[type=email],.sec:not(.on-red) .nl input[type=text]{color:var(--chrome);border-color:var(--chrome)}
+.sec:not(.on-red) .nl input::placeholder{color:var(--muted)}
+.sec:not(.on-red) .nl input:focus{border-color:var(--red);outline:none}
+.sec:not(.on-red) .nl .check input{accent-color:var(--red)}
+.sec:not(.on-red) .nl .check a{color:var(--red)}
 
 /* Cookie-Banner */
 .cookie{position:fixed;left:0;right:0;bottom:0;z-index:100;background:var(--black);border-top:3px solid var(--red);padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -10px 40px rgba(0,0,0,.5)}
@@ -393,29 +378,18 @@ footer{padding-block:48px 40px;text-align:center}
 @media (max-width:860px){.videos,.nl{grid-template-columns:minmax(0,1fr)}}
 
 /* ===== Smartphone (bis 860px) ===== */
-.burger{display:none}
 @media (max-width:860px){
-  .top .wrap{flex-direction:row;align-items:center;padding-block:10px}
-  .top .logo img{height:36px}
-  .burger{display:flex;flex-direction:column;justify-content:center;gap:7px;width:44px;height:44px;padding:8px 8px;background:transparent;border:0;cursor:pointer;position:relative}
-  .burger span{display:block;height:2.5px;background:var(--black);transition:transform .2s}
-  .burger span:nth-child(3){display:none}
-  .burger b{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-  .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(4.75px) rotate(45deg)}
-  .burger[aria-expanded="true"] span:nth-child(2){transform:translateY(-4.75px) rotate(-45deg)}
-  .top nav{display:none;position:absolute;left:0;right:0;top:100%;background:var(--red);border-bottom:2px solid var(--black);flex-direction:column;gap:0;padding:4px var(--gutter-r) 16px var(--gutter-l)}
-  .top nav.open{display:flex}
-  .top nav a{font-size:34px;font-stretch:62%;font-weight:850;padding-block:6px;border-bottom:1px solid var(--line-red)}
-  section{scroll-margin-top:60px}
+  section{scroll-margin-top:100px}
 
-  .hero{min-height:max(520px,calc(100vh - var(--hero-top,118px)));min-height:max(520px,calc(100lvh - var(--hero-top,118px)));aspect-ratio:auto}
+  .hero{min-height:max(520px,100vh);min-height:max(520px,100lvh);aspect-ratio:auto}
   .hero img.bg{object-position:50% 8%}
   .hero .slide::after{background:linear-gradient(180deg,rgba(12,11,11,0) 58%,rgba(12,11,11,.9) 100%)}
   .hero .wrap{padding-block:16px 56px}
   .hero h1{margin-top:6px}
   .hero .btns{margin-top:14px}
   .hero h1{font-size:clamp(44px,13vw,72px)}
-  .hero .btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .hero .btns{display:flex;flex-wrap:wrap;gap:10px}
+  .hero .btns .btn{font-size:16px;padding:9px 16px}
   .btns .btn{text-align:center}
   .btn{min-height:48px;display:inline-flex;align-items:center;justify-content:center}
 
@@ -461,7 +435,18 @@ footer{padding-block:48px 40px;text-align:center}
 .dl .s{grid-column:1;color:var(--muted);font-size:14px}
 .dl .arr{grid-column:2;grid-row:1/3;font-size:28px;color:var(--red)}
 .dl:hover .t{color:var(--red)}
-#downloads{padding-bottom:0}
+#videos{margin-bottom:clamp(32px,5vw,64px)}
+#presse .sub-h{margin-top:clamp(48px,6vw,80px)}
+.on-red .quote{border-color:var(--black)}
+.on-red .quote:hover{background:var(--black);color:var(--red)}
+.on-red .quote .src{color:rgba(12,11,11,.7)}
+.on-red .quote:hover .src{color:var(--red)}
+.on-red .sub-h{color:var(--black)}
+.on-red .dls,.on-red .dl{border-color:var(--line-red)}
+.on-red .dl,.on-red .dl .t,.on-red .dl .arr{color:var(--black)}
+.on-red .dl .s{color:rgba(12,11,11,.7)}
+.on-red .dl:hover .t{color:var(--chrome)}
+#presse .press{margin-bottom:0}
 #kontakt{border-top:0}
 @media (max-width:860px){.dls{grid-template-columns:1fr}.dl{padding:22px 4px}}
 /* Presskit + Booking */
@@ -490,7 +475,26 @@ footer{padding-block:48px 40px;text-align:center}
 .mini .x{background:transparent;border:0;color:var(--chrome);font-size:28px;line-height:1;cursor:pointer;padding:4px 8px}
 body.has-mini{padding-bottom:110px}
 @media (max-width:860px){.pk{grid-template-columns:1fr}}
+
+/* ===== Desktop (ab 861px): Navigation erst transparent, beim Scrollen rot; Seitenränder wie Fontaines ===== */
+@media (min-width:861px){
+  :root{--gutter-l:clamp(28px,3vw,72px);--gutter-r:clamp(28px,3vw,72px)}
+  .wrap{max-width:none}
+  .hero .slide::before{content:"";position:absolute;inset:0 0 auto 0;height:180px;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(12,11,11,.55),rgba(12,11,11,0))}
+  .hero .wrap{padding-block:40px 64px}
+}
+/* Laufband sitzt in der Navigation und erscheint beim Scrollen mit der roten Leiste */
+main#start{display:flex;flex-direction:column}
+main#start > *{order:2}
+main#start > .hero{order:0}
+main#start > .marquee{order:1}
+/* ===== Handy (bis 860px): gleiche Idee wie Desktop ===== */
+@media (max-width:860px){
+  :root{--gutter-l:max(20px, env(safe-area-inset-left, 0px));--gutter-r:max(20px, env(safe-area-inset-right, 0px))}
+  .hero .slide::before{content:"";position:absolute;inset:0 0 auto 0;height:140px;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(12,11,11,.55),rgba(12,11,11,0))}
+}
 </style>
+<link rel="stylesheet" href="nav.css?v=3">
 
 </head>
 <body>
@@ -502,24 +506,22 @@ body.has-mini{padding-bottom:110px}
       <a href="#musik">Musik</a>
       <a href="#live">Live</a>
       <a href="#band">Band</a>
-      <a href="#videos">Videos</a>
-      <a href="#fotos">Fotos</a>
+      <a href="#merch">Merch</a>
+      <a href="#medien">Medien</a>
       <a href="#presse">Presse</a>
-      <a href="#newsletter">Newsletter</a>
-      <a href="#downloads">Downloads</a>
-      <a href="#kontakt">Kontakt</a>
+      <a class="nav-btn" href="mailto:hallo@softblech.com">Kontakt</a>
     </nav>
     <div class="lang" role="group" aria-label="Sprache / Language"><button type="button" data-lang="de" aria-pressed="true">DE</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
   </div>
+  <div class="marquee cond" aria-hidden="true">
+  <div class="track">
+    <span>I Want To Be With You – die neue Single – out now</span><span>Post Wave aus Berlin</span><span>04.12. Valentin Stüberl</span>
+    <span>I Want To Be With You – die neue Single – out now</span><span>Post Wave aus Berlin</span><span>04.12. Valentin Stüberl</span>
+  </div>
+</div>
 </header>
 
 <main id="start">
-  <div class="marquee cond" aria-hidden="true">
-    <div class="track">
-      <span>I Want To Be With You – die neue Single – out now</span><span>Post Wave aus Berlin</span><span>04.12. Valentin Stüberl</span>
-      <span>I Want To Be With You – die neue Single – out now</span><span>Post Wave aus Berlin</span><span>04.12. Valentin Stüberl</span>
-    </div>
-  </div>
   <section class="hero" id="news" aria-roledescription="Karussell" aria-label="News">
   <div class="slide on">
     <picture><source media="(max-width:860px)" srcset="img/hero.jpg"><img class="bg" src="img/header-sofa.jpg" style="--pos:50% 35%" alt="Dennis und Henri auf einem Sofa, Polaroid-Cover der Single I Want To Be With You"></picture>
@@ -534,9 +536,6 @@ body.has-mini{padding-bottom:110px}
   </div>
   <div class="cnav" hidden><button type="button" class="prev" aria-label="Vorherige News">‹</button><div class="dots"></div><button type="button" class="next" aria-label="Nächste News">›</button></div>
   </section>
-
-
-
 
   <section id="musik" class="sec">
     <div class="wrap">
@@ -571,12 +570,6 @@ body.has-mini{padding-bottom:110px}
     </div>
   </section>
 
-  <section id="videos" class="sec" style="padding-top:0" hidden>
-    <div class="wrap">
-      <h2 class="cond">Videos</h2>
-      <div class="videos" id="video-list"></div>
-    </div>
-  </section>
 
   <section id="live" class="sec on-red">
     <div class="wrap">
@@ -634,10 +627,27 @@ body.has-mini{padding-bottom:110px}
     </div>
   </section>
 
+  <section id="merch" class="sec on-red">
+    <div class="wrap merch-home">
+      <a class="merch-img" href="merch/"><img src="merch/shirt.jpg" alt="Schwarzes T-Shirt mit kleinem SOFTBLECH-Logo in Chrom mittig auf der Brust" width="1080" height="1350" loading="lazy"></a>
+      <div class="text">
+        <h2 class="cond">Merch</h2>
+        <p class="lead">Ja, es ist wahr: Es gibt endlich Merch! Das erste SOFTBLECH-Shirt, schwarz, mit unserem Logo in Chrom.</p>
+        <p>Im Moment gibt es die Vorbestellung aber exklusiv für Freunde und Bekannte, mit einem Code. Du willst auch einen? Schreib uns gern, wir schauen, was sich machen lässt.</p>
+        <div class="btns">
+          <a class="btn solid" href="mailto:hallo@softblech.com?subject=Merch-Code">Code anfragen</a>
+          <a class="btn ghost" href="merch/">Ich habe einen Code</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <section id="fotos" class="sec">
+  <section id="medien" class="sec">
     <div class="wrap">
-      <h2 class="cond">Fotos</h2>
+      <h2 class="cond">Medien</h2>
+      <div id="videos" hidden>
+        <div class="videos" id="video-list"></div>
+      </div>
       <div class="insta" id="insta" hidden></div>
       <div class="photos" id="photos">
         <figure><img src="img/press/softblech-band-berlin-kevin-pawlak-1.jpg" alt="SOFTBLECH, Post-Wave-Band aus Berlin: Dennis und Henri auf einer Mauer vor einer Hauswand" loading="lazy"><figcaption>Foto: Kevin Pawlak</figcaption></figure>
@@ -651,30 +661,38 @@ body.has-mini{padding-bottom:110px}
     </div>
   </section>
 
-  <section class="sec on-red duo-sec">
-    <div class="wrap duo">
-      <div id="presse">
+  <section id="presse" class="sec on-red">
+    <div class="wrap">
       <h2 class="cond">Presse</h2>
       <div class="press">
-        <a class="quote" style="border-color:var(--black)" href="https://regenmag.com/news/news-softblech-reveals-latest-single-from-upcoming-ep-exploring-secret-longings-temptations-and-addiction-to-scrolling-and-swiping/" target="_blank" rel="noopener">
+        <a class="quote" href="https://regenmag.com/news/news-softblech-reveals-latest-single-from-upcoming-ep-exploring-secret-longings-temptations-and-addiction-to-scrolling-and-swiping/" target="_blank" rel="noopener">
           <span class="q cond">„Secret Longings, Temptations and Addiction to Scrolling and Swiping“</span>
-          <span class="src" style="color:var(--black)">ReGen Magazine · November 2026</span>
+          <span class="src">ReGen Magazine · November 2026</span>
         </a>
-        <a class="quote" style="border-color:var(--black)" href="https://www.bohema-wien.com/artikel/s3oiqtrhukpia56k2ter5x5cxg519i" target="_blank" rel="noopener">
+        <a class="quote" href="https://www.bohema-wien.com/artikel/s3oiqtrhukpia56k2ter5x5cxg519i" target="_blank" rel="noopener">
           <span class="q cond">„Weiche Schale, Punk im Kern“</span>
-          <span class="src" style="color:var(--black)">Bohema Magazin Wien · November 2026</span>
+          <span class="src">Bohema Magazin Wien · November 2026</span>
         </a>
-        <a class="quote" style="border-color:var(--black)" href="https://www.kaltblut-magazine.com/the-anatomy-of-a-freefall-softblech-capture-heartbreak-on-in-the-end-i-only-think-of-you/" target="_blank" rel="noopener">
+        <a class="quote" href="https://www.kaltblut-magazine.com/the-anatomy-of-a-freefall-softblech-capture-heartbreak-on-in-the-end-i-only-think-of-you/" target="_blank" rel="noopener">
           <span class="q cond">„The Anatomy of a Freefall“</span>
-          <span class="src" style="color:var(--black)">KALTBLUT Magazine · September 2026</span>
+          <span class="src">KALTBLUT Magazine · September 2026</span>
         </a>
-        <a class="quote" style="border-color:var(--black)" href="https://www.radiohamburg.de/aktionen/stars_for_free/TOP-3-im-Check-So-klingt-Softblech-id1431622.html" target="_blank" rel="noopener">
+        <a class="quote" href="https://www.radiohamburg.de/aktionen/stars_for_free/TOP-3-im-Check-So-klingt-Softblech-id1431622.html" target="_blank" rel="noopener">
           <span class="q cond">„TOP 3 im Check: So klingt Softblech“</span>
-          <span class="src" style="color:var(--black)">Radio Hamburg · August 2025</span>
+          <span class="src">Radio Hamburg · August 2025</span>
         </a>
       </div>
+      <h3 class="cond sub-h" id="downloads">Downloads</h3>
+      <div class="dls">
+        <a class="dl" href="downloads/softblech-presskit.pdf" download><span class="t cond">Presskit</span><span class="s">PDF · Bio, Fakten, Releases, Presse</span><span class="arr" aria-hidden="true">↓</span></a>
+        <a class="dl" href="https://drive.google.com/drive/folders/1K4uR7UvWpCNpZ2IkZ0Ao4phFAWkuovKI" target="_blank" rel="noopener"><span class="t cond">Pressefotos</span><span class="s">Hohe Auflösung · Google Drive</span><span class="arr" aria-hidden="true">↗</span></a>
+        <a class="dl" href="downloads/softblech-technical-rider.pdf" download><span class="t cond">Technical Rider</span><span class="s">PDF · Für Veranstalter</span><span class="arr" aria-hidden="true">↓</span></a>
+      </div>
     </div>
-      <div id="newsletter">
+  </section>
+
+  <section id="newsletter" class="sec">
+    <div class="wrap">
       <h2 class="cond">Newsletter</h2>
       <p style="max-width:60ch;margin:0 0 28px;font-weight:600;font-size:18px">Stay close. Neue Songs, Konzerttermine und kleine Einblicke hinter die Kulissen. Kein Spam, nur ab und zu eine Mail.</p>
       <form class="nl" id="nl-form" method="post" novalidate>
@@ -686,31 +704,19 @@ body.has-mini{padding-bottom:110px}
         <div class="actions"><button class="btn solid" type="submit">Anmelden</button><span class="msg" id="nl-msg" role="status"></span></div>
       </form>
     </div>
-    </div>
   </section>
 
-  <section id="downloads" class="sec">
-    <div class="wrap">
-      <h2 class="cond">Downloads</h2>
-      <div class="dls">
-        <a class="dl" href="downloads/softblech-presskit.pdf" download><span class="t cond">Presskit</span><span class="s">PDF · Bio, Fakten, Releases, Presse</span><span class="arr" aria-hidden="true">↓</span></a>
-        <a class="dl" href="https://drive.google.com/drive/folders/1K4uR7UvWpCNpZ2IkZ0Ao4phFAWkuovKI" target="_blank" rel="noopener"><span class="t cond">Pressefotos</span><span class="s">Hohe Auflösung · Google Drive</span><span class="arr" aria-hidden="true">↗</span></a>
-        <a class="dl" href="downloads/softblech-technical-rider.pdf" download><span class="t cond">Technical Rider</span><span class="s">PDF · Für Veranstalter</span><span class="arr" aria-hidden="true">↓</span></a>
-      </div>
-    </div>
-  </section>
-
-  <section id="kontakt" class="sec">
+  <section id="kontakt" class="sec on-red">
     <div class="wrap contact">
       <div>
         <h2 class="cond">Kontakt</h2>
-        <a class="big cond" id="mail" href="mailto:softblech@gmail.com" style="display:block;text-decoration:none">softblech@gmail.com</a>
+        <a class="big cond" id="mail" href="mailto:hallo@softblech.com" style="display:block;text-decoration:none">hallo@softblech.com</a>
       </div>
       <div>
         <p>Für Presse und alles andere. Wir antworten persönlich.</p>
         <p>Booking: Aaron Widdig (LOFT)</p>
         <div class="btns">
-          <a class="btn solid" href="mailto:softblech@gmail.com">Mail an uns</a>
+          <a class="btn solid" href="mailto:hallo@softblech.com">Mail an uns</a>
           <a class="btn ghost" href="mailto:aaron@loft.de?subject=Booking%20SOFTBLECH">Mail ans Booking</a>
         </div>
       </div>
@@ -725,7 +731,7 @@ body.has-mini{padding-bottom:110px}
   </div>
 </div>
 
-<footer>
+<footer class="site-foot">
   <div class="wrap">
     <div class="social">
       <a href="https://www.instagram.com/softblech" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg></a>
@@ -733,13 +739,13 @@ body.has-mini{padding-bottom:110px}
       <a href="https://open.spotify.com/artist/2jYXnyDOvsZcopHLQgBgt6" target="_blank" rel="noopener" aria-label="Spotify"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M7 9.3c3.6-1 7.4-.7 10.4 1M7.6 12.5c2.9-.8 6-.5 8.4.9M8.2 15.5c2.3-.6 4.6-.4 6.5.7" fill="none" stroke="var(--black)" stroke-width="1.7" stroke-linecap="round"/></svg></a>
       <a href="https://music.apple.com/de/artist/softblech/1750294821" target="_blank" rel="noopener" aria-label="Apple Music"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3v12.3a3.2 3.2 0 1 1-2-3V7.6l-7 1.6v8a3.2 3.2 0 1 1-2-3V5.5Z"/></svg></a>
       <a href="https://soundcloud.com/softblech" target="_blank" rel="noopener" aria-label="SoundCloud"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 8.2a5.6 5.6 0 0 1 9.3 3.5A3.2 3.2 0 0 1 20 18h-9ZM9 9.5h1V18H9Zm-2 1h1V18H7Zm-2 1.3h1V18H5Zm-2 1.7h1V18H3Z"/></svg></a>
-      <a href="mailto:softblech@gmail.com" aria-label="E-Mail an softblech@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3.5 6 8.5 7 8.5-7"/></svg></a>
+      <a href="mailto:hallo@softblech.com" aria-label="E-Mail an hallo@softblech.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3.5 6 8.5 7 8.5-7"/></svg></a>
     </div>
     <div class="foot-links">
       <a href="impressum.html">Impressum</a>
       <a href="datenschutz.html">Datenschutz</a>
       <button class="linkbtn foot-cookie" type="button" data-open-cookies>Cookie-Einstellungen</button>
-      <a href="#kontakt">Kontakt</a>
+      <a href="mailto:hallo@softblech.com">Kontakt</a>
     </div>
     <div class="copyr">© 2026 Softblech</div>
   </div>
@@ -830,7 +836,7 @@ var SB = {
       var news=(res[0]&&res[0].news)||[]; if(!news.length) return;
       var ev=((res[1]&&res[1].events)||[])[0];
       if(ev){var d=new Date(ev.datetime);
-        news.splice(1,0,{eyebrow:'Nächstes Konzert · '+d.getDate()+'. '+M[d.getMonth()]+' '+d.getFullYear(),title:ev.venue,highlight:ev.city,image:'img/header-live.jpg',image_mobile:'img/header-live-mobil.jpg',alt:'Publikum und Band bei einem Softblech-Konzert im Valentin Stüberl',position:'50% 40%',buttons:[['Alle Termine','#live']].concat(ev.url?[[ev.tickets?'Tickets':'Infos',ev.url]]:[])});}
+        news.splice(1,0,{eyebrow:'Nächstes Konzert · '+d.getDate()+'. '+M[d.getMonth()]+' '+d.getFullYear(),title:ev.venue,highlight:ev.city,image:'img/header-live.jpg',image_mobile:'img/header-live-mobil.jpg',alt:'Publikum und Band bei einem Softblech-Konzert im Valentin Stüberl',position:'50% 40%',buttons:[['Termine','#live']].concat(ev.url?[[ev.tickets?'Tickets':'Infos',ev.url]]:[])});}
       hero.querySelectorAll('.slide').forEach(function(s){s.remove()});
       hero.insertAdjacentHTML('afterbegin',news.map(slide).join(''));
       var slides=hero.querySelectorAll('.slide'),dots=hero.querySelector('.dots'),i=0,timer;
@@ -998,22 +1004,15 @@ var SB = {
     if(!mail.value||!mail.checkValidity()){e.preventDefault();msg.textContent='Bitte gib eine gültige E-Mail-Adresse ein.';mail.focus();return}
     var nm=document.getElementById('nl-name');if(!nm.value.trim()){e.preventDefault();msg.textContent='Bitte gib deinen Vornamen ein.';nm.focus();return}
     if(!ok.checked){e.preventDefault();msg.textContent='Bitte setz noch das Häkchen.';ok.focus();return}
-    if(!SB.newsletterAction){e.preventDefault();msg.textContent='Der Newsletter startet bald. Bis dahin: softblech@gmail.com';return}
+    if(!SB.newsletterAction){e.preventDefault();msg.textContent='Der Newsletter startet bald. Bis dahin: hallo@softblech.com';return}
     form.action=SB.newsletterAction;
     msg.textContent='Danke! Bitte bestätige die Anmeldung über den Link in der Mail, die wir dir gerade schicken.';
   });
 })();
-(function(){
-  var b=document.getElementById('burger'), n=document.getElementById('mainnav');
-  if(!b) return;
-  function set(o){n.classList.toggle('open',o);b.setAttribute('aria-expanded',o?'true':'false')}
-  b.addEventListener('click',function(){set(!n.classList.contains('open'))});
-  n.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){set(false)})});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
-})();
 </script>
 
+<script src="nav.js?v=1"></script>
 <script src="lang.js"></script>
-<script src="hero.js"></script>
+<script src="hero.js?v=20261118f"></script>
 </body>
 </html>

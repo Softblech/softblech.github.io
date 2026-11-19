@@ -3,14 +3,17 @@
    Neue Texte auf der Seite: hier unten in D ergänzen. */
 (function(){
   var D={
-    "Menü":"Menu","Musik":"Music","Fotos":"Photos","Presse":"Press","Kontakt":"Contact",
+    "Menü":"Menu","Musik":"Music","Fotos":"Photos","Medien":"Media","Presse":"Press","Kontakt":"Contact",
     "I Want To Be With You – die neue Single – out now":"I Want To Be With You – the new single – out now",
+    "Bald erhältlich":"Coming soon","Code anfragen":"Ask for a code","Ich habe einen Code":"I have a code",
+    "Ja, es ist wahr: Es gibt endlich Merch! Das erste SOFTBLECH-Shirt, schwarz, mit unserem Logo in Chrom.":"Yes, it's true: merch is finally here! The first SOFTBLECH shirt, black, with our chrome logo.",
+    "Im Moment gibt es die Vorbestellung aber exklusiv für Freunde und Bekannte, mit einem Code. Du willst auch einen? Schreib uns gern, wir schauen, was sich machen lässt.":"For now, pre-orders are exclusive to friends and family with a code. Want one too? Just write to us and we'll see what we can do.",
     "Post Wave aus Berlin":"Post wave from Berlin",
-    "Zum Song":"Listen","Abspielen":"Play","Mehr zum Song":"More about the song","Reinhören":"Listen",
+    "Zum Song":"To the song","Abspielen":"Play","Mehr zum Song":"More about the song","Reinhören":"Listen",
     "Neue Single":"New single","Debütsingle":"Debut single","Debüt":"Debut","2024 · Debüt":"2024 · Debut",
     "Ein Song über die Sehnsucht nach dem, was man nicht hat, selbst wenn man festhält, was man hat. Über Einsamkeit, die nicht verschwindet, nur weil jemand neben einem liegt.":
       "A song about longing for what you don't have, even when you're holding on to what you do. About a loneliness that doesn't go away just because someone is lying next to you.",
-    "Nichts verpassen":"Don't miss a thing","Eintragen":"Sign up","Alle Termine":"All dates","Infos":"Info",
+    "Nichts verpassen":"Don't miss a thing","Eintragen":"Sign up","Alle Termine":"All dates","Termine":"Dates","Infos":"Info",
     "Freitag, ab 19 Uhr · Eintritt auf Spendenbasis":"Friday, from 7 pm · Pay what you can",
     "Bisher auf der Bühne":"Past shows","Foto:":"Photo:","Fotos:":"Photos:",
     "Valentin Stüberl, Berlin · Release-Show":"Valentin Stüberl, Berlin · Release show",

@@ -171,7 +171,7 @@ def build(c):
 
 <section class="sec contact"><div class="wrap narrow">
   <h2 class="cond">{bi("Kontakt", "Contact")}</h2>
-  <p>{bi("Fragen, Interviews, Konzertanfragen:", "Questions, interviews, bookings:")} <a href="mailto:softblech@gmail.com">softblech@gmail.com</a></p>
+  <p>{bi("Fragen, Interviews, Konzertanfragen:", "Questions, interviews, bookings:")} <a href="mailto:hallo@softblech.com">hallo@softblech.com</a></p>
 </div></section>
 
 <section class="sec"><div class="wrap">
@@ -213,3 +213,7 @@ for c in ALL:
                         "text_en": c.get("teaser_en") or c.get("pitch_en") or ""}
 (ROOT / "data/songs.json").write_text(json.dumps(songs, ensure_ascii=False, indent=1), encoding="utf-8")
 print("geschrieben: data/songs.json")
+
+# Globale Navigation aus index.html auf alle Unterseiten kopieren
+import subprocess, sys
+subprocess.run([sys.executable, str(ROOT / "tools/sync_nav.py")], check=True)

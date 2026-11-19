@@ -12,14 +12,6 @@ a{color:inherit}img{max-width:100%;height:auto;display:block}
 h1,h2{margin:0;text-wrap:balance}
 :focus-visible{outline:3px solid var(--chrome);outline-offset:3px}
 html[data-lang=de] [data-l=en],html[data-lang=en] [data-l=de]{display:none!important}
-.top{position:sticky;top:0;z-index:50;background:var(--red);color:var(--black);border-bottom:2px solid var(--black)}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;padding-block:8px}
-.top .logo img{height:40px;width:auto}
-.lang{display:flex;align-items:center;gap:2px}
-.lang button{font:800 14px/1 var(--display);font-stretch:75%;letter-spacing:.04em;background:transparent;color:var(--black);border:0;padding:6px 5px;cursor:pointer;opacity:.45}
-.lang button+button::before{content:"/";display:inline-block;margin-right:7px;opacity:.6;font-weight:600;text-decoration:none}
-.lang button:hover{opacity:1}
-.lang button[aria-pressed=true]{opacity:1;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
 .rhero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:48px;align-items:center;padding-block:56px}
 .cover{width:100%;aspect-ratio:1;object-fit:cover;box-shadow:0 20px 60px rgba(0,0,0,.6)}
 .eyebrow{color:var(--red);font-family:var(--display);font-stretch:75%;font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:15px}
@@ -53,9 +45,7 @@ summary::after{content:"+";color:var(--red)}details[open] summary::after{content
 .on-red .btn{border-color:var(--black);color:var(--black)}
 .on-red .btn.solid{background:var(--black);color:var(--red)}
 .on-red .btn:hover{background:var(--chrome);border-color:var(--chrome);color:var(--black)}
-footer{padding-block:32px;font-size:14px;color:var(--muted)}
-footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px}
-.linkbtn{background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer}
+.linkbtn{background:none;border:0;padding:0;cursor:pointer}
 .cookie{position:fixed;left:0;right:0;bottom:0;z-index:100;background:var(--black);border-top:3px solid var(--red);padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -10px 40px rgba(0,0,0,.5)}
 .cookie .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px;padding-block:20px}
 .cookie .txt{flex:1 1 420px;min-width:0}

@@ -1,6 +1,6 @@
 /* ===== META PIXEL – nur hier die Pixel-ID eintragen ===== */
 /* Zu finden im Meta Events Manager unter "Datenquellen": die lange Zahl (15–16 Ziffern). */
-var SB_META_PIXEL_ID = "";   /* z. B. "1234567890123456" – leer = Pixel ist aus */
+var SB_META_PIXEL_ID = "29551118357818193";   /* z. B. "1234567890123456" – leer = Pixel ist aus */
 /* ======================================================== */
 
 /* Der Pixel lädt NUR, wenn im Cookie-Banner "Marketing" erlaubt wurde. */
