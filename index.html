@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src https://open.spotify.com https://www.youtube-nocookie.com; media-src 'self' https:; form-action https://*.sibforms.com mailto:; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://www.facebook.com https://connect.facebook.net; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src https://open.spotify.com https://www.youtube-nocookie.com; media-src 'self' https:; form-action https://*.sibforms.com mailto:; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="google-site-verification" content="tIb0PsMpnMlQAyEZlipryolaV5vkbuFU5V1y7A4lLs0">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -761,11 +761,12 @@ main#start > .marquee{order:1}
   <div class="wrap">
     <div class="txt">
       <b id="cookie-title">Cookies &amp; externe Inhalte</b>
-      <p>Wir möchten Besuche zählen und Spotify und YouTube direkt hier zeigen. Dabei gehen Daten an Google und Spotify, aber nur, wenn du zustimmst. <a href="datenschutz.html">Datenschutz</a></p>
+      <p>Wir möchten Besuche zählen, Spotify und YouTube direkt hier zeigen und mit dem Meta Pixel messen, ob unsere Instagram- und Facebook-Werbung ankommt. Dabei gehen Daten an Google, Spotify und Meta, aber nur, wenn du zustimmst. <a href="datenschutz.html">Datenschutz</a></p>
       <div class="opts" id="cookie-opts" hidden>
         <label for="c-need"><input id="c-need" type="checkbox" checked disabled> Notwendig</label>
         <label for="c-media"><input id="c-media" type="checkbox"> Externe Medien (Spotify, YouTube)</label>
         <label for="c-stats"><input id="c-stats" type="checkbox"> Statistik (Google Analytics)</label>
+        <label for="c-mkt"><input id="c-mkt" type="checkbox"> Marketing (Meta Pixel)</label>
       </div>
     </div>
     <div class="btns">
@@ -776,6 +777,7 @@ main#start > .marquee{order:1}
     </div>
   </div>
 </div>
+<script src="meta-pixel.js"></script>
 <script>
 function safeUrl(u){u=String(u||"");return /^(https?:\/\/|#|[a-z0-9-]+\/|img\/|data\/)/i.test(u)&&!/^\s*javascript:/i.test(u)?u:"#"}
 /* ===== EINSTELLUNGEN – hier trägt man später IDs ein ===== */
@@ -802,15 +804,15 @@ var SB = {
   var KEY="sb-consent-v1", consent=null;
   try{consent=JSON.parse(localStorage.getItem(KEY))}catch(e){}
   var box=document.getElementById('cookie'), opts=document.getElementById('cookie-opts');
-  var cM=document.getElementById('c-media'), cS=document.getElementById('c-stats');
+  var cM=document.getElementById('c-media'), cS=document.getElementById('c-stats'), cK=document.getElementById('c-mkt');
   var bSave=document.getElementById('c-save'), bChoose=document.getElementById('c-choose');
 
-  function openBox(){ if(consent){cM.checked=!!consent.media;cS.checked=!!consent.stats} box.hidden=false; }
+  function openBox(){ if(consent){cM.checked=!!consent.media;cS.checked=!!consent.stats;cK.checked=!!consent.marketing} box.hidden=false; }
   function save(c){ consent=c; try{localStorage.setItem(KEY,JSON.stringify(c))}catch(e){} box.hidden=true; apply(); }
-  document.getElementById('c-all').onclick=function(){save({media:true,stats:true})};
-  document.getElementById('c-none').onclick=function(){save({media:false,stats:false})};
+  document.getElementById('c-all').onclick=function(){save({media:true,stats:true,marketing:true})};
+  document.getElementById('c-none').onclick=function(){save({media:false,stats:false,marketing:false})};
   bChoose.onclick=function(){opts.hidden=false;bSave.hidden=false;bChoose.hidden=true};
-  bSave.onclick=function(){save({media:cM.checked,stats:cS.checked})};
+  bSave.onclick=function(){save({media:cM.checked,stats:cS.checked,marketing:cK.checked})};
   document.querySelectorAll('[data-open-cookies]').forEach(function(b){b.onclick=function(){opts.hidden=false;bSave.hidden=false;bChoose.hidden=true;openBox()}});
 
   /* Videos aufbauen */
@@ -906,7 +908,7 @@ var SB = {
     var name=el.dataset.embed==='youtube'?'YouTube':'Spotify';
     el.classList.remove('on');
     el.innerHTML='<div class="gate"><p>Hier wird ein Player von '+name+' angezeigt. Beim Laden werden Daten an '+name+' übertragen.</p><button class="btn solid" type="button">'+name+' laden</button></div>';
-    el.querySelector('button').onclick=function(){ save({media:true,stats:consent?!!consent.stats:false}); };
+    el.querySelector('button').onclick=function(){ save({media:true,stats:consent?!!consent.stats:false,marketing:consent?!!consent.marketing:false}); };
   }
   function load(el){
     if(el.querySelector('iframe')) return;
@@ -927,9 +929,10 @@ var SB = {
     document.querySelectorAll('[data-embed]').forEach(function(el){ (consent&&consent.media)?load(el):gate(el); });
     if(consent&&consent.stats) loadGA();
     else if(gaLoaded){ location.reload(); }
+    if(window.sbMetaPixel) sbMetaPixel.apply(consent);
   }
   apply();
-  if(!consent) openBox();
+  if(!consent||!('marketing' in consent)) openBox();   /* neu fragen, wenn Meta Pixel noch nicht abgefragt wurde */
 
   /* Songs direkt im Player abspielen */
   var player=document.getElementById('player');

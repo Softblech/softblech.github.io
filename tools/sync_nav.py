@@ -37,10 +37,13 @@ def build(prefix, i18n):
     return '<!-- NAV: automatisch aus index.html (tools/sync_nav.py), hier nicht von Hand aendern -->\n' + h
 
 
-def build_foot(prefix, i18n):
+def build_foot(prefix, i18n, cookies=False):
     f = footer
-    # Cookie-Einstellungen gibt es nur auf der Startseite (dort liegt das Cookie-Banner)
-    f = re.sub(r'\s*<button [^>]*data-open-cookies[^>]*>.*?</button>', '', f, flags=re.S)
+    # Cookie-Einstellungen nur auf Seiten mit Cookie-Banner (Startseite + Song-Seiten mit release.js)
+    if not cookies:
+        f = re.sub(r'\s*<button [^>]*data-open-cookies[^>]*>.*?</button>', '', f, flags=re.S)
+    elif i18n:
+        f = f.replace('>Cookie-Einstellungen</button>', '><span data-l="de">Cookie-Einstellungen</span><span data-l="en">Cookie settings</span></button>')
     f = re.sub(r'href="(impressum|datenschutz|widerruf)\.html"', lambda m: f'href="{prefix}{m.group(1)}.html"', f)
     if i18n:
         tr = lambda m: m.group(1) + (f'<span data-l="de">{m.group(2)}</span><span data-l="en">{D[m.group(2).strip()]}</span>' if m.group(2).strip() in D else m.group(2)) + m.group(3)
@@ -52,7 +55,7 @@ def patch(path, prefix, i18n):
     t = path.read_text(encoding='utf-8')
     new = build(prefix, i18n)
     t = re.sub(r'(<!-- NAV:[^\n]*-->\n)?<header\b.*?</header>', lambda m: new, t, count=1, flags=re.S)
-    foot = build_foot(prefix, i18n)
+    foot = build_foot(prefix, i18n, 'release.js' in t)
     if re.search(r'<footer\b', t):
         t = re.sub(r'(<!-- FOOTER:[^\n]*-->\n)?<footer\b.*?</footer>', lambda m: foot, t, count=1, flags=re.S)
     else:
