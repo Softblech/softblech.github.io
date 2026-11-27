@@ -15,14 +15,17 @@ var MAX_PRO_MAIL_STUNDE = 3;   // Bestellungen pro E-Mail-Adresse und Stunde
 var MAX_PRO_TAG = 40;          // Bestellungen pro Tag insgesamt (schützt das Mail-Limit von Google)
 var MAX_FEHLVERSUCHE = 30;     // falsche Codes in 10 Minuten, danach 10 Minuten Pause
 // ================================================================
-// Alles Weitere (PayPal-Link, Mail-Adressen, Zahlungsfrist, Zusatztexte)
+// Alles Weitere (Bankdaten, Mail-Adressen, Zahlungsfrist, Zusatztexte)
 // steht im Tabellenblatt "Einstellungen" und wird dort geändert.
 // Dafür muss das Skript NICHT neu eingefügt oder bereitgestellt werden.
 
 var STANDARD = [
   ['Bestellungen offen', 'ja', 'ja oder nein. Nein = Shop sofort zu, auch für direkte Anfragen.'],
   ['Zugangscode', '041226', 'Code für softblech.com/merch. Ändern = der alte Code geht sofort nicht mehr. Lieber 8+ Zeichen.'],
-  ['PayPal-Link', 'https://www.paypal.me/henrisoen', 'Steht in der Bestätigungsmail. Leer = "Zahlungsinfos schicken wir persönlich".'],
+  ['Kontoinhaber', 'Softblech GbR', 'Für die Überweisung. Steht in der Bestätigungsmail und nach dem Bestellen auf der Seite.'],
+  ['IBAN', 'DE29 2022 0800 0074 8076 97', 'Leer = kein Konto, dann gilt der PayPal-Link (falls gesetzt).'],
+  ['BIC', 'SXPYDEHHXXX', ''],
+  ['PayPal-Link', '', 'Nur noch Notlösung, wenn keine IBAN eingetragen ist. Sonst leer lassen.'],
   ['Hinweis-Mail an', 'softblech@gmail.com', 'Bekommt bei jeder Bestellung eine Mail. Leer = keine. Am besten direkt die Gmail-Adresse.'],
   ['Antworten an', 'hallo@softblech.com', 'Wenn Fans auf die Bestätigung antworten, landet es hier.'],
   ['Zahlungsfrist (Tage)', 7, 'Wird in der Bestätigungsmail genannt.'],
@@ -45,6 +48,9 @@ function cfg_() {
     offen: !/^(nein|no|false|0)$/i.test(String(o['Bestellungen offen']).trim()),
     code: norm_(o['Zugangscode']),
     paypal: String(o['PayPal-Link'] || '').trim(),
+    inhaber: String(o['Kontoinhaber'] || '').trim(),
+    iban: String(o['IBAN'] || '').trim(),
+    bic: String(o['BIC'] || '').trim(),
     kopieAn: String(o['Hinweis-Mail an'] || '').trim(),
     antwortAn: String(o['Antworten an'] || '').trim() || 'hallo@softblech.com',
     frist: parseInt(o['Zahlungsfrist (Tage)'], 10) || 7,
@@ -175,7 +181,7 @@ function doPost(e) {
     // Doppelte Bestellung (gleiche Mail, gleiche Shirts, gleiche Lieferung in 10 Minuten): alte Nummer zurückgeben, nichts neu speichern
     var dupKey = 'd:' + Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, email.toLowerCase() + '|' + anzahl.join(',') + '|' + lieferung));
     var dup = cache.get(dupKey);
-    if (dup) { lock.releaseLock(); return json_({ ok: true, nr: dup, summe: betrag, doppelt: true }); }
+    if (dup) { lock.releaseLock(); return json_({ ok: true, nr: dup, summe: betrag, doppelt: true, konto: konto_(c, dup, t('vorname'), t('nachname')) }); }
     // Limits: pro E-Mail und Stunde, pro Tag insgesamt
     var proMail = parseInt(cache.get(mailKey) || '0', 10);
     if (proMail >= MAX_PRO_MAIL_STUNDE) { lock.releaseLock(); return json_({ ok: false, error: 'limit' }); }
@@ -203,7 +209,7 @@ function doPost(e) {
     lock.releaseLock();
 
     if (c.senden) {
-      try { mail_(c, p.sprache === 'en', email, t('vorname', 80), nr, anzahl, lieferung, betrag); } catch (err) { console.error(err); }
+      try { mail_(c, p.sprache === 'en', email, t('vorname', 80), nr, anzahl, lieferung, betrag, t('nachname', 80)); } catch (err) { console.error(err); }
     }
     if (c.kopieAn) {
       try {
@@ -218,14 +224,16 @@ function doPost(e) {
             '\n\nLieferung:\n' + adresse +
             (t('nachricht', 500) ? '\n\nNachricht: ' + t('nachricht', 500) : '') +
             '\nNewsletter: ' + (p.newsletter === 'ja' ? 'ja' : 'nein') +
-            (c.paypal ? '\n\nDer Link ' + c.paypal + ' steht in der Bestätigungsmail. Zahlung mit ' + nr + ' abgleichen und "Bezahlt" abhaken.\n' : '\n\nNächster Schritt: PayPal-Infos an ' + email + ' schicken (Verwendungszweck ' + nr + ').\n') +
+            (c.iban ? '\n\nZahlung per Überweisung auf ' + c.iban + ', Verwendungszweck "' + zweck_(nr, t('vorname'), t('nachname')) + '". Eingang auf dem Konto prüfen und "Bezahlt" abhaken.\n'
+              : c.paypal ? '\n\nDer Link ' + c.paypal + ' steht in der Bestätigungsmail. Zahlung mit ' + nr + ' abgleichen und "Bezahlt" abhaken.\n'
+              : '\n\nNächster Schritt: Zahlungsinfos an ' + email + ' schicken (Verwendungszweck ' + nr + ').\n') +
             'Tabelle: https://docs.google.com/spreadsheets/d/' + TABELLE_ID + '/edit',
           name: 'SOFTBLECH Merch',
           replyTo: email
         });
       } catch (err) { console.error(err); }
     }
-    return json_({ ok: true, nr: nr, summe: betrag });
+    return json_({ ok: true, nr: nr, summe: betrag, konto: konto_(c, nr, t('vorname'), t('nachname')) });
   } catch (err) {
     console.error(err);
     return json_({ ok: false, error: 'Serverfehler' });
@@ -234,16 +242,33 @@ function doPost(e) {
   }
 }
 
-function mail_(c, en, an, vorname, nr, anzahl, lieferung, betrag) {
+// Verwendungszweck für die Überweisung: Bestellnummer + Name (max. 140 Zeichen)
+function zweck_(nr, vorname, nachname) {
+  return (nr + ' ' + [vorname, nachname].filter(String).join(' ')).replace(/\s+/g, ' ').trim().slice(0, 140);
+}
+
+// Bankdaten für die Danke-Seite (nur nach einer gültigen Bestellung, nie öffentlich im Seiten-Code)
+function konto_(c, nr, vorname, nachname) {
+  return c.iban ? { inhaber: c.inhaber, iban: c.iban, bic: c.bic, zweck: zweck_(nr, vorname, nachname), frist: c.frist } : null;
+}
+
+function mail_(c, en, an, vorname, nr, anzahl, lieferung, betrag, nachname) {
   var liste = GROESSEN.map(function (g, i) { return anzahl[i] ? anzahl[i] + ' × ' + g : ''; }).filter(String).join(', ');
   var euro = betrag.toFixed(2).replace('.', en ? '.' : ',') + ' €';
-  var PAYPAL = c.paypal, ZAHLEN_IN_TAGEN = c.frist;
-  var zahlEn = PAYPAL
-    ? 'Please send ' + euro + ' via PayPal within ' + ZAHLEN_IN_TAGEN + ' days:\n' + PAYPAL + '\nPlease add your order number ' + nr + ' as a note.'
-    : 'We will send you the PayPal payment details personally in the next few days.';
-  var zahlDe = PAYPAL
-    ? 'Bitte überweise ' + euro + ' innerhalb von ' + ZAHLEN_IN_TAGEN + ' Tagen per PayPal:\n' + PAYPAL + '\nSchreib bitte deine Bestellnummer ' + nr + ' in die Mitteilung.'
-    : 'Die PayPal-Zahlungsinfos schicken wir dir in den nächsten Tagen persönlich.';
+  var PAYPAL = c.paypal, ZAHLEN_IN_TAGEN = c.frist, zweck = zweck_(nr, vorname, nachname || '');
+  var zahlEn, zahlDe;
+  if (c.iban) {
+    zahlEn = 'Please transfer ' + euro + ' within ' + ZAHLEN_IN_TAGEN + ' days to:\n\n' +
+      'Account holder: ' + c.inhaber + '\nIBAN: ' + c.iban + (c.bic ? '\nBIC: ' + c.bic : '') + '\nAmount: ' + euro + '\nReference: ' + zweck;
+    zahlDe = 'Bitte überweise ' + euro + ' innerhalb von ' + ZAHLEN_IN_TAGEN + ' Tagen an:\n\n' +
+      'Kontoinhaber: ' + c.inhaber + '\nIBAN: ' + c.iban + (c.bic ? '\nBIC: ' + c.bic : '') + '\nBetrag: ' + euro + '\nVerwendungszweck: ' + zweck;
+  } else if (PAYPAL) {
+    zahlEn = 'Please send ' + euro + ' via PayPal within ' + ZAHLEN_IN_TAGEN + ' days:\n' + PAYPAL + '\nPlease add your order number ' + nr + ' as a note.';
+    zahlDe = 'Bitte überweise ' + euro + ' innerhalb von ' + ZAHLEN_IN_TAGEN + ' Tagen per PayPal:\n' + PAYPAL + '\nSchreib bitte deine Bestellnummer ' + nr + ' in die Mitteilung.';
+  } else {
+    zahlEn = 'We will send you the payment details personally in the next few days.';
+    zahlDe = 'Die Zahlungsinfos schicken wir dir in den nächsten Tagen persönlich.';
+  }
   var text = en
     ? 'Hi ' + vorname + ',\n\nthanks for pre-ordering our shirt!\n\nOrder number: ' + nr + '\nShirts: ' + liste + '\n' +
       (lieferung === 'Versand' ? 'Delivery: DHL' : 'Delivery: pick-up at a show') + '\nTotal: ' + euro + '\n\n' + zahlEn + '\n\n' +
@@ -252,6 +277,15 @@ function mail_(c, en, an, vorname, nr, anzahl, lieferung, betrag) {
       (lieferung === 'Versand' ? 'Lieferung: Versand mit DHL' : 'Lieferung: Abholung bei einem Konzert') + '\nBetrag: ' + euro + '\n\n' + zahlDe + '\n\n' +
       (c.zusatzDe ? c.zusatzDe + '\n\n' : '') + 'Sobald die Shirts gedruckt sind, melden wir uns.\n\nLiebe Grüße\nDennis & Henri\nSOFTBLECH\nsoftblech.com';
   MailApp.sendEmail({ to: an, subject: (en ? 'Your SOFTBLECH pre-order ' : 'Deine SOFTBLECH-Vorbestellung ') + nr, body: text, name: 'SOFTBLECH', replyTo: c.antwortAn });
+}
+
+// TESTMAIL: Im Apps-Script-Editor oben "testMail" wählen und Ausführen.
+// Schickt eine Beispiel-Bestätigung (deutsch + englisch) NUR an die Adresse unten. Es wird nichts in die Tabelle geschrieben.
+var TEST_AN = 'dennishoertinger@gmail.com';
+function testMail() {
+  var c = cfg_(), anzahl = GROESSEN.map(function (g, i) { return i === 2 ? 1 : 0; });
+  mail_(c, false, TEST_AN, 'Dennis', 'SB-TEST', anzahl, 'Versand', PREIS + VERSAND, 'Hörtinger');
+  mail_(c, true, TEST_AN, 'Dennis', 'SB-TEST', anzahl, 'Versand', PREIS + VERSAND, 'Hörtinger');
 }
 
 // Verhindert, dass Eingaben wie "=..." als Formel in der Tabelle landen

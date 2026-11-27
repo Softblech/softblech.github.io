@@ -17,7 +17,8 @@ var MERCH = {
   newsletter: 'https://4a6dbfd6.sibforms.com/serve/MUIFAMwR_m5h8o1wltsYbSCL7N-QMkxqJUoEVb_HBoeFtIwxgZZst1DJeTa-DguGFJctrygaBhK5eTaY9OMlEblkh8J50NXY2i4jN8-niLvTT9qEuoETD_KrCktzgieUgJNxSoE3nzt0x5q3pnvh9-7T5rGj5rN5tNrGP_zIDFhjXlRyv7Ma3OdJQnfqodpfR2hNcHu-zTpUljvZAg==',
   // Zugangscode: steht NICHT mehr hier, sondern nur im Google-Blatt "Einstellungen" (Zeile "Zugangscode").
   // Das Skript prüft ihn bei der Eingabe und bei jeder Bestellung.
-  paypal: ''                   // leer = PayPal-Link steht nur in der Bestätigungsmail (Dennis 17.11.)
+  // Bezahlt wird per Überweisung. Die Bankdaten stehen im Blatt "Einstellungen" und kommen nach dem Bestellen
+  // vom Skript (stehen also nicht öffentlich im Seiten-Code).
 };
 /* ===================================================================== */
 
@@ -40,10 +41,6 @@ var MERCH = {
   function date(iso) {
     var d = new Date(iso + 'T12:00:00');
     return d.toLocaleDateString(en() ? 'en-GB' : 'de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
-  }
-  function paypalUrl() {
-    var p = MERCH.paypal || '';
-    return /^https:\/\//.test(p) ? p : '';
   }
 
   // Größen-Felder bauen
@@ -90,8 +87,8 @@ var MERCH = {
     $('m-deadline-dt').hidden = $('m-deadline').hidden = !MERCH.bis;
     if (MERCH.bis) $('m-deadline').textContent = date(MERCH.bis);
     $('m-pay-note').textContent = en()
-      ? 'After ordering you get an order number and the payment details by email. You pay via PayPal.'
-      : 'Nach dem Absenden bekommst du deine Bestellnummer und die Zahlungsdetails per Mail. Bezahlt wird per PayPal.';
+      ? 'After ordering you get an order number and the payment details by email. You pay by bank transfer.'
+      : 'Nach dem Absenden bekommst du deine Bestellnummer und die Zahlungsdetails per Mail. Bezahlt wird per Überweisung.';
   }
 
   // Bilder-Karussell: wischen, auf das Bild tippen oder den roten Balken anklicken
@@ -190,13 +187,25 @@ var MERCH = {
   function success(r) {
     form.hidden = true;
     $('d-nr').textContent = r.nr;
-    $('d-pay').textContent = MERCH.paypal
-      ? (en() ? 'Please send ' + eur(r.summe) + ' via PayPal to ' + MERCH.paypal + ' and write ' + r.nr + ' as the reference.'
-              : 'Bitte überweise ' + eur(r.summe) + ' per PayPal an ' + MERCH.paypal + ' und schreib ' + r.nr + ' in den Verwendungszweck.')
-      : (en() ? 'Total: ' + eur(r.summe) + '. You will find the payment details in your confirmation email.'
-              : 'Betrag: ' + eur(r.summe) + '. Die Zahlungsdetails findest du in deiner Bestätigungsmail.');
-    var u = paypalUrl();
-    if (u) { $('d-paypal').href = u; $('d-paypal').hidden = false; }
+    var k = r.konto;
+    if (k && k.iban) {
+      $('d-pay').textContent = en()
+        ? 'Please transfer ' + eur(r.summe) + ' within ' + (k.frist || 7) + ' days to:'
+        : 'Bitte überweise ' + eur(r.summe) + ' innerhalb von ' + (k.frist || 7) + ' Tagen an:';
+      var rows = [[en() ? 'Account holder' : 'Kontoinhaber', k.inhaber], ['IBAN', k.iban], ['BIC', k.bic],
+        [en() ? 'Amount' : 'Betrag', eur(r.summe)], [en() ? 'Reference' : 'Verwendungszweck', k.zweck]];
+      var dl = $('d-bank'); dl.textContent = '';
+      rows.forEach(function (x) {
+        if (!x[1]) return;
+        var dt = document.createElement('dt'), dd = document.createElement('dd');
+        dt.textContent = x[0]; dd.textContent = x[1]; dl.appendChild(dt); dl.appendChild(dd);
+      });
+      dl.hidden = false;
+    } else {
+      $('d-pay').textContent = en()
+        ? 'Total: ' + eur(r.summe) + '. You will find the payment details in your confirmation email.'
+        : 'Betrag: ' + eur(r.summe) + '. Die Zahlungsdetails findest du in deiner Bestätigungsmail.';
+    }
     $('done').hidden = false; $('done').focus();
   }
 
