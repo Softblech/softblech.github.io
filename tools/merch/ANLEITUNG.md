@@ -40,7 +40,7 @@ Bearbeiten (Stift) > Version: Neue Version** neu bereitstellen. Die Adresse blei
 
 ## Einstellungen ändern (ohne Code)
 
-Im Blatt **Einstellungen** der Tabelle stehen PayPal-Link, die Adresse für die Hinweis-Mail, die Antwort-Adresse,
+Im Blatt **Einstellungen** der Tabelle stehen die Bankdaten (Kontoinhaber, IBAN, BIC), die Adresse für die Hinweis-Mail, die Antwort-Adresse,
 die Zahlungsfrist, ob Bestätigungsmails rausgehen, und optionale Zusatztexte für die Mail.
 Einfach den Wert in Spalte B ändern. Das gilt sofort für die nächste Bestellung, ohne neues Bereitstellen.
 Nur Preis, Versand und Größen stehen im Code, weil sie auch auf der Website (merch/merch.js) stehen müssen.
@@ -62,6 +62,12 @@ doppelt abgeschickte Bestellungen (gleiche Mail, gleiche Shirts, 10 Minuten) wer
 4. **Bereitstellen > Bereitstellungen verwalten** > Stift-Symbol > bei Version **Neue Version** wählen > **Bereitstellen**.
    Wichtig: NICHT „Neue Bereitstellung“, sonst ändert sich die Adresse und die Website findet das Skript nicht mehr.
 
+## Testmail schicken
+
+Im Apps-Script-Editor oben in der Funktionsauswahl **testMail** wählen und **Ausführen**.
+Dann kommt eine Beispiel-Bestätigung (deutsch und englisch) an die Adresse `TEST_AN` im Skript (Dennis).
+In die Tabelle wird dabei nichts geschrieben.
+
 ## 5. Excel-Liste herunterladen
 
 In der Tabelle: **Datei > Herunterladen > Microsoft Excel (.xlsx)**.
@@ -76,7 +82,7 @@ In der Tabelle: **Datei > Herunterladen > Microsoft Excel (.xlsx)**.
 1. Fan füllt das Formular aus und bekommt sofort eine Bestellnummer (z. B. SB-007).
 2. Die Bestellung steht als neue Zeile in der Tabelle.
 3. Der Fan bekommt eine Bestätigungsmail (Absender softblech@gmail.com, Antworten gehen an hallo@softblech.com).
-4. Ihr schickt jedem persönlich die PayPal-Infos (Bestellnummer als Verwendungszweck), gleicht die Zahlungen ab und setzt das Häkchen „Bezahlt“.
+4. Die Bankdaten und der Verwendungszweck (Bestellnummer + Name) stehen automatisch in der Bestätigungsmail. Ihr gleicht die Überweisungen auf dem Konto ab und setzt das Häkchen „Bezahlt“.
 
 ## Vorbestellung beenden
 
